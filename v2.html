@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MU DalBros — Season 6 · Servidor Privado</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #d4a843;
+  --gold-light: #f0c85a;
+  --blue: #1a5fb8;
+  --blue-light: #4a9eff;
+  --blue-glow: rgba(74,158,255,0.3);
+  --red: #c23b22;
+  --red-light: #ff4d30;
+  --bg: #060812;
+  --bg2: #0b0f1e;
+  --bg3: #0f1428;
+  --panel: rgba(11,15,30,0.92);
+  --text: #ddd8c8;
+  --text-muted: #7a7a9a;
+  --border: rgba(212,168,67,0.18);
+  --border-blue: rgba(74,158,255,0.2);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(6,8,18,0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  height: 58px;
+  display: flex; align-items: center;
+  padding: 0 2rem;
+  gap: 2rem;
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+
+.nav-logo img {
+  height: 38px;
+  filter: drop-shadow(0 0 6px rgba(212,168,67,0.5));
+}
+
+.nav-links {
+  display: flex; gap: 0; list-style: none; flex: 1;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0 1rem;
+  height: 58px;
+  display: flex; align-items: center;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+.nav-actions {
+  display: flex; gap: 0.6rem; align-items: center;
+}
+
+.nav-btn {
+  padding: 0.45rem 1.1rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.nav-btn-gold {
+  background: var(--gold);
+  color: #1a0f00;
+}
+.nav-btn-gold:hover { background: var(--gold-light); }
+
+.nav-btn-discord {
+  background: #5865F2;
+  color: #fff;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-btn-discord:hover { background: #6b77ff; }
+
+/* ── HERO ── */
+#hero {
+  position: relative;
+  height: 100vh; min-height: 620px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden;
+  padding-top: 58px;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--bg) url('images/DarkLord.png') center top/cover no-repeat;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(6,8,18,0.25) 0%, rgba(6,8,18,0.15) 40%, rgba(6,8,18,0.75) 80%, rgba(6,8,18,1) 100%);
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 0 1rem;
+  max-width: 700px;
+}
+
+.hero-logo {
+  width: 520px; max-width: 80vw;
+  margin: 0 auto 1.5rem;
+  margin-top: -80px;
+  filter: drop-shadow(0 0 40px rgba(212,168,67,0.7)) drop-shadow(0 0 80px rgba(212,168,67,0.3));
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+.hero-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  margin-bottom: 0.4rem;
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 60px rgba(74,158,255,0.4), 0 0 20px rgba(212,168,67,0.3), 0 3px 0 rgba(0,0,0,0.9);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.hero-sub {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.hero-btns {
+  display: flex; gap: 0.75rem;
+  justify-content: center; flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.btn-hero-main {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.85rem 2.2rem;
+  background: linear-gradient(135deg, #b8941e, #e0b840);
+  color: #1a0f00;
+  font-size: 0.88rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; border-radius: 3px;
+  box-shadow: 0 4px 25px rgba(212,168,67,0.4);
+  transition: all 0.2s;
+}
+.btn-hero-main:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 6px 35px rgba(212,168,67,0.55); }
+
+.btn-hero-disc {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.85rem 2rem;
+  background: #5865F2;
+  color: #fff;
+  font-size: 0.88rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; border-radius: 3px;
+  transition: all 0.2s;
+}
+.btn-hero-disc:hover { background: #6b77ff; transform: translateY(-1px); }
+
+/* ── STAT BAR ── */
+#statbar {
+  position: relative; z-index: 3;
+  background: rgba(6,8,18,0.97);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.statbar-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  divide: 1px solid var(--border);
+}
+
+.statbar-item {
+  padding: 1.4rem 1rem;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.statbar-item:last-child { border-right: none; }
+
+.statbar-icon { font-size: 1.3rem; margin-bottom: 0.4rem; }
+
+.statbar-val {
+  font-size: 1.8rem; font-weight: 800;
+  color: var(--gold);
+  text-shadow: 0 0 15px rgba(212,168,67,0.3);
+  line-height: 1;
+}
+
+.statbar-label {
+  font-size: 0.65rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+/* ── SECTION ── */
+.section-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
+
+.section-head { text-align: center; margin-bottom: 3rem; }
+
+.s-label {
+  font-size: 0.7rem; letter-spacing: 0.35em;
+  text-transform: uppercase; color: var(--blue-light);
+  margin-bottom: 0.4rem;
+}
+
+.s-title {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 800; color: #fff;
+  text-shadow: 0 0 30px rgba(74,158,255,0.2);
+}
+
+.s-title span { color: var(--gold); }
+
+.s-line {
+  width: 50px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue-light), transparent);
+  margin: 0.9rem auto 0;
+}
+
+/* ── FEATURES ── */
+#features {
+  background: var(--bg2);
+  position: relative;
+}
+#features::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: url('images/ChatGPT Image Jun 8, 2026, 02_48_49 PM.png') center center/cover no-repeat;
+  opacity: 0.08;
+}
+#features .section-inner { position: relative; z-index: 1; }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.feature-card {
+  background: var(--bg2);
+  padding: 2rem 1.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s;
+}
+.feature-card:hover { background: var(--bg3); }
+
+.feature-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue-light), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.feature-card:hover::after { opacity: 1; }
+
+.feat-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: rgba(74,158,255,0.1);
+  border: 1px solid rgba(74,158,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.feat-icon.gold { background: rgba(212,168,67,0.1); border-color: rgba(212,168,67,0.25); }
+.feat-icon.red  { background: rgba(194,59,34,0.1);  border-color: rgba(194,59,34,0.25); }
+
+.feat-title {
+  font-size: 1rem; font-weight: 700;
+  color: var(--gold); margin-bottom: 0.4rem;
+}
+
+.feat-desc {
+  font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;
+}
+
+/* ── CLIENT FEATURES ── */
+#client-features {
+  background: var(--bg);
+  position: relative;
+}
+#client-features::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: url('images/ChatGPT Image Jun 8, 2026, 02_48_49 PM.png') center center/cover no-repeat;
+  opacity: 0.06;
+}
+#client-features .section-inner { position: relative; z-index: 1; }
+
+.cf-highlight {
+  background: linear-gradient(135deg, rgba(212,168,67,0.07), rgba(212,168,67,0.03));
+  border: 1px solid rgba(212,168,67,0.35);
+  border-radius: 8px;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+.cf-highlight::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.cf-highlight-badge {
+  display: inline-block;
+  background: rgba(212,168,67,0.15);
+  border: 1px solid rgba(212,168,67,0.4);
+  color: var(--gold);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-bottom: 0.6rem;
+}
+
+.cf-hl-icon {
+  width: 64px; height: 64px; border-radius: 12px;
+  background: rgba(212,168,67,0.1);
+  border: 1px solid rgba(212,168,67,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; flex-shrink: 0;
+}
+
+.cf-hl-title {
+  font-size: 1.3rem; font-weight: 800;
+  color: var(--gold); margin-bottom: 0.4rem;
+}
+
+.cf-hl-key {
+  display: inline-block;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding: 2px 10px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #fff;
+  margin-right: 6px;
+  letter-spacing: 0.05em;
+}
+
+.cf-hl-desc {
+  font-size: 0.85rem; color: var(--text-muted);
+  line-height: 1.7; margin-top: 0.4rem;
+}
+
+.cf-hl-sub {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem;
+}
+
+.cf-pill {
+  background: rgba(74,158,255,0.08);
+  border: 1px solid rgba(74,158,255,0.2);
+  color: var(--blue-light);
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.cf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.cf-card {
+  background: var(--bg2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: border-color 0.2s;
+}
+.cf-card:hover { border-color: rgba(212,168,67,0.3); }
+
+.cf-card-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.cf-card-icon.blue { background: rgba(74,158,255,0.1); border: 1px solid rgba(74,158,255,0.2); }
+.cf-card-icon.gold { background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.2); }
+.cf-card-icon.red  { background: rgba(194,59,34,0.1);  border: 1px solid rgba(194,59,34,0.2);  }
+
+.cf-card-title {
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.3rem;
+}
+.cf-card-desc {
+  font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;
+}
+.cf-card-key {
+  display: inline-block;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 3px;
+  padding: 1px 7px;
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.7);
+  margin-right: 4px;
+}
+
+/* ── EVENTS ── */
+#events {
+  position: relative;
+  background: var(--bg2);
+}
+#events::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: url('images/ChatGPT Image Jun 4, 2026, 12_33_22 AM.png') center top/cover no-repeat;
+  opacity: 0.07;
+}
+#events .section-inner { position: relative; z-index: 1; }
+
+.events-tabs {
+  display: flex; gap: 0.4rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding-bottom: 1px;
+}
+
+.etab {
+  padding: 0.6rem 1.4rem;
+  font-size: 0.78rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+  user-select: none;
+}
+.etab.active { color: var(--blue-light); border-bottom-color: var(--blue-light); }
+.etab:hover:not(.active) { color: var(--text); }
+
+.ev-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.ev-card {
+  background: var(--bg2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+}
+.ev-card:hover { border-color: var(--blue-light); transform: translateY(-3px); }
+
+.ev-thumb {
+  height: 110px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ev-thumb.bc  { background: linear-gradient(135deg, #1a0505, #3d0808); }
+.ev-thumb.cc  { background: linear-gradient(135deg, #0d0520, #2a0d50); }
+.ev-thumb.ds  { background: linear-gradient(135deg, #1a0800, #4a1800); }
+.ev-thumb.it  { background: linear-gradient(135deg, #001a10, #003320); }
+.ev-thumb.sk  { background: linear-gradient(135deg, #080808, #1a1a1a); }
+.ev-thumb.rd  { background: linear-gradient(135deg, #1a0302, #3d0704); }
+.ev-thumb.gd  { background: linear-gradient(135deg, #1a1200, #403000); }
+.ev-thumb.ww  { background: linear-gradient(135deg, #080d1a, #0f1e3d); }
+.ev-thumb.med { background: linear-gradient(135deg, #0d1a08, #1a3d10); }
+.ev-thumb.sea { background: linear-gradient(135deg, #030a1a, #071e40); }
+.ev-thumb.lw  { background: linear-gradient(135deg, #1a0f00, #402500); }
+.ev-thumb.ib  { background: linear-gradient(135deg, #0a0a1a, #1a1a3d); }
+
+.ev-thumb::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, var(--bg2) 100%);
+}
+
+.ev-body { padding: 0.75rem; }
+
+.ev-name {
+  font-size: 0.82rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.25rem;
+}
+
+.ev-sub {
+  font-size: 0.7rem; color: var(--text-muted); line-height: 1.4;
+}
+
+.ev-badge {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 2px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+.ev-badge.activo { background: rgba(74,158,255,0.15); color: var(--blue-light); border: 1px solid rgba(74,158,255,0.3); }
+.ev-badge.especial { background: rgba(212,168,67,0.12); color: var(--gold); border: 1px solid rgba(212,168,67,0.3); }
+
+/* ── CTA ── */
+#cta {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+#cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(74,158,255,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(212,168,67,0.06) 0%, transparent 60%);
+}
+
+.cta-inner {
+  position: relative; z-index: 1;
+  max-width: 700px; margin: 0 auto;
+  padding: 5rem 1.5rem;
+  text-align: center;
+}
+
+.cta-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900; color: #fff;
+  text-shadow: 0 0 40px rgba(74,158,255,0.3);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.cta-title span { color: var(--gold); }
+
+.cta-sub {
+  font-size: 0.9rem; color: var(--text-muted);
+  margin-bottom: 2.5rem;
+}
+
+.cta-btns {
+  display: flex; gap: 1rem;
+  justify-content: center; flex-wrap: wrap;
+}
+
+.btn-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 1rem 2.5rem;
+  border-radius: 3px;
+  font-size: 0.9rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s;
+}
+
+.btn-cta-main {
+  background: linear-gradient(135deg, #b8941e, #e0b840);
+  color: #1a0f00;
+  box-shadow: 0 4px 30px rgba(212,168,67,0.4);
+}
+.btn-cta-main:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.btn-cta-sec {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.btn-cta-sec:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── RANKING ── */
+#ranking { background: var(--bg); }
+
+.rank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.rank-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.rank-panel-head {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+
+.rank-panel-icon { font-size: 1rem; }
+
+.rank-panel-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+table.rtable {
+  width: 100%; border-collapse: collapse; font-size: 0.82rem;
+}
+
+table.rtable td {
+  padding: 0.7rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+}
+
+table.rtable tr:last-child td { border-bottom: none; }
+table.rtable tr:hover td { background: rgba(255,255,255,0.02); }
+
+.rpos { width: 32px; font-weight: 700; color: var(--text-muted); }
+.rpos.g { color: #ffd700; }
+.rpos.s { color: #c0c0c0; }
+.rpos.b { color: #cd7f32; }
+
+.rname { font-weight: 600; }
+.rval  { text-align: right; color: var(--gold); font-weight: 600; }
+.rmut  { color: var(--text-muted); font-size: 0.74rem; }
+
+.rank-empty {
+  text-align: center; padding: 2rem;
+  font-size: 0.78rem; color: var(--text-muted); font-style: italic;
+}
+
+/* ── DOWNLOAD ── */
+#download {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+
+.dl-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media(max-width:680px){ .dl-grid { grid-template-columns: 1fr; } }
+
+.dl-left h2 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800; color: #fff;
+  margin-bottom: 0.75rem;
+}
+.dl-left h2 span { color: var(--gold); }
+
+.dl-left p {
+  font-size: 0.85rem; color: var(--text-muted);
+  margin-bottom: 1.5rem; line-height: 1.7;
+}
+
+.dl-specs {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.dl-spec {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.78rem; color: var(--text-muted);
+}
+.dl-spec::before { content: '✓'; color: var(--blue-light); font-weight: 700; }
+
+.dl-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.dl-right {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2rem;
+}
+
+.dl-right h4 {
+  font-size: 0.72rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.dl-steps { list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 1rem; }
+
+.dl-steps li {
+  counter-increment: s;
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.82rem; color: var(--text-muted);
+}
+
+.dl-steps li::before {
+  content: counter(s);
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(74,158,255,0.15);
+  border: 1px solid rgba(74,158,255,0.3);
+  color: var(--blue-light);
+  font-size: 0.65rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+
+.dl-steps li strong { color: var(--text); }
+
+/* ── FOOTER IMAGE ── */
+#footer-char {
+  position: relative;
+  height: 620px;
+  background: var(--bg) url('images/MagicGladiator.png') center center/cover no-repeat;
+  overflow: hidden;
+}
+#footer-char::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(6,8,18,0.7) 0%,
+    rgba(6,8,18,0) 15%,
+    rgba(6,8,18,0) 80%,
+    rgba(6,8,18,1) 100%
+  );
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #040609;
+  border-top: none;
+  padding: 3rem 1.5rem 1.5rem;
+}
+
+.footer-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media(max-width:700px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
+
+.footer-brand img {
+  height: 44px; margin-bottom: 1rem;
+  filter: drop-shadow(0 0 8px rgba(212,168,67,0.4));
+}
+
+.footer-brand p {
+  font-size: 0.78rem; color: var(--text-muted); line-height: 1.6;
+  max-width: 240px;
+}
+
+.footer-col h5 {
+  font-size: 0.68rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.75rem; font-weight: 600;
+}
+
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+.footer-col ul a {
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.8rem; transition: color 0.2s;
+}
+.footer-col ul a:hover { color: var(--text); }
+
+.footer-stats {
+  max-width: 1100px; margin: 0 auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+
+.footer-copy {
+  font-size: 0.7rem; color: var(--text-muted); opacity: 0.5;
+}
+
+.footer-info {
+  font-size: 0.7rem; color: var(--text-muted);
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+
+.footer-info span { display: flex; align-items: center; gap: 5px; }
+
+.online-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22cc44; box-shadow: 0 0 5px #22cc44;
+  animation: p 2s infinite;
+}
+@keyframes p { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── IP COPY ── */
+.ip-pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--bg3); border: 1px solid var(--border-blue);
+  border-radius: 4px; padding: 0.7rem 1.4rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem; color: var(--blue-light);
+  cursor: pointer; transition: border-color 0.2s;
+  margin: 1.5rem auto 0.5rem; display: flex;
+}
+.ip-pill:hover { border-color: var(--blue-light); }
+
+.ip-note { font-size: 0.7rem; color: var(--text-muted); text-align:center; }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <img src="images/MuDalBrosLogo.png" alt="MU DalBros">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero" class="active">Inicio</a></li>
+    <li><a href="#features">Información</a></li>
+    <li><a href="#events">Eventos</a></li>
+    <li><a href="#ranking">Ranking</a></li>
+    <li><a href="#download">Descargas</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#download" class="nav-btn nav-btn-gold">⬇ Descargar</a>
+    <a href="#" class="nav-btn nav-btn-discord">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+      Discord
+    </a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+    <img src="images/MuDalBrosLogo.png" alt="MU DalBros" class="hero-logo">
+    <div class="hero-label">Servidor Privado Argentino</div>
+    <div class="hero-sub">Season 6 · La experiencia clásica de MU Online<br>
+      <span style="color:var(--text);opacity:0.6">Exp x1 &nbsp;·&nbsp; 10 Resets &nbsp;·&nbsp; 100% Drop &nbsp;·&nbsp; 100 Master Levels</span>
+    </div>
+    <div class="hero-btns">
+      <a href="#download" class="btn-hero-main">⬇ Descargar Cliente</a>
+      <a href="#" class="btn-hero-disc">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+        Discord
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STAT BAR ═══ -->
+<div id="statbar">
+  <div class="statbar-inner">
+    <div class="statbar-item">
+      <div class="statbar-icon">⚔️</div>
+      <div class="statbar-val">x1</div>
+      <div class="statbar-label">Experiencia</div>
+    </div>
+    <div class="statbar-item">
+      <div class="statbar-icon">🎁</div>
+      <div class="statbar-val">100%</div>
+      <div class="statbar-label">Drop Rate</div>
+    </div>
+    <div class="statbar-item">
+      <div class="statbar-icon">🔄</div>
+      <div class="statbar-val">10</div>
+      <div class="statbar-label">Resets Máx.</div>
+    </div>
+    <div class="statbar-item">
+      <div class="statbar-icon">⭐</div>
+      <div class="statbar-val">100</div>
+      <div class="statbar-label">Master Lvl Máx.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FEATURES ═══ -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="s-label">¿Por qué MU DalBros?</div>
+      <h2 class="s-title">Diseñado para <span>durar</span></h2>
+      <div class="s-line"></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon gold">⚔️</div>
+        <div class="feat-title">Season 6 Clásico</div>
+        <div class="feat-desc">La versión que marcó una época. Sin pay-to-win, sin progresión acelerada. Cada nivel tiene valor, cada item importa.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🏦</div>
+        <div class="feat-title">Economía Estable</div>
+        <div class="feat-desc">Drop 100% sin inflación. El sistema de GP recompensa a los jugadores online con 10 GP por hora automáticamente.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon red">🐉</div>
+        <div class="feat-title">Eventos Activos</div>
+        <div class="feat-desc">Blood Castle, Devil Square, Chaos Castle, Illusion Temple y múltiples invasiones. Siempre hay algo para hacer.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🚀</div>
+        <div class="feat-title">Launcher Automático</div>
+        <div class="feat-desc">Actualizaciones instantáneas sin escanear 3 GB. El launcher detecta cambios y descarga solo lo necesario.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLIENT FEATURES ═══ -->
+<section id="client-features">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="s-label">Lo que nos hace diferentes</div>
+      <h2 class="s-title">Características <span>del Cliente</span></h2>
+      <div class="s-line"></div>
+    </div>
+
+    <!-- HIGHLIGHT: TAB -->
+    <div class="cf-highlight">
+      <div class="cf-hl-icon">🗺️</div>
+      <div>
+        <div class="cf-hl-title"><span class="cf-hl-key">TAB</span> Mapa de Spots y HotSpots</div>
+        <div class="cf-hl-desc">
+          Spots y <strong style="color:#c084fc">HotSpots</strong> marcados en el mapa.
+        </div>
+        <div class="cf-hl-sub">
+          <span class="cf-pill">Elbeland</span>
+          <span class="cf-pill">Devias</span>
+          <span class="cf-pill">Atlans</span>
+          <span class="cf-pill">Icarus</span>
+          <span class="cf-pill">Kanturu 1·2·3</span>
+          <span class="cf-pill">Tarkan</span>
+          <span class="cf-pill">Aida</span>
+          <span class="cf-pill">Vulcanus</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID de features del cliente -->
+    <div class="cf-grid">
+
+      <div class="cf-card">
+        <div class="cf-card-icon blue">⊟</div>
+        <div>
+          <div class="cf-card-title"><span class="cf-card-key">F12</span> Minimizar y bajar recursos</div>
+          <div class="cf-card-desc">Presioná F12 para minimizar el juego y reducir el uso de CPU y RAM. Ideal para tener el MU abierto en segundo plano sin que te frene la PC.</div>
+        </div>
+      </div>
+
+      <div class="cf-card">
+        <div class="cf-card-icon gold">👤</div>
+        <div>
+          <div class="cf-card-title">Crear cuenta desde el login</div>
+          <div class="cf-card-desc">No hace falta ir a ninguna página web. Desde la pantalla de inicio del juego podés crear tu cuenta con el botón <strong style="color:var(--text)">Create</strong>, directo y sin complicaciones.</div>
+        </div>
+      </div>
+
+      <div class="cf-card">
+        <div class="cf-card-icon blue">💾</div>
+        <div>
+          <div class="cf-card-title">Guardar cuenta y contraseña</div>
+          <div class="cf-card-desc">El login tiene la opción <strong style="color:var(--text)">Save Account/Password</strong> para que no tengas que escribir tus datos cada vez que entrás.</div>
+        </div>
+      </div>
+
+<div class="cf-card">
+        <div class="cf-card-icon red">💎</div>
+        <div>
+          <div class="cf-card-title">Item Bank — Banco de Joyas</div>
+          <div class="cf-card-desc">Guardá tus Bless, Soul, Chaos, Life y Creation en el banco integrado sin ocupar espacio en el baúl. Accesible desde el Especial Menu.</div>
+        </div>
+      </div>
+
+      <div class="cf-card">
+        <div class="cf-card-icon gold">🎡</div>
+        <div>
+          <div class="cf-card-title">Lucky Wheel — 2 ruedas</div>
+          <div class="cf-card-desc"><strong style="color:var(--text)">Wheel 1</strong> (1 WC): joyas aleatorias. <strong style="color:var(--text)">Wheel 2</strong> (10 WC): joyas raras + Loch's Feather y Crest of Monarch. Accesible desde el Especial Menu.</div>
+        </div>
+      </div>
+
+      <div class="cf-card">
+        <div class="cf-card-icon blue">🪙</div>
+        <div>
+          <div class="cf-card-title">10 GP por hora automático</div>
+          <div class="cf-card-desc">Por estar conectado recibís 10 Goblin Points cada hora. Solo jugando ya acumulás GP para canjear en la tienda. No hace falta hacer nada especial.</div>
+        </div>
+      </div>
+
+      <div class="cf-card">
+        <div class="cf-card-icon red">🌧️</div>
+        <div>
+          <div class="cf-card-title">Lluvia de Joyas — 17:00 y 22:00</div>
+          <div class="cf-card-desc">Todos los días a las <strong style="color:var(--text)">17:00</strong> y <strong style="color:var(--text)">22:00</strong> hay Lluvia de Joyas en Lorencia. El servidor avisa in-game para que nadie se lo pierda.</div>
+        </div>
+      </div>
+
+      <div class="cf-card">
+        <div class="cf-card-icon blue">🚀</div>
+        <div>
+          <div class="cf-card-title">Launcher con actualización instantánea</div>
+          <div class="cf-card-desc">El launcher detecta cambios y descarga solo los archivos modificados en segundos. Sin escanear 3 GB completos en cada apertura.</div>
+        </div>
+      </div>
+
+      <div class="cf-card">
+        <div class="cf-card-icon gold">🏆</div>
+        <div>
+          <div class="cf-card-title">VIP — +5% EXP y DROP</div>
+          <div class="cf-card-desc">Plan VIP disponible en el Especial Menu. 30 días con bonificación de experiencia y drop rate. Se activa con WCoin directamente desde el juego.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EVENTS ═══ -->
+<section id="events">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="s-label">Contenido del Servidor</div>
+      <h2 class="s-title">Eventos <span>Destacados</span></h2>
+      <div class="s-line"></div>
+    </div>
+
+    <div class="events-tabs">
+      <div class="etab active" onclick="showTab(this,'ev-clasicos')">Eventos Clásicos</div>
+      <div class="etab" onclick="showTab(this,'ev-invasiones')">Invasiones</div>
+      <div class="etab" onclick="showTab(this,'ev-especiales')">Sistemas</div>
+    </div>
+
+    <div id="ev-clasicos" class="ev-grid">
+      <div class="ev-card">
+        <div class="ev-thumb bc">🏰</div>
+        <div class="ev-body">
+          <div class="ev-name">Blood Castle</div>
+          <div class="ev-sub">Combate en masa. Completá objetivos para ganar recompensas.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb ds">😈</div>
+        <div class="ev-body">
+          <div class="ev-name">Devil Square</div>
+          <div class="ev-sub">Oleadas de monstruos. Acumulá puntos para subir al ranking.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb cc">🌀</div>
+        <div class="ev-body">
+          <div class="ev-name">Chaos Castle</div>
+          <div class="ev-sub">Battle royale de supervivencia. Último en pie gana.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb it">🪄</div>
+        <div class="ev-body">
+          <div class="ev-name">Illusion Temple</div>
+          <div class="ev-sub">Evento por equipos. Robá la estatua enemiga y llevala a tu base.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="ev-invasiones" class="ev-grid" style="display:none">
+      <div class="ev-card">
+        <div class="ev-thumb sk">💀</div>
+        <div class="ev-body">
+          <div class="ev-name">Skeleton King</div>
+          <div class="ev-sub">Invade Lorencia. Gran recompensa para quien lo derrote.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb rd">🔴</div>
+        <div class="ev-body">
+          <div class="ev-name">Red Dragon</div>
+          <div class="ev-sub">Drops exclusivos y gran cantidad de experiencia.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb gd">🐉</div>
+        <div class="ev-body">
+          <div class="ev-name">Golden Dragon</div>
+          <div class="ev-sub">WCoin y jewels raras para quienes lo derroten.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb ww">🧙</div>
+        <div class="ev-body">
+          <div class="ev-name">White Wizard</div>
+          <div class="ev-sub">Aparece en los mapas con recompensas únicas.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb med">🐍</div>
+        <div class="ev-body">
+          <div class="ev-name">Medusa</div>
+          <div class="ev-sub">Boss de alto nivel. Coordiná con tu guild para derrotarla.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb sea">🐇</div>
+        <div class="ev-body">
+          <div class="ev-name">Rabbits / Summer / New Year</div>
+          <div class="ev-sub">Invasiones de temporada con drops de joyas.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb sk">🥈</div>
+        <div class="ev-body">
+          <div class="ev-name">Silver Invasion</div>
+          <div class="ev-sub">Drops de items valiosos para los jugadores que participen.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="ev-especiales" class="ev-grid" style="display:none">
+      <div class="ev-card">
+        <div class="ev-thumb lw">🎡</div>
+        <div class="ev-body">
+          <div class="ev-name">Lucky Wheel</div>
+          <div class="ev-sub">Wheel 1 (1 WC): joyas aleatorias. Wheel 2 (10 WC): joyas + Loch's Feather.</div>
+          <span class="ev-badge especial">Premium</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb ib">💎</div>
+        <div class="ev-body">
+          <div class="ev-name">Item Bank</div>
+          <div class="ev-sub">Banco de joyas integrado. Guardá Bless, Soul, Chaos sin ocupar baúl.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb gd">🏆</div>
+        <div class="ev-body">
+          <div class="ev-name">VIP</div>
+          <div class="ev-sub">Plan VIP con bonificaciones de EXP y Drop. Se activa con WCoin.</div>
+          <span class="ev-badge especial">Premium</span>
+        </div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-thumb cc">🪙</div>
+        <div class="ev-body">
+          <div class="ev-name">GP Automático</div>
+          <div class="ev-sub">El servidor regala 10 GP cada hora a todos los jugadores online.</div>
+          <span class="ev-badge activo">Activo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section id="cta">
+  <div class="cta-inner">
+    <h2 class="cta-title">Tu leyenda<br><span>comienza aquí</span></h2>
+    <p class="cta-sub">Unite a miles de jugadores y escribí tu propia historia en MU DalBros.<br>Completamente gratis. Instalación rápida.</p>
+    <div class="cta-btns">
+      <a href="#download" class="btn-cta btn-cta-main">⬇ Descargar Cliente</a>
+      <a href="#" class="btn-cta btn-cta-sec">Más información</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RANKING ═══ -->
+<section id="ranking">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="s-label">Los mejores jugadores</div>
+      <h2 class="s-title"><span>Ranking</span> del Servidor</h2>
+      <div class="s-line"></div>
+    </div>
+    <div class="rank-grid">
+      <div class="rank-panel">
+        <div class="rank-panel-head">
+          <span class="rank-panel-icon">👑</span>
+          <span class="rank-panel-title">Top Jugadores — Nivel</span>
+        </div>
+        <div class="rank-empty">El ranking estará disponible cuando el servidor esté en producción.</div>
+      </div>
+      <div class="rank-panel">
+        <div class="rank-panel-head">
+          <span class="rank-panel-icon">🔄</span>
+          <span class="rank-panel-title">Top Resets</span>
+        </div>
+        <div class="rank-empty">El ranking estará disponible cuando el servidor esté en producción.</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:2rem">
+      <div class="ip-pill" onclick="copyIP(this)">
+        200.42.108.234 &nbsp;:&nbsp; 44405
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      </div>
+      <div class="ip-note" id="ip2-note">Clic para copiar la IP del servidor</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DOWNLOAD ═══ -->
+<section id="download">
+  <div class="section-inner">
+    <div class="dl-grid">
+      <div class="dl-left">
+        <h2>Descargá el <span>cliente</span></h2>
+        <p>Cliente completo con launcher de actualización automática. Solo descargás una vez — de ahí en más el launcher actualiza solo lo que cambió.</p>
+        <div class="dl-specs">
+          <div class="dl-spec">Season 6 Episode 3</div>
+          <div class="dl-spec">Windows 7 / 10 / 11</div>
+          <div class="dl-spec">Actualización automática</div>
+          <div class="dl-spec">Totalmente gratis</div>
+        </div>
+        <div class="dl-btns">
+          <a href="#" class="btn-hero-main" style="font-size:0.85rem;padding:0.85rem 1.8rem">⬇ Descargar desde MEGA</a>
+        </div>
+      </div>
+      <div class="dl-right">
+        <h4>Cómo instalar</h4>
+        <ol class="dl-steps">
+          <li>Descargá y descomprimí el cliente en cualquier carpeta</li>
+          <li>Ejecutá <strong>MuLauncher.exe</strong> como administrador</li>
+          <li>El launcher actualiza automáticamente los archivos necesarios</li>
+          <li>Hacé click en <strong>INICIAR JUEGO</strong> y ¡entrá al servidor!</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER CHARACTER ═══ -->
+<div id="footer-char"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="images/MuDalBrosLogo.png" alt="MU DalBros">
+      <p>Servidor privado argentino Season 6. La experiencia clásica de MU Online sin pay-to-win. Exp x1 · Drop 100% · 10 Resets.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navegación</h5>
+      <ul>
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#features">Información</a></li>
+        <li><a href="#events">Eventos</a></li>
+        <li><a href="#ranking">Ranking</a></li>
+        <li><a href="#download">Descargas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Eventos</h5>
+      <ul>
+        <li><a href="#events">Blood Castle</a></li>
+        <li><a href="#events">Devil Square</a></li>
+        <li><a href="#events">Chaos Castle</a></li>
+        <li><a href="#events">Invasiones</a></li>
+        <li><a href="#events">Lucky Wheel</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Comunidad</h5>
+      <ul>
+        <li><a href="#">Discord</a></li>
+        <li><a href="#">Reglas</a></li>
+        <li><a href="#">Soporte</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-stats">
+    <div class="footer-copy">© 2024 MU DalBros — Servidor Privado Season 6. No afiliado a Webzen.</div>
+    <div class="footer-info">
+      <span><div class="online-dot"></div> Servidor Online</span>
+      <span>IP: 200.42.108.234 · Puerto: 44405</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showTab(el, id) {
+  document.querySelectorAll('.etab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  ['ev-clasicos','ev-invasiones','ev-especiales'].forEach(function(tid){
+    document.getElementById(tid).style.display = tid === id ? 'grid' : 'none';
+  });
+}
+
+function copyIP(el) {
+  navigator.clipboard.writeText('200.42.108.234').then(function(){
+    document.getElementById('ip2-note').textContent = '✓ IP copiada al portapapeles';
+    setTimeout(function(){ document.getElementById('ip2-note').textContent = 'Clic para copiar la IP del servidor'; }, 2000);
+  });
+}
+
+// Nav active on scroll
+(function(){
+  var sections = document.querySelectorAll('section[id], div[id="statbar"]');
+  var links = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function(){
+    var pos = window.scrollY + 80;
+    sections.forEach(function(s){
+      if(pos >= s.offsetTop && pos < s.offsetTop + s.offsetHeight){
+        links.forEach(function(l){ l.classList.remove('active'); });
+        var m = document.querySelector('.nav-links a[href="#'+s.id+'"]');
+        if(m) m.classList.add('active');
+      }
+    });
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
