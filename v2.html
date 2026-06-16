@@ -167,6 +167,14 @@ nav {
   0%,100% { opacity: 0.15; }
   50%      { opacity: 1; }
 }
+.hint-pulse {
+  opacity: 0.45;
+  animation: hint-glow 3s ease-in-out infinite;
+}
+@keyframes hint-glow {
+  0%,100% { opacity: 0.45; text-shadow: none; }
+  50%     { opacity: 1; text-shadow: 0 0 10px rgba(212,168,67,0.9), 0 0 24px rgba(212,168,67,0.5); }
+}
 
 /* ── CHAIN IMPACT GLOW ── */
 #chain-glow {
@@ -1163,7 +1171,7 @@ footer {
       <div class="s-label">Lo que nos hace diferentes</div>
       <h2 class="s-title">Características <span>del Cliente</span></h2>
       <div class="s-line"></div>
-      <p style="font-size:0.92rem;color:var(--gold-light);margin-top:0.7rem;opacity:0.9;letter-spacing:0.03em">👁 Mantené el click en los botones y cards para ver las capturas</p>
+      <p class="hint-pulse" style="font-size:0.92rem;color:var(--gold-light);margin-top:0.7rem;letter-spacing:0.03em">👁 Mantené el click en los botones y cards para ver las capturas</p>
     </div>
 
     <!-- HIGHLIGHT: TAB -->
