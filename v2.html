@@ -890,6 +890,83 @@ footer {
   </div>
 </nav>
 
+<!-- ── MUSIC PLAYER ── -->
+<div id="music-player">
+  <button id="btn-playpause" title="Play / Pause">▶</button>
+  <button id="btn-mute" title="Mute / Unmute">🔊</button>
+  <span id="music-label">MU DalBros</span>
+</div>
+<audio id="bg-music" src="login_theme.mp3" loop preload="auto"></audio>
+
+<style>
+#music-player {
+  position: fixed;
+  bottom: 1.2rem;
+  left: 1.2rem;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(6,8,18,0.82);
+  border: 1px solid rgba(212,168,67,0.25);
+  border-radius: 30px;
+  padding: 0.35rem 0.8rem 0.35rem 0.5rem;
+  backdrop-filter: blur(10px);
+}
+#music-player button {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  line-height: 1;
+  transition: color 0.2s;
+}
+#music-player button:hover { color: var(--gold-light); }
+#music-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+</style>
+
+<script>
+(function(){
+  var audio = document.getElementById('bg-music');
+  var btnPlay = document.getElementById('btn-playpause');
+  var btnMute = document.getElementById('btn-mute');
+  var playing = false;
+
+  function tryPlay(){
+    audio.volume = 0.4;
+    audio.play().then(function(){ playing = true; btnPlay.textContent = '⏸'; }).catch(function(){});
+  }
+
+  // Autoplay al primer click en cualquier parte
+  document.addEventListener('click', function onFirstClick(){
+    if(!playing){ tryPlay(); }
+    document.removeEventListener('click', onFirstClick);
+  }, { once: true });
+
+  // Intentar autoplay directo (funciona en algunos browsers)
+  window.addEventListener('load', function(){ tryPlay(); });
+
+  btnPlay.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(playing){ audio.pause(); playing = false; btnPlay.textContent = '▶'; }
+    else { tryPlay(); }
+  });
+
+  btnMute.addEventListener('click', function(e){
+    e.stopPropagation();
+    audio.muted = !audio.muted;
+    btnMute.textContent = audio.muted ? '🔇' : '🔊';
+  });
+})();
+</script>
+
 <!-- ═══ HERO ═══ -->
 <section id="hero">
   <div class="hero-bg"></div>
