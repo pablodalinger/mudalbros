@@ -1472,13 +1472,6 @@ footer {
       </div>
     </div>
 
-    <div style="text-align:center;margin-top:2rem">
-      <div class="ip-pill" onclick="copyIP(this)">
-        200.42.108.234 &nbsp;:&nbsp; 44405
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-      </div>
-      <div class="ip-note" id="ip2-note">Clic para copiar la IP del servidor</div>
-    </div>
   </div>
 </section>
 
@@ -1555,7 +1548,6 @@ footer {
     <div class="footer-copy">© 2024 MU DalBros — Servidor Privado Season 6. No afiliado a Webzen.</div>
     <div class="footer-info">
       <span><div class="online-dot"></div> Servidor Online</span>
-      <span>IP: 200.42.108.234 · Puerto: 44405</span>
     </div>
   </div>
 </footer>
@@ -1569,12 +1561,6 @@ function showTab(el, id) {
   });
 }
 
-function copyIP(el) {
-  navigator.clipboard.writeText('200.42.108.234').then(function(){
-    document.getElementById('ip2-note').textContent = '✓ IP copiada al portapapeles';
-    setTimeout(function(){ document.getElementById('ip2-note').textContent = 'Clic para copiar la IP del servidor'; }, 2000);
-  });
-}
 
 // Nav active on scroll
 (function(){
