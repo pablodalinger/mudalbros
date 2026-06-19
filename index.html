@@ -990,6 +990,7 @@ footer {
     <li><a href="#hero" class="active">Inicio</a></li>
     <li><a href="#features">Información</a></li>
     <li><a href="#events">Eventos</a></li>
+    <li><a href="#guias">Guías</a></li>
     <li><a href="#ranking">Ranking</a></li>
     <li><a href="#download">Descargas</a></li>
   </ul>
@@ -1269,14 +1270,6 @@ footer {
         </div>
       </div>
 
-      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/VIP.jpg">
-        <div class="cf-card-icon gold">🏆</div>
-        <div>
-          <div class="cf-card-title">VIP Gold — +50% EXP y +25% DROP <span class="modal-hint">👁</span></div>
-          <div class="cf-card-desc">Plan VIP Gold disponible en el Especial Menu. 30 días con bonificación de experiencia y drop rate. Se activa con WCoin directamente desde el juego.</div>
-        </div>
-      </div>
-
       <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/Helper.jpg">
         <div class="cf-card-icon">🤖</div>
         <div>
@@ -1423,14 +1416,6 @@ footer {
           <span class="ev-badge activo">Activo</span>
         </div>
       </div>
-      <div class="ev-card has-modal" data-modal-img="images/ImagenesModal/VIP.jpg">
-        <div class="ev-thumb gd">🏆</div>
-        <div class="ev-body">
-          <div class="ev-name">VIP <span class="modal-hint">👁</span></div>
-          <div class="ev-sub">Plan VIP con bonificaciones de EXP y Drop. Se activa con WCoin.</div>
-          <span class="ev-badge especial">Premium</span>
-        </div>
-      </div>
       <div class="ev-card has-modal" data-modal-img="images/ImagenesModal/GoblinPoints.jpg">
         <div class="ev-thumb cc">🪙</div>
         <div class="ev-body">
@@ -1444,6 +1429,100 @@ footer {
 </section>
 
 <!-- ═══ CTA ═══ -->
+<style>
+#guias { position: relative; }
+#guias .guia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.6rem;
+}
+.guia-card {
+  background: rgba(20, 18, 26, 0.6);
+  border: 1px solid rgba(212, 168, 67, 0.18);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.guia-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+.guia-video {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  object-fit: cover;
+}
+.guia-body { padding: 1rem 1.2rem 1.3rem; }
+.guia-title { font-weight: 700; color: var(--gold); margin-bottom: .45rem; font-size: 1.02rem; }
+.guia-desc { font-size: .9rem; color: #b8b3c0; line-height: 1.55; }
+</style>
+
+<section id="guias">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="s-label">Guía Rápida</div>
+      <h2 class="s-title">Tutoriales <span>en Video</span></h2>
+      <div class="s-line"></div>
+    </div>
+    <div class="guia-grid">
+
+      <div class="guia-card">
+        <video class="guia-video" controls preload="metadata" playsinline>
+          <source src="Videos/Spot.mp4" type="video/mp4">
+        </video>
+        <div class="guia-body">
+          <div class="guia-title">📍 Encontrá tu lugar de leveo</div>
+          <div class="guia-desc">Abrí el mapa con la tecla M y descubrí los Spot y HotSpot marcados para farmear en los mejores puntos.</div>
+        </div>
+      </div>
+
+      <div class="guia-card">
+        <video class="guia-video" controls preload="metadata" playsinline>
+          <source src="Videos/IemBank.mp4" type="video/mp4">
+        </video>
+        <div class="guia-body">
+          <div class="guia-title">💎 Item Bank gratis</div>
+          <div class="guia-desc">Guardá todas tus jewels (Bless, Soul, Chaos, Life, Creation) en el Item Bank sin costo alguno, sin ocupar el baúl.</div>
+        </div>
+      </div>
+
+      <div class="guia-card">
+        <video class="guia-video" controls preload="metadata" playsinline>
+          <source src="Videos/Intefaz.mp4" type="video/mp4">
+        </video>
+        <div class="guia-body">
+          <div class="guia-title">🎨 Elegí tu interfaz</div>
+          <div class="guia-desc">7 estilos de interfaz disponibles. Elegí el que más te guste desde el menú de opciones.</div>
+        </div>
+      </div>
+
+      <div class="guia-card">
+        <video class="guia-video" controls preload="metadata" playsinline>
+          <source src="Videos/Resolucion.mp4" type="video/mp4">
+        </video>
+        <div class="guia-body">
+          <div class="guia-title">🖥️ Ajustá la resolución</div>
+          <div class="guia-desc">Configurá la resolución en vivo desde adentro del juego, sin reiniciar el cliente.</div>
+        </div>
+      </div>
+
+      <div class="guia-card">
+        <video class="guia-video" controls preload="metadata" playsinline>
+          <source src="Videos/Consumo.mp4" type="video/mp4">
+        </video>
+        <div class="guia-body">
+          <div class="guia-title">⚡ Bajá el consumo de PC</div>
+          <div class="guia-desc">Minimizá la ventana o apretá F12 para reducir el consumo de recursos de tu PC mientras jugás.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section id="cta">
   <div class="cta-inner">
     <h2 class="cta-title">Tu leyenda<br><span>comienza aquí</span></h2>
