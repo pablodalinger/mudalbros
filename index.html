@@ -977,6 +977,97 @@ footer {
 .ip-pill:hover { border-color: var(--blue-light); }
 
 .ip-note { font-size: 0.7rem; color: var(--text-muted); text-align:center; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE MOBILE — max 768px
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* NAV */
+  nav {
+    padding: 0 1rem;
+    gap: 0.75rem;
+    position: relative;
+  }
+  .nav-links { display: none; }
+  .nav-actions { margin-left: auto; }
+  .nav-btn { padding: 0.4rem 0.75rem; font-size: 0.7rem; }
+
+  /* HERO */
+  #hero { min-height: 100svh; }
+  .hero-logo { width: 85vw; margin-top: -40px; }
+  .hero-title { font-size: clamp(1.6rem, 7vw, 2.4rem) !important; }
+  .hero-sub { font-size: 0.85rem !important; }
+  .hero-btns { flex-direction: column; align-items: center; gap: 0.75rem; }
+  .btn-hero-main, .btn-hero-disc { width: 100%; max-width: 300px; text-align: center; justify-content: center; }
+  #dl-hair-glow { display: none; }
+  .hero-label { font-size: 0.65rem; }
+
+  /* SECTIONS */
+  .section-inner { padding: 3rem 1.1rem; }
+  .section-title { font-size: clamp(1.3rem, 5.5vw, 1.8rem) !important; }
+  .section-sub { font-size: 0.82rem; }
+
+  /* FEATURES GRID */
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .feature-card { padding: 1.25rem 1rem; }
+  .feat-title { font-size: 0.85rem; }
+  .feat-desc { font-size: 0.75rem; }
+
+  /* CLIENT FEATURES */
+  .cf-highlight { padding: 1.25rem 1rem; }
+  .cf-hl-title { font-size: 1.1rem; }
+  .cf-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .cf-pills { flex-wrap: wrap; gap: 0.4rem; }
+
+  /* CLASES */
+  .classes-grid,
+  .classes-tabs-content { grid-template-columns: 1fr; }
+
+  /* EVENTOS */
+  .events-tabs { flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+  .events-tabs button { font-size: 0.7rem; padding: 0.35rem 0.75rem; }
+  .ev-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .ev-name { font-size: 0.8rem; }
+  .ev-sub { font-size: 0.7rem; }
+
+  /* TIENDA WCOIN */
+  .wc-packs { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .wc-pack { padding: 1rem 0.75rem; }
+  .wc-form-wrap { padding: 1.25rem 1rem; }
+  .wc-input { font-size: 0.9rem; }
+  .btn-pagar { font-size: 0.85rem; }
+
+  /* CTA */
+  .cta-inner { padding: 2.5rem 1.25rem; }
+  .cta-title { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+  .cta-btns { flex-direction: column; align-items: center; gap: 0.75rem; }
+  .cta-btns a { width: 100%; max-width: 300px; text-align: center; }
+
+  /* DOWNLOAD */
+  .dl-grid { grid-template-columns: 1fr; }
+  .dl-btns { flex-direction: column; align-items: center; }
+  .dl-btns a { width: 100%; max-width: 300px; text-align: center; }
+
+  /* FOOTER */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .footer-brand { grid-column: 1 / -1; }
+
+  /* IP */
+  .ip-pill { font-size: 0.85rem; }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE MOBILE PEQUEÑO — max 480px
+══════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .ev-grid { grid-template-columns: 1fr; }
+  .wc-packs { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .nav-btn-gold { display: none; } /* en 480 solo Discord en nav */
+  .hero-title { font-size: clamp(1.4rem, 8vw, 2rem) !important; }
+}
 </style>
 </head>
 <body>
