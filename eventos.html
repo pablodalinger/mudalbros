@@ -548,7 +548,7 @@ nav {
 }
 
 /* ── CARD MODAL ── */
-.has-modal { user-select:none; -webkit-user-select:none; cursor: pointer; }
+.has-modal { user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; cursor: pointer; }
 .modal-hint {
   font-size: 0.7rem; opacity: 0.45;
   margin-left: 4px; user-select: none;
@@ -1293,6 +1293,7 @@ footer {
     modal.style.transform = 'translate(-50%,-50%)';
     modal.style.zIndex = '9999';
     document.querySelectorAll('.has-modal').forEach(function(card){
+      card.addEventListener('contextmenu',function(e){e.preventDefault();});
       card.addEventListener('touchstart', function(e){
         e.preventDefault();
         modalImg.src = card.getAttribute('data-modal-img');
