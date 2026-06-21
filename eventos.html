@@ -1306,6 +1306,7 @@ footer {
 
   document.querySelectorAll('.has-modal').forEach(function(card){
     card.addEventListener('click', function(e){
+      if(modal.style.display==='block') return;
       e.stopPropagation();
       openModal(card.getAttribute('data-modal-img'));
     });

@@ -1138,7 +1138,7 @@ footer {
       <div class="s-label">Lo que nos hace diferentes</div>
       <h2 class="s-title">Características <span>del Cliente</span></h2>
       <div class="s-line"></div>
-      <p class="hint-pulse" style="font-size:0.92rem;color:var(--gold-light);margin-top:0.7rem;letter-spacing:0.03em">👁 Mantené el click en los botones y cards para ver las capturas</p>
+      <p class="hint-pulse" style="font-size:0.92rem;color:var(--gold-light);margin-top:0.7rem;letter-spacing:0.03em">👁 Tocá o hacé click en los spots, botones y cards para ver las capturas</p>
     </div>
 
     <!-- HIGHLIGHT: TAB -->
@@ -1337,6 +1337,7 @@ footer {
 
   document.querySelectorAll('.has-modal').forEach(function(card){
     card.addEventListener('click', function(e){
+      if(modal.style.display==='block') return;
       e.stopPropagation();
       openModal(card.getAttribute('data-modal-img'));
     });
