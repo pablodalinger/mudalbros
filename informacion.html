@@ -548,7 +548,7 @@ nav {
 }
 
 /* ── CARD MODAL ── */
-.has-modal { cursor: pointer; }
+.has-modal { user-select:none; -webkit-user-select:none; cursor: pointer; }
 .modal-hint {
   font-size: 0.7rem; opacity: 0.45;
   margin-left: 4px; user-select: none;
@@ -1310,33 +1310,49 @@ footer {
 </footer><div id="card-modal"><img id="card-modal-img" src="" alt=""></div>
 
 <script>
-/* ── CARD MODAL ON MOUSEDOWN ── */
+/* ── CARD MODAL ── */
 (function(){
   var modal = document.getElementById('card-modal');
   var modalImg = document.getElementById('card-modal-img');
+  var isMobile = ('ontouchstart' in window);
 
-  document.querySelectorAll('.has-modal').forEach(function(card){
-    card.addEventListener('mousedown', function(e){
-      if(e.button !== 0) return;
-      modalImg.src = card.getAttribute('data-modal-img');
-      modal.style.display = 'block';
-      positionModal(e);
+  if(isMobile){
+    /* MOBILE: tap abre centrado, tap afuera cierra */
+    modal.style.position = 'fixed';
+    modal.style.left = '50%';
+    modal.style.top = '50%';
+    modal.style.transform = 'translate(-50%,-50%)';
+    modal.style.zIndex = '9999';
+    document.querySelectorAll('.has-modal').forEach(function(card){
+      card.addEventListener('touchstart', function(e){
+        e.preventDefault();
+        modalImg.src = card.getAttribute('data-modal-img');
+        modal.style.display = 'block';
+      }, {passive: false});
     });
-  });
-
-  document.addEventListener('mouseup', function(){
-    modal.style.display = 'none';
-  });
-
-  document.addEventListener('mousemove', function(e){
-    if(modal.style.display === 'block') positionModal(e);
-  });
-
-  function positionModal(e){
-    var x = e.clientX;
-    var y = e.clientY;
-    modal.style.left = x + 'px';
-    modal.style.top  = y + 'px';
+    document.addEventListener('touchstart', function(e){
+      if(modal.style.display === 'block' && !modal.contains(e.target)){
+        modal.style.display = 'none';
+      }
+    });
+  } else {
+    /* DESKTOP: hold mousedown muestra, soltar cierra */
+    document.querySelectorAll('.has-modal').forEach(function(card){
+      card.addEventListener('mousedown', function(e){
+        if(e.button !== 0) return;
+        modalImg.src = card.getAttribute('data-modal-img');
+        modal.style.display = 'block';
+        positionModal(e);
+      });
+    });
+    document.addEventListener('mouseup', function(){ modal.style.display = 'none'; });
+    document.addEventListener('mousemove', function(e){
+      if(modal.style.display === 'block') positionModal(e);
+    });
+    function positionModal(e){
+      modal.style.left = e.clientX + 'px';
+      modal.style.top  = e.clientY + 'px';
+    }
   }
 })();
 </script><script>
