@@ -29,6 +29,16 @@
 }
 
 html { scroll-behavior: smooth; }
+
+/* ── SECTION BACKGROUND ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  background: url('images/img_demon.png') center/cover no-repeat;
+  opacity: 0.13;
+}
+
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: var(--bg);
@@ -121,7 +131,7 @@ nav {
 
 .hero-bg {
   position: absolute; inset: 0; z-index: 0;
-  background: var(--bg) url('images/DarkLord.png') center top/cover no-repeat;
+  background: var(--bg) url('images/img_demon.png') center top/cover no-repeat;
 }
 
 .hero-bg::before {
@@ -885,7 +895,7 @@ table.rtable tr:hover td { background: rgba(255,255,255,0.02); }
 #footer-char {
   position: relative;
   height: 620px;
-  background: var(--bg) url('images/MagicGladiator.png') center center/cover no-repeat;
+  background: var(--bg) url('images/img_demon.png') center center/cover no-repeat;
   overflow: hidden;
 }
 #footer-char::before {
