@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inicio — MU DalBros</title>
+<title>Informacion — MU DalBros</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1069,112 +1069,194 @@ footer {
   .hero-title { font-size: clamp(1.4rem, 8vw, 2rem) !important; }
 }
 </style>
+
 </head>
-<body><!-- ═══ NAV ═══ -->
+<body>
 <nav>
-  <a href="index.html" class="nav-logo">
-    <img src="images/MuDalBrosLogo.png" alt="MU DalBros">
-  </a>
+  <a href="index.html" class="nav-logo"><img src="images/MuDalBrosLogo.png" alt="MU DalBros"></a>
   <ul class="nav-links">
-    <li><a href="index.html" class="active">Inicio</a></li>
-    <li><a href="informacion.html" >Información</a></li>
+    <li><a href="index.html" >Inicio</a></li>
+    <li><a href="informacion.html" class="active">Informacion</a></li>
     <li><a href="eventos.html" >Eventos</a></li>
-    <li><a href="guias.html" >Guías</a></li>
+    <li><a href="guias.html" >Guias</a></li>
     <li><a href="wcoin.html"  style="color:var(--gold)">WCoin</a></li>
     <li><a href="ranking.html" >Ranking</a></li>
     <li><a href="descargas.html" >Descargas</a></li>
   </ul>
   <div class="nav-actions">
     <a href="descargas.html" class="nav-btn nav-btn-gold">&#8595; Descargar</a>
-    <a href="https://discord.gg/FyF2g3FeV" target="_blank" class="nav-btn nav-btn-discord">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
-      Discord
-    </a>
+    <a href="https://discord.gg/FyF2g3FeV" target="_blank" class="nav-btn nav-btn-discord"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg> Discord</a>
   </div>
-</nav><!-- ── MUSIC PLAYER ── -->
-<div id="music-player">
-  <button id="btn-playpause" title="Play / Pause">▶</button>
-  <button id="btn-mute" title="Mute / Unmute">🔊</button>
+</nav><div id="music-player">
+  <button id="btn-playpause" title="Play / Pause">&#9654;</button>
+  <button id="btn-mute" title="Mute / Unmute">&#128266;</button>
   <span id="music-label">MU DalBros</span>
 </div>
 <audio id="bg-music" src="login_theme.mp3" loop preload="auto"></audio>
 <style>
-#music-player { position:fixed; bottom:1.2rem; left:1.2rem; z-index:2000; display:flex; align-items:center; gap:0.4rem; background:rgba(6,8,18,0.82); border:1px solid rgba(212,168,67,0.25); border-radius:30px; padding:0.35rem 0.8rem 0.35rem 0.5rem; backdrop-filter:blur(10px); }
-#music-player button { background:none; border:none; color:var(--gold); font-size:1rem; cursor:pointer; padding:0.1rem 0.3rem; line-height:1; transition:color 0.2s; }
-#music-player button:hover { color:var(--gold-light); }
-#music-label { font-size:0.65rem; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase; }
+#music-player{position:fixed;bottom:1.2rem;left:1.2rem;z-index:2000;display:flex;align-items:center;gap:0.4rem;background:rgba(6,8,18,0.82);border:1px solid rgba(212,168,67,0.25);border-radius:30px;padding:0.35rem 0.8rem 0.35rem 0.5rem;backdrop-filter:blur(10px);}
+#music-player button{background:none;border:none;color:var(--gold);font-size:1rem;cursor:pointer;padding:0.1rem 0.3rem;line-height:1;transition:color 0.2s;}
+#music-player button:hover{color:var(--gold-light);}
+#music-label{font-size:0.65rem;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;}
 </style>
 <script>
-(function(){
-  var audio=document.getElementById('bg-music'),btnPlay=document.getElementById('btn-playpause'),btnMute=document.getElementById('btn-mute'),playing=false;
-  function tryPlay(){ audio.volume=0.4; audio.play().then(function(){ playing=true; btnPlay.textContent='⏸'; }).catch(function(){}); }
-  document.addEventListener('click',function onFC(){ if(!playing){tryPlay();} document.removeEventListener('click',onFC); },{once:true});
-  window.addEventListener('load',function(){ tryPlay(); });
-  btnPlay.addEventListener('click',function(e){ e.stopPropagation(); if(playing){audio.pause();playing=false;btnPlay.textContent='▶';} else{tryPlay();} });
-  btnMute.addEventListener('click',function(e){ e.stopPropagation(); audio.muted=!audio.muted; btnMute.textContent=audio.muted?'🔇':'🔊'; });
-})();
-</script><section id="hero">
-  <div class="hero-bg"></div>
-  <canvas id="hero-canvas"></canvas>
-  <div id="chain-glow"></div>
-  <div id="dl-hair-glow"></div>
-
-  <div class="hero-content">
-    <img src="images/MuDalBrosLogo.png" alt="MU DalBros" class="hero-logo">
-    <div class="hero-label">Servidor Privado Argentino</div>
-    <div class="hero-sub">Season 6 · La experiencia clásica de MU Online<br>
-      <span style="color:var(--text);opacity:0.75;font-size:0.95em">
-        EXP 10x &nbsp;·&nbsp; DROP 60% &nbsp;·&nbsp; LVL Master 1x &nbsp;&nbsp;<span style="color:var(--gold);font-size:0.85em">NORMAL</span>
-      </span><br>
-      <span style="color:var(--gold-light);opacity:0.9;font-size:0.95em">
-        EXP 15x &nbsp;·&nbsp; DROP 75% &nbsp;·&nbsp; LVL Master 3x &nbsp;&nbsp;<span style="color:var(--gold);font-size:0.85em">VIP ★</span>
-      </span><br>
-      <span style="color:var(--text);opacity:0.5;font-size:0.82em">10 Resets &nbsp;·&nbsp; 100 LVL Master</span>
+(function(){var a=document.getElementById('bg-music'),bp=document.getElementById('btn-playpause'),bm=document.getElementById('btn-mute'),pl=false;function tp(){a.volume=0.4;a.play().then(function(){pl=true;bp.textContent='⏸';}).catch(function(){});}document.addEventListener('click',function onFC(){if(!pl){tp();}document.removeEventListener('click',onFC);},{once:true});window.addEventListener('load',function(){tp();});bp.addEventListener('click',function(e){e.stopPropagation();if(pl){a.pause();pl=false;bp.textContent='▶';}else{tp();}});bm.addEventListener('click',function(e){e.stopPropagation();a.muted=!a.muted;bm.textContent=a.muted?'🔇':'🔊';});})();
+</script><section id="features">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="s-label">¿Por qué MU DalBros?</div>
+      <h2 class="s-title">Diseñado para <span>durar</span></h2>
+      <div class="s-line"></div>
     </div>
-    <div class="hero-btns">
-      <a href="#download" class="btn-hero-main">⬇ Descargar Cliente</a>
-      <a href="https://discord.gg/FyF2g3FeV" target="_blank" class="btn-hero-disc">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
-        Discord
-      </a>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon gold">⚔️</div>
+        <div class="feat-title">Season 6 Clásico</div>
+        <div class="feat-desc">La versión que marcó una época. Sin pay-to-win, sin progresión acelerada. Cada nivel tiene valor, cada item importa.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🏦</div>
+        <div class="feat-title">Economía Estable</div>
+        <div class="feat-desc">Drop 60% normal / 75% VIP. El sistema de GP recompensa a los jugadores online con 10 GP por hora automáticamente.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon red">🐉</div>
+        <div class="feat-title">Eventos Activos</div>
+        <div class="feat-desc">Blood Castle, Devil Square, Chaos Castle y múltiples invasiones. Siempre hay algo para hacer.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ STAT BAR ═══ -->
-<div id="statbar">
-  <div class="statbar-inner">
-    <div class="statbar-item">
-      <div class="statbar-icon">⚔️</div>
-      <div class="statbar-val">10x <span style="font-size:0.55em;color:var(--text-muted);font-weight:400">NORMAL</span></div>
-      <div class="statbar-val" style="font-size:1rem;margin-top:0.15rem">15x <span style="font-size:0.6em;color:var(--gold);font-weight:400">VIP</span></div>
-      <div class="statbar-label">Experiencia</div>
+<!-- ═══ CLIENT FEATURES ═══ -->
+<section id="client-features">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="s-label">Lo que nos hace diferentes</div>
+      <h2 class="s-title">Características <span>del Cliente</span></h2>
+      <div class="s-line"></div>
+      <p class="hint-pulse" style="font-size:0.92rem;color:var(--gold-light);margin-top:0.7rem;letter-spacing:0.03em">👁 Mantené el click en los botones y cards para ver las capturas</p>
     </div>
-    <div class="statbar-item">
-      <div class="statbar-icon">🎁</div>
-      <div class="statbar-val">60% <span style="font-size:0.55em;color:var(--text-muted);font-weight:400">NORMAL</span></div>
-      <div class="statbar-val" style="font-size:1rem;margin-top:0.15rem">75% <span style="font-size:0.6em;color:var(--gold);font-weight:400">VIP</span></div>
-      <div class="statbar-label">Drop Rate</div>
+
+    <!-- HIGHLIGHT: TAB -->
+    <div class="cf-highlight">
+      <div class="cf-hl-icon">🗺️</div>
+      <div>
+        <div class="cf-hl-title"><span class="cf-hl-key">TAB</span> Mapa de Spots y HotSpots</div>
+        <div class="cf-hl-desc">
+          Spots y <strong style="color:#c084fc">HotSpots</strong> marcados en el mapa.
+        </div>
+        <div class="cf-hl-sub">
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Lorencia.jpg">Lorencia</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Noria.jpg">Noria</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Elbeland.jpg">Elbeland</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Devias.jpg">Devias</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Dungeon.jpg">Dungeon</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Atlans.jpg">Atlans</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/LostTower.jpg">Lost Tower</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Tarkan.jpg">Tarkan</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Kanturu.jpg">Kanturu 1·2·3</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Aida.jpg">Aida</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Icarus.jpg">Icarus</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Karutan.jpg">Karutan</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/LaCleon.jpg">La Cleon</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/PeaceOfSwamp.jpg">Peace Swamp</span>
+          <span class="cf-pill has-modal" data-modal-img="images/ImagenesModal/Vulcanus.jpg">Vulcanus</span>
+        </div>
+      </div>
     </div>
-    <div class="statbar-item">
-      <div class="statbar-icon">🔄</div>
-      <div class="statbar-val">10</div>
-      <div class="statbar-label">Resets Máx.</div>
-    </div>
-    <div class="statbar-item">
-      <div class="statbar-icon">⭐</div>
-      <div class="statbar-val">100</div>
-      <div class="statbar-label">Master Lvl Máx.</div>
-    </div>
-  </div>
-</div>
-<section id="cta">
-  <div class="cta-inner">
-    <h2 class="cta-title">Tu leyenda<br><span>comienza aquí</span></h2>
-    <p class="cta-sub">Unite a miles de jugadores y escribí tu propia historia en MU DalBros.<br>Completamente gratis. Instalación rápida.</p>
-    <div class="cta-btns">
-      <a href="descargas.html" class="btn-cta btn-cta-main">⬇ Descargar Cliente</a>
-      <a href="#" class="btn-cta btn-cta-sec">Más información</a>
+
+    <!-- GRID de features del cliente -->
+    <div class="cf-grid">
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/bajoconsumo.jpg">
+        <div class="cf-card-icon blue">⊟</div>
+        <div>
+          <div class="cf-card-title"><span class="cf-card-key">F12</span> Minimizar y bajar recursos <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">Presioná F12 para minimizar el juego y reducir el uso de CPU y RAM. Ideal para tener el MU abierto en segundo plano sin que te frene la PC.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/CrearCuenta.jpg">
+        <div class="cf-card-icon gold">👤</div>
+        <div>
+          <div class="cf-card-title">Crear cuenta desde el login <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">No hace falta ir a ninguna página web. Desde la pantalla de inicio del juego podés crear tu cuenta con el botón <strong style="color:var(--text)">Create</strong>, directo y sin complicaciones.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/GuardarCuenta.jpg">
+        <div class="cf-card-icon blue">💾</div>
+        <div>
+          <div class="cf-card-title">Guardar cuenta y contraseña <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">El login tiene la opción <strong style="color:var(--text)">Save Account/Password</strong> para que no tengas que escribir tus datos cada vez que entrás.</div>
+        </div>
+      </div>
+
+<div class="cf-card has-modal" data-modal-img="images/ImagenesModal/ItemBank.jpg">
+        <div class="cf-card-icon red">💎</div>
+        <div>
+          <div class="cf-card-title">Item Bank — Banco de Joyas <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">Guardá tus Bless, Soul, Chaos, Life y Creation en el banco integrado sin ocupar espacio en el baúl. Accesible desde el Especial Menu.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/LuckyWheel.jpg">
+        <div class="cf-card-icon gold">🎡</div>
+        <div>
+          <div class="cf-card-title">Lucky Wheel — 2 ruedas <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc"><strong style="color:var(--text)">Wheel 1</strong> (1 WC): Scrolls de combate, Talisman of Luck, Demon, Spirit of Guardian y Chaos. <strong style="color:var(--text)">Wheel 2</strong> (10 WC): Box of Kundun +1 a +5, Loch's Feather y Crest of Monarch. Accesible desde el Especial Menu.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/GoblinPoints.jpg">
+        <div class="cf-card-icon blue">🪙</div>
+        <div>
+          <div class="cf-card-title">10 GP por hora automático <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">Por estar conectado recibís 10 Goblin Points cada hora. Solo jugando ya acumulás GP para canjear en la tienda. No hace falta hacer nada especial.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/CustomDrop.jpg">
+        <div class="cf-card-icon red">🌧️</div>
+        <div>
+          <div class="cf-card-title">Lluvia de Joyas — 17:00 y 22:00 <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">Todos los días a las <strong style="color:var(--text)">17:00</strong> y <strong style="color:var(--text)">22:00</strong> hay Lluvia de Joyas en Lorencia. El servidor avisa in-game para que nadie se lo pierda.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/JoyasLVL72.jpg">
+        <div class="cf-card-icon blue">💎</div>
+        <div>
+          <div class="cf-card-title">Drop de Joyas en mobs normales <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">Los mobs de nivel 72 o más dropean Bless, Soul, Chaos, Life y Creation. Sin depender solo de eventos para farmear joyas.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/Helper.jpg">
+        <div class="cf-card-icon">🤖</div>
+        <div>
+          <div class="cf-card-title">Helper desde nivel 1 <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">El auto-helper está disponible desde el nivel 1. Podés farmear AFK desde el primer momento sin restricciones de nivel mínimo.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/Zen.jpg">
+        <div class="cf-card-icon gold">💰</div>
+        <div>
+          <div class="cf-card-title">Zen x200 <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">Los mobs sueltan zen multiplicado por 200. Siempre vas a tener para reparar, comprar en el mercado y tirar en el Caos sin quedarte a cero.</div>
+        </div>
+      </div>
+
+      <div class="cf-card has-modal" data-modal-img="images/ImagenesModal/Buff.jpg">
+        <div class="cf-card-icon blue">🧝</div>
+        <div>
+          <div class="cf-card-title">Buff de Elf Soldier — 3 horas <span class="modal-hint">👁</span></div>
+          <div class="cf-card-desc">El buff de daño y defensa que da la Elf Soldier de los pueblos dura 3 horas. Buscala una vez y farmeá tranquilo sin volver cada 30 minutos.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1190,21 +1272,21 @@ footer {
     <div class="footer-col">
       <h5>Navegación</h5>
       <ul>
-        <li><a href="#hero">Inicio</a></li>
-        <li><a href="#features">Información</a></li>
-        <li><a href="#events">Eventos</a></li>
-        <li><a href="#ranking">Ranking</a></li>
-        <li><a href="#download">Descargas</a></li>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="informacion.html">Información</a></li>
+        <li><a href="eventos.html">Eventos</a></li>
+        <li><a href="ranking.html">Ranking</a></li>
+        <li><a href="descargas.html">Descargas</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Eventos</h5>
       <ul>
-        <li><a href="#events">Blood Castle</a></li>
-        <li><a href="#events">Devil Square</a></li>
-        <li><a href="#events">Chaos Castle</a></li>
-        <li><a href="#events">Invasiones</a></li>
-        <li><a href="#events">Lucky Wheel</a></li>
+        <li><a href="eventos.html">Blood Castle</a></li>
+        <li><a href="eventos.html">Devil Square</a></li>
+        <li><a href="eventos.html">Chaos Castle</a></li>
+        <li><a href="eventos.html">Invasiones</a></li>
+        <li><a href="eventos.html">Lucky Wheel</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1256,17 +1338,11 @@ footer {
 })();
 </script><script>
 (function(){
-  var canvas=document.getElementById('hero-canvas'),ctx=canvas.getContext('2d'),W,H,particles=[];
-  function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
-  resize(); window.addEventListener('resize',resize);
-  function rand(a,b){ return a+Math.random()*(b-a); }
-  function Particle(){ this.reset(); }
-  Particle.prototype.reset=function(){ this.x=rand(0,W);this.y=rand(H*0.2,H);this.vx=rand(-0.4,0.4);this.vy=rand(-1.4,-0.4);this.size=rand(2.5,5.5);this.life=0;this.maxLife=rand(80,200);var r=Math.floor(rand(200,255)),g=Math.floor(rand(60,140));this.color='rgba('+r+','+g+',20,'; };
-  Particle.prototype.update=function(){ this.life++;this.x+=this.vx;this.y+=this.vy;this.vx+=rand(-0.05,0.05);if(this.life>=this.maxLife)this.reset(); };
-  Particle.prototype.draw=function(){ var t=this.life/this.maxLife,alpha=t<0.2?t/0.2:1-(t-0.2)/0.8;alpha=Math.max(0,Math.min(1,alpha))*0.75;ctx.beginPath();ctx.arc(this.x,this.y,this.size*(1-t*0.5),0,Math.PI*2);ctx.fillStyle=this.color+alpha+')';ctx.fill(); };
-  for(var i=0;i<60;i++){ var p=new Particle();p.life=Math.floor(rand(0,p.maxLife));particles.push(p); }
-  function loop(){ ctx.clearRect(0,0,W,H);for(var i=0;i<particles.length;i++){particles[i].update();particles[i].draw();}requestAnimationFrame(loop); }
-  loop();
+  var targets=document.querySelectorAll('.feature-card,.cf-card,.ev-card,.cf-hl,.guia-card,.rank-panel,.wc-pack');
+  targets.forEach(function(el){el.classList.add('anim-fadein');});
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+  targets.forEach(function(el){obs.observe(el);});
 })();
-</script></body>
+</script>
+</body>
 </html>
