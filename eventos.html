@@ -1276,30 +1276,46 @@ footer {
       <span><div class="online-dot"></div> Servidor Online</span>
     </div>
   </div>
-</footer><div id="card-modal"><img id="card-modal-img" src="" alt=""></div>
+</footer>
+<div id="card-modal">
+  <button id="card-modal-close">&times;</button>
+  <img id="card-modal-img" src="" alt="">
+</div>
+<style>
+#card-modal { position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); z-index:9999; display:none; }
+#card-modal-close {
+  position:absolute; top:-14px; right:-14px;
+  width:28px; height:28px; border-radius:50%;
+  background:#d4a843; color:#000; border:none;
+  font-size:1.1rem; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:bold; z-index:10000;
+}
+#card-modal-close:hover { background:#f0c85a; }
+</style>
 
 <script>
 /* ── CARD MODAL ── */
 (function(){
   var modal = document.getElementById('card-modal');
   var modalImg = document.getElementById('card-modal-img');
-  modal.style.position = 'fixed';
-  modal.style.left = '50%';
-  modal.style.top = '50%';
-  modal.style.transform = 'translate(-50%,-50%)';
-  modal.style.zIndex = '9999';
+  var btnClose = document.getElementById('card-modal-close');
+
+  function openModal(src){ modalImg.src = src; modal.style.display = 'block'; }
+  function closeModal(){ modal.style.display = 'none'; }
 
   document.querySelectorAll('.has-modal').forEach(function(card){
     card.addEventListener('click', function(e){
       e.stopPropagation();
-      modalImg.src = card.getAttribute('data-modal-img');
-      modal.style.display = 'block';
+      openModal(card.getAttribute('data-modal-img'));
     });
   });
 
-  document.addEventListener('click', function(){
-    modal.style.display = 'none';
+  btnClose.addEventListener('click', function(e){ e.stopPropagation(); closeModal(); });
+  document.addEventListener('click', function(e){
+    if(modal.style.display==='block' && !modal.contains(e.target)) closeModal();
   });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
 
 })();
 </script><script>
