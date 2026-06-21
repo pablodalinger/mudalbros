@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+<script>if(window!==window.top){document.addEventListener("DOMContentLoaded",function(){var a=document.getElementById("bg-music");if(a){a.pause();a.src="";a.remove();}var n=document.querySelector("nav");if(n)n.style.display="none";var m=document.getElementById("music-player");if(m)m.style.display="none";document.body.style.paddingTop="0";});}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Informacion — MU DalBros</title>
@@ -1343,6 +1344,14 @@ footer {
   var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
   targets.forEach(function(el){obs.observe(el);});
 })();
+</script>
+
+<script>
+window.addEventListener('load',function(){
+  document.querySelectorAll('[data-modal-img]').forEach(function(el){
+    var i=new Image();i.src=el.getAttribute('data-modal-img');
+  });
+});
 </script>
 </body>
 </html>
