@@ -1115,6 +1115,27 @@ footer {
 .guia-desc li { margin-bottom: 0.25rem; }
 .guia-desc .warn { display: block; margin-top: 0.6rem; color: var(--gold); font-size: 0.85rem; }
 
+.guia-desc-wrap { position: relative; }
+.guia-desc-wrap.collapsed .guia-desc {
+  max-height: 4.7rem;
+  overflow: hidden;
+}
+.guia-desc-wrap.collapsed::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 1.9rem; height: 1.8rem;
+  background: linear-gradient(to bottom, rgba(20,18,26,0), rgba(20,18,26,0.95));
+  pointer-events: none;
+}
+.guia-more-btn {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.8rem; font-weight: 700;
+  color: var(--gold);
+  background: none; border: none; padding: 0; cursor: pointer;
+  letter-spacing: 0.03em;
+}
+.guia-more-btn:hover { color: var(--gold-light); text-decoration: underline; }
+
 .guia-tabs {
   display: flex; justify-content: center; gap: 0.75rem;
   margin-bottom: 2.5rem; flex-wrap: wrap;
@@ -1246,6 +1267,7 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">⚔️ Divine Weapons of the Archangel</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">Arma nativa +15 + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen en la Chaos Machine → sale con Skill garantizado y 30% de chance de Luck. Hay una receta para cada clase:
             <ul>
               <li>Daybreak +15 → Divine Sword of the Archangel (BK)</li>
@@ -1256,6 +1278,8 @@ footer {
               <li>Phoenix Soul Star +15 → Divine Claws of Archangel (Rage Fighter)</li>
             </ul>
           </div>
+          <button class="guia-more-btn">Ver más ▾</button>
+          </div>
         </div>
       </div>
 
@@ -1265,6 +1289,7 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">🗡️ BloodAngel Weapons (Tier 1)</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">Divine Weapon of the Archangel +15 + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen → BloodAngel Excellent (100% éxito, Skill garantizado, 30% Luck, 1 opción excelente). El video muestra la Divine Sword → BloodAngel Sword (BK), pero el mix funciona igual para todas las clases:
             <ul>
               <li>Divine Sword → BloodAngel Sword (BK)</li>
@@ -1276,6 +1301,8 @@ footer {
             </ul>
             <span class="warn">⚠️ El Mago (MG) es la excepción: mirá el video de BloodAngel MagicSword.</span>
           </div>
+          <button class="guia-more-btn">Ver más ▾</button>
+          </div>
         </div>
       </div>
 
@@ -1285,8 +1312,11 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">🔮 BloodAngel MagicSword (MG)</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">Mismo sistema que el resto de las BloodAngel: Divine Sword of the Archangel +15 + 5 Jewel of Bless + <strong style="color:var(--gold)">5 Jewel of Life</strong> + 1.000.000 zen → BloodAngel MagicSword Excellent (100% éxito, Skill garantizado, 30% Luck, 1 opción excelente).
             <span class="warn">⚠️ Es la única receta de la tanda BloodAngel que pide Jewel of Life en vez de Soul.</span>
+          </div>
+          <button class="guia-more-btn">Ver más ▾</button>
           </div>
         </div>
       </div>
@@ -1297,6 +1327,7 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">💀 DarkAngel Weapons (Tier 2)</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">BloodAngel Weapon <strong style="color:var(--gold)">Excellent</strong> +15 (tiene que ser Excellent) + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen → DarkAngel Excellent, el tier más alto de la escalera de armas. Misma mecánica para todas las clases:
             <ul>
               <li>BloodAngel Sword Exc → DarkAngel Sword (BK)</li>
@@ -1307,6 +1338,8 @@ footer {
               <li>BloodAngel Claws Exc → DarkAngel Claws (Rage Fighter)</li>
             </ul>
           </div>
+          <button class="guia-more-btn">Ver más ▾</button>
+          </div>
         </div>
       </div>
 
@@ -1316,8 +1349,11 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">💀 DarkAngel MagicSword (MG)</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">Mismo mix que el resto: BloodAngel MagicSword <strong style="color:var(--gold)">Excellent</strong> +15 + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen → DarkAngel MagicSword Excellent.
             <span class="warn">⚠️ Acá sí va Jewel of Soul (a diferencia del paso anterior BloodAngel, donde el Mago usaba Life) — es la única diferencia entre clases en este tier.</span>
+          </div>
+          <button class="guia-more-btn">Ver más ▾</button>
           </div>
         </div>
       </div>
@@ -1328,6 +1364,7 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">🛡️ BloodAngel Sets (Tier 1)</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">Pieza del set nativo top de tu clase +15 + 10 Bundled Jewel of Bless + 10 Bundled Jewel of Soul + 1.000.000 zen → misma pieza en BloodAngel Excellent (100% éxito, 30% Luck, 25% +4 Option, opciones excelentes 60%×2 / 30%×3 / 10%×4). Cada pieza (Helm/Armor/Pants/Gloves/Boots) se craftea por separado, mismo mix. Set de origen según tu clase:
             <ul>
               <li>Dark Soul → BloodAngel Wizard</li>
@@ -1339,6 +1376,8 @@ footer {
               <li>Piercing → BloodAngel Fighter (Rage Fighter, sin pieza de Gloves)</li>
             </ul>
           </div>
+          <button class="guia-more-btn">Ver más ▾</button>
+          </div>
         </div>
       </div>
 
@@ -1348,7 +1387,10 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">🛡️ DarkAngel Sets (Tier 2)</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">Pieza BloodAngel <strong style="color:var(--gold)">Excellent</strong> +15 (tiene que ser Excellent) + 10 Bundled Jewel of Bless + 10 Bundled Jewel of Soul + 1.000.000 zen → misma pieza en DarkAngel Excellent, el tier tope de armadura. Mismo mecanismo para las 7 clases, misma pieza que tenías en BloodAngel: Wizard, Knight, Elf, Magic, Lord, Summoner y Fighter.</div>
+          <button class="guia-more-btn">Ver más ▾</button>
+          </div>
         </div>
       </div>
 
@@ -1358,6 +1400,7 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">🕊️ Alas Custom por Clase</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">Ala o capa S3 nativa +15 + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen → ala custom de tu clase (30% chance de Luck, 30% chance de +4 Option). El video muestra Wing of Storm → Wings of Annihilation (BK), pero hay una receta para cada clase:
             <ul>
               <li>Wing of Storm → Wings of Annihilation (BK)</li>
@@ -1369,6 +1412,8 @@ footer {
               <li>Cloak of Overrule → Wing of Judgment (Rage Fighter)</li>
             </ul>
           </div>
+          <button class="guia-more-btn">Ver más ▾</button>
+          </div>
         </div>
       </div>
 
@@ -1378,8 +1423,11 @@ footer {
         </video>
         <div class="guia-body">
           <div class="guia-title">🕊️ Wing of Dominator (Dark Lord)</div>
+          <div class="guia-desc-wrap collapsed">
           <div class="guia-desc">Mismo sistema que el resto de las alas custom: Cape of Emperor +15 + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen → Wing of Dominator (30% chance de Luck, 30% chance de +4 Option).
             <span class="warn">⚠️ Si sos de otra clase, mirá el video "Alas Custom por Clase" para ver cuál es el ala nativa que te corresponde a vos.</span>
+          </div>
+          <button class="guia-more-btn">Ver más ▾</button>
           </div>
         </div>
       </div>
@@ -1400,6 +1448,17 @@ footer {
       panels.forEach(function(x){ x.classList.remove('active'); });
       b.classList.add('active');
       document.querySelector('.guia-panel[data-panel="'+b.dataset.tab+'"]').classList.add('active');
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  document.querySelectorAll('.guia-more-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var wrap = btn.closest('.guia-desc-wrap');
+      var collapsed = wrap.classList.toggle('collapsed');
+      btn.textContent = collapsed ? 'Ver más ▾' : 'Ver menos ▴';
     });
   });
 })();
