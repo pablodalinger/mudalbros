@@ -1088,7 +1088,10 @@ footer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.6rem;
+  align-items: start;
 }
+.guia-card { position: relative; z-index: 0; }
+.guia-card.has-floating-desc { overflow: visible; z-index: 40; border-radius: 12px 12px 0 0; border-bottom-color: rgba(212,168,67,0.4); }
 .guia-card {
   background: rgba(20, 18, 26, 0.6);
   border: 1px solid rgba(212, 168, 67, 0.18);
@@ -1135,6 +1138,20 @@ footer {
   letter-spacing: 0.03em;
 }
 .guia-more-btn:hover { color: var(--gold-light); text-decoration: underline; }
+
+.guia-desc-wrap.floating {
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  z-index: 40;
+  background: rgba(15,13,20,0.98);
+  border: 1px solid rgba(212,168,67,0.4);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 0.2rem 1.2rem 1.3rem;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.75);
+}
+.guia-desc-wrap.floating .guia-desc { max-height: none; overflow: visible; }
+.guia-desc-wrap.floating::after { display: none; }
 
 .guia-tabs {
   display: flex; justify-content: center; gap: 0.75rem;
@@ -1457,8 +1474,19 @@ footer {
   document.querySelectorAll('.guia-more-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
       var wrap = btn.closest('.guia-desc-wrap');
-      var collapsed = wrap.classList.toggle('collapsed');
-      btn.textContent = collapsed ? 'Ver más ▾' : 'Ver menos ▴';
+      var card = btn.closest('.guia-card');
+      var isCollapsed = wrap.classList.contains('collapsed');
+      if (isCollapsed) {
+        wrap.classList.remove('collapsed');
+        wrap.classList.add('floating');
+        card.classList.add('has-floating-desc');
+        btn.textContent = 'Ver menos ▴';
+      } else {
+        wrap.classList.add('collapsed');
+        wrap.classList.remove('floating');
+        card.classList.remove('has-floating-desc');
+        btn.textContent = 'Ver más ▾';
+      }
     });
   });
 })();
