@@ -185,44 +185,44 @@ export default {
     });
     messages.push({ role: "user", content: userMessage });
 
-    if (!env.GROQ_API_KEY) {
+    if (!env.OPENAI_API_KEY) {
       return new Response(
-        JSON.stringify({ error: "Falta configurar el secret GROQ_API_KEY en el Worker" }),
+        JSON.stringify({ error: "Falta configurar el secret OPENAI_API_KEY en el Worker" }),
         { status: 500, headers: { "Content-Type": "application/json", ...headers } }
       );
     }
 
-    let groqRes;
+    let aiRes;
     try {
-      groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      aiRes = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${env.GROQ_API_KEY}`,
+          Authorization: `Bearer ${env.OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
+          model: "gpt-4o-mini",
           messages,
           temperature: 0.4,
           max_tokens: 400,
         }),
       });
     } catch (e) {
-      return new Response(JSON.stringify({ error: "No se pudo contactar a Groq" }), {
+      return new Response(JSON.stringify({ error: "No se pudo contactar a OpenAI" }), {
         status: 502,
         headers: { "Content-Type": "application/json", ...headers },
       });
     }
 
-    if (!groqRes.ok) {
-      const detail = await groqRes.text();
-      return new Response(JSON.stringify({ error: "Error de Groq", detail }), {
+    if (!aiRes.ok) {
+      const detail = await aiRes.text();
+      return new Response(JSON.stringify({ error: "Error de OpenAI", detail }), {
         status: 502,
         headers: { "Content-Type": "application/json", ...headers },
       });
     }
 
-    const data = await groqRes.json();
+    const data = await aiRes.json();
     const reply =
       data?.choices?.[0]?.message?.content?.trim() ||
       "Perdon, no pude generar una respuesta. Proba de nuevo o pregunta en nuestro Discord.";
