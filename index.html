@@ -1164,5 +1164,168 @@ footer {
 <canvas id="global-sparks" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:999;"></canvas>
 <iframe id="shell-frame" name="shell-frame" src="inicio.html"></iframe>
 <script>(function(){var canvas=document.getElementById('global-sparks'),ctx=canvas.getContext('2d'),W,H,particles=[];function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}resize();window.addEventListener('resize',resize);function rand(a,b){return a+Math.random()*(b-a);}function Particle(){this.reset();}Particle.prototype.reset=function(){this.x=rand(0,W);this.y=rand(H*0.2,H);this.vx=rand(-0.4,0.4);this.vy=rand(-1.4,-0.4);this.size=rand(2.5,5.5);this.life=0;this.maxLife=rand(80,200);var r=Math.floor(rand(200,255)),g=Math.floor(rand(60,140));this.color='rgba('+r+','+g+',20,';};Particle.prototype.update=function(){this.life++;this.x+=this.vx;this.y+=this.vy;this.vx+=rand(-0.05,0.05);if(this.life>=this.maxLife)this.reset();};Particle.prototype.draw=function(){var t=this.life/this.maxLife,alpha=t<0.2?t/0.2:1-(t-0.2)/0.8;alpha=Math.max(0,Math.min(1,alpha))*0.75;ctx.beginPath();ctx.arc(this.x,this.y,this.size*(1-t*0.5),0,Math.PI*2);ctx.fillStyle=this.color+alpha+')';ctx.fill();};for(var i=0;i<60;i++){var p=new Particle();p.life=Math.floor(rand(0,p.maxLife));particles.push(p);}function loop(){ctx.clearRect(0,0,W,H);for(var i=0;i<particles.length;i++){particles[i].update();particles[i].draw();}requestAnimationFrame(loop);}loop();})();</script>
+
+<!-- ═══ ELF LALA CHATBOT ═══ -->
+<div id="elflala-widget">
+  <div id="elflala-teaser">¡Hola! Consultá lo que quieras sobre el servidor a Elf Lala.</div>
+  <button id="elflala-toggle" aria-label="Abrir chat con Elf Lala">
+    <img id="elflala-toggle-icon" src="images/elfaLala.webp" alt="Elf Lala">
+  </button>
+  <div id="elflala-panel">
+    <div id="elflala-header">
+      <span id="elflala-header-name">Elf Lala</span>
+      <button id="elflala-close" aria-label="Cerrar chat">&#10005;</button>
+    </div>
+    <div id="elflala-messages"></div>
+    <div id="elflala-inputbar">
+      <input id="elflala-input" type="text" placeholder="Consultá lo que quieras..." maxlength="300">
+      <button id="elflala-send" aria-label="Enviar">&#10148;</button>
+    </div>
+  </div>
+</div>
+<style>
+#elflala-widget { position: fixed; bottom: 1.2rem; right: 1.2rem; z-index: 3000; font-family: inherit; }
+#elflala-toggle {
+  width: 260px; height: 260px; border-radius: 50%;
+  background: linear-gradient(135deg, #b8941e, #e0b840);
+  border: none; cursor: pointer;
+  box-shadow: 0 4px 24px rgba(212,168,67,0.45);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s;
+  padding: 0; overflow: hidden;
+}
+#elflala-toggle:hover { transform: scale(1.05); }
+#elflala-toggle-icon { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+#elflala-teaser {
+  position: absolute; bottom: 278px; right: 0;
+  width: 220px;
+  background: rgba(10,9,16,0.98);
+  border: 1px solid rgba(212,168,67,0.35);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+  color: #e8e6f0; font-size: 0.82rem; line-height: 1.4;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+#elflala-teaser::after {
+  content: ''; position: absolute; bottom: -7px; right: 34px;
+  width: 14px; height: 14px;
+  background: rgba(10,9,16,0.98);
+  border-right: 1px solid rgba(212,168,67,0.35);
+  border-bottom: 1px solid rgba(212,168,67,0.35);
+  transform: rotate(45deg);
+}
+#elflala-widget.open #elflala-teaser { display: none; }
+#elflala-panel {
+  display: none;
+  position: absolute; bottom: 272px; right: 0;
+  width: 320px; height: 440px;
+  background: rgba(10,9,16,0.98);
+  border: 1px solid rgba(212,168,67,0.3);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  flex-direction: column;
+  overflow: hidden;
+}
+#elflala-panel.open { display: flex; }
+#elflala-header {
+  padding: 0.85rem 1rem;
+  background: rgba(212,168,67,0.08);
+  border-bottom: 1px solid rgba(212,168,67,0.2);
+  display: flex; align-items: center; justify-content: space-between;
+}
+#elflala-header-name { font-weight: 700; color: #f0c85a; font-size: 0.95rem; }
+#elflala-close { background: none; border: none; color: #7a7a9a; cursor: pointer; font-size: 0.85rem; padding: 4px; }
+#elflala-close:hover { color: #f0c85a; }
+#elflala-messages {
+  flex: 1; overflow-y: auto; padding: 0.9rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.elflala-msg { font-size: 0.85rem; line-height: 1.5; padding: 0.55rem 0.75rem; border-radius: 10px; max-width: 85%; }
+.elflala-msg.bot { background: rgba(212,168,67,0.1); color: #e8e6f0; align-self: flex-start; border: 1px solid rgba(212,168,67,0.2); }
+.elflala-msg.user { background: rgba(74,158,255,0.12); color: #e8e6f0; align-self: flex-end; border: 1px solid rgba(74,158,255,0.25); }
+.elflala-msg.typing { color: #7a7a9a; font-style: italic; }
+#elflala-inputbar {
+  display: flex; gap: 0.4rem; padding: 0.7rem;
+  border-top: 1px solid rgba(212,168,67,0.2);
+}
+#elflala-input {
+  flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(212,168,67,0.25);
+  border-radius: 8px; padding: 0.5rem 0.7rem; color: #e8e6f0; font-size: 0.85rem; outline: none;
+}
+#elflala-input:focus { border-color: #d4a843; }
+#elflala-send {
+  background: #d4a843; border: none; border-radius: 8px; width: 38px;
+  color: #1a0f00; font-size: 0.9rem; cursor: pointer;
+}
+#elflala-send:hover { background: #f0c85a; }
+@media (max-width: 480px) {
+  #elflala-panel { width: 88vw; right: -0.4rem; }
+}
+</style>
+<script>
+(function(){
+  var WORKER_URL = "https://elflalamudalbros.pablodalinger77.workers.dev";
+
+  var widget = document.getElementById('elflala-widget');
+  var toggle = document.getElementById('elflala-toggle');
+  var panel = document.getElementById('elflala-panel');
+  var closeBtn = document.getElementById('elflala-close');
+  var messages = document.getElementById('elflala-messages');
+  var input = document.getElementById('elflala-input');
+  var sendBtn = document.getElementById('elflala-send');
+  var history = [];
+  var greeted = false;
+
+  function addMsg(text, role){
+    var div = document.createElement('div');
+    div.className = 'elflala-msg ' + role;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  function openPanel(){
+    panel.classList.add('open');
+    if (!greeted) {
+      addMsg('¡Hola, guerrero! ¿En qué puedo ayudarte hoy?', 'bot');
+      greeted = true;
+    }
+    input.focus();
+  }
+
+  toggle.addEventListener('click', function(){
+    if (panel.classList.contains('open')) { panel.classList.remove('open'); widget.classList.remove('open'); }
+    else { openPanel(); widget.classList.add('open'); }
+  });
+  closeBtn.addEventListener('click', function(){ panel.classList.remove('open'); widget.classList.remove('open'); });
+
+  function send(){
+    var text = input.value.trim();
+    if (!text) return;
+    addMsg(text, 'user');
+    history.push({ role: 'user', text: text });
+    input.value = '';
+    var typing = addMsg('Elf Lala está escribiendo...', 'typing');
+
+    fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: history })
+    }).then(function(r){ return r.json(); }).then(function(data){
+      typing.remove();
+      var reply = data.reply || 'Perdón, no pude responder. Probá de nuevo o preguntá en nuestro Discord.';
+      addMsg(reply, 'bot');
+      history.push({ role: 'bot', text: reply });
+    }).catch(function(){
+      typing.remove();
+      addMsg('No me pude conectar. Probá de nuevo en un rato o preguntá en nuestro Discord.', 'bot');
+    });
+  }
+
+  sendBtn.addEventListener('click', send);
+  input.addEventListener('keydown', function(e){ if (e.key === 'Enter') send(); });
+})();
+</script>
 </body>
 </html>
