@@ -1167,9 +1167,10 @@ footer {
 
 <!-- ═══ ELF LALA CHATBOT ═══ -->
 <div id="elflala-widget">
+  <canvas id="elflala-dust" width="260" height="420"></canvas>
   <div id="elflala-teaser">¡Hola! Consultá lo que quieras sobre el servidor a Elf Lala.</div>
   <button id="elflala-toggle" aria-label="Abrir chat con Elf Lala">
-    <img id="elflala-toggle-icon" src="images/elfaLala.webp" alt="Elf Lala">
+    <img id="elflala-toggle-icon" src="images/ElfaLala2.png" alt="Elf Lala">
   </button>
   <div id="elflala-panel">
     <div id="elflala-header">
@@ -1185,16 +1186,30 @@ footer {
 </div>
 <style>
 #elflala-widget { position: fixed; bottom: 1.2rem; right: 1.2rem; z-index: 3000; font-family: inherit; }
+#elflala-dust {
+  position: absolute; bottom: 0; right: 0;
+  width: 260px; height: 420px;
+  pointer-events: none;
+  z-index: 3;
+}
+#elflala-widget.open #elflala-dust { display: none; }
 #elflala-toggle {
   width: 260px; height: 260px; border-radius: 50%;
   background: linear-gradient(135deg, #b8941e, #e0b840);
   border: none; cursor: pointer;
-  box-shadow: 0 4px 24px rgba(212,168,67,0.45);
+  box-shadow: 0 4px 24px rgba(255,255,255,0.55);
   display: flex; align-items: center; justify-content: center;
   transition: transform 0.2s;
   padding: 0; overflow: hidden;
+  position: relative; z-index: 2;
+  animation: elflala-pulse 2.4s ease-in-out infinite;
 }
-#elflala-toggle:hover { transform: scale(1.05); }
+#elflala-toggle:hover { animation-play-state: paused; transform: scale(1.05); }
+@keyframes elflala-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+#elflala-widget.open #elflala-toggle { display: none; }
 #elflala-toggle-icon { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
 #elflala-teaser {
   position: absolute; bottom: 278px; right: 0;
@@ -1205,6 +1220,7 @@ footer {
   padding: 0.7rem 0.9rem;
   color: #e8e6f0; font-size: 0.82rem; line-height: 1.4;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 4;
 }
 #elflala-teaser::after {
   content: ''; position: absolute; bottom: -7px; right: 34px;
@@ -1217,7 +1233,7 @@ footer {
 #elflala-widget.open #elflala-teaser { display: none; }
 #elflala-panel {
   display: none;
-  position: absolute; bottom: 272px; right: 0;
+  position: absolute; bottom: 0; right: 0;
   width: 320px; height: 440px;
   background: rgba(10,9,16,0.98);
   border: 1px solid rgba(212,168,67,0.3);
@@ -1225,6 +1241,7 @@ footer {
   box-shadow: 0 20px 60px rgba(0,0,0,0.6);
   flex-direction: column;
   overflow: hidden;
+  z-index: 5;
 }
 #elflala-panel.open { display: flex; }
 #elflala-header {
@@ -1275,6 +1292,44 @@ footer {
   var sendBtn = document.getElementById('elflala-send');
   var history = [];
   var greeted = false;
+
+  var dustCanvas = document.getElementById('elflala-dust');
+  var dctx = dustCanvas.getContext('2d');
+  var dustColors = ['255,182,220', '200,160,255', '170,255,200', '150,220,255'];
+  var dustParticles = [];
+  var BUTTON_TOP = 160;
+  var FADE_TOP = 90;
+  function DustParticle(){ this.reset(); }
+  DustParticle.prototype.reset = function(){
+    this.x = Math.random() * 260;
+    this.y = 170 + Math.random() * 240;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = -0.35 - Math.random() * 0.55;
+    this.size = 0.6 + Math.random() * 1.2;
+    this.color = dustColors[Math.floor(Math.random() * dustColors.length)];
+  };
+  for (var di = 0; di < 180; di++){
+    var dp = new DustParticle();
+    dp.y = 170 + Math.random() * 480;
+    dustParticles.push(dp);
+  }
+  function dustLoop(){
+    dctx.clearRect(0, 0, 260, 420);
+    for (var i = 0; i < dustParticles.length; i++){
+      var p = dustParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y <= FADE_TOP){ p.reset(); continue; }
+      var alpha = p.y >= BUTTON_TOP ? 1 : (p.y - FADE_TOP) / (BUTTON_TOP - FADE_TOP);
+      alpha = Math.max(0, Math.min(1, alpha)) * 0.9;
+      dctx.beginPath();
+      dctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      dctx.fillStyle = 'rgba(' + p.color + ',' + alpha + ')';
+      dctx.fill();
+    }
+    requestAnimationFrame(dustLoop);
+  }
+  dustLoop();
 
   function addMsg(text, role){
     var div = document.createElement('div');
