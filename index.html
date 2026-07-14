@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MU DalBros — Season 6 · Servidor Privado</title>
+<meta name="description" content="MU DalBros: servidor privado argentino de MU Online Season 6, gratuito y sin pay to win. Experiencia 10x, Drop Rate 60%, hasta 10 resets. Descargá el cliente y sumate a la comunidad.">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -129,7 +130,7 @@ nav {
 
 .hero-bg {
   position: absolute; inset: 0; z-index: 0;
-  background: var(--bg) url('images/DarkLord.png') center top/cover no-repeat;
+  background: var(--bg) url('images/DarkLord.webp') center top/cover no-repeat;
 }
 
 .hero-bg::before {
@@ -893,7 +894,7 @@ table.rtable tr:hover td { background: rgba(255,255,255,0.02); }
 #footer-char {
   position: relative;
   height: 620px;
-  background: var(--bg) url('images/MagicGladiator.png') center center/cover no-repeat;
+  background: var(--bg) url('images/MagicGladiator.webp') center center/cover no-repeat;
   overflow: hidden;
 }
 #footer-char::before {
@@ -1109,9 +1110,10 @@ footer {
 <style>body{overflow:hidden;}#shell-frame{position:fixed;top:58px;left:0;right:0;bottom:0;width:100%;height:calc(100vh - 58px);border:none;}</style>
 </head>
 <body>
+<iframe id="shell-frame" name="shell-frame" src="inicio.html" title="Contenido de MU DalBros"></iframe>
 <nav>
   <button id="nav-hamburger" aria-label="Menú">&#9776;</button>
-  <a href="inicio.html" class="nav-logo" target="shell-frame"><img src="images/MuDalBrosLogo.png" alt="MU DalBros"></a>
+  <a href="inicio.html" class="nav-logo" target="shell-frame"><img src="images/MuDalBrosLogo.webp" alt="MU DalBros" width="57" height="38"></a>
   <ul class="nav-links" id="nav-links">
     <li><a href="inicio.html"      target="shell-frame" class="active">Inicio</a></li>
     <li><a href="informacion.html" target="shell-frame">Informacion</a></li>
@@ -1163,7 +1165,6 @@ footer {
   window.addEventListener("resize",function(){if(!menu.classList.contains("open"))updateFrame();});
 })();</script>
 <canvas id="global-sparks" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:999;"></canvas>
-<iframe id="shell-frame" name="shell-frame" src="inicio.html"></iframe>
 <script>(function(){var canvas=document.getElementById('global-sparks'),ctx=canvas.getContext('2d'),W,H,particles=[];function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}resize();window.addEventListener('resize',resize);function rand(a,b){return a+Math.random()*(b-a);}function Particle(){this.reset();}Particle.prototype.reset=function(){this.x=rand(0,W);this.y=rand(H*0.2,H);this.vx=rand(-0.4,0.4);this.vy=rand(-1.4,-0.4);this.size=rand(2.5,5.5);this.life=0;this.maxLife=rand(80,200);var r=Math.floor(rand(200,255)),g=Math.floor(rand(60,140));this.color='rgba('+r+','+g+',20,';};Particle.prototype.update=function(){this.life++;this.x+=this.vx;this.y+=this.vy;this.vx+=rand(-0.05,0.05);if(this.life>=this.maxLife)this.reset();};Particle.prototype.draw=function(){var t=this.life/this.maxLife,alpha=t<0.2?t/0.2:1-(t-0.2)/0.8;alpha=Math.max(0,Math.min(1,alpha))*0.75;ctx.beginPath();ctx.arc(this.x,this.y,this.size*(1-t*0.5),0,Math.PI*2);ctx.fillStyle=this.color+alpha+')';ctx.fill();};for(var i=0;i<60;i++){var p=new Particle();p.life=Math.floor(rand(0,p.maxLife));particles.push(p);}function loop(){ctx.clearRect(0,0,W,H);for(var i=0;i<particles.length;i++){particles[i].update();particles[i].draw();}requestAnimationFrame(loop);}loop();})();</script>
 
 <!-- ═══ ELF LALA CHATBOT ═══ -->
@@ -1171,7 +1172,7 @@ footer {
   <canvas id="elflala-dust" width="260" height="420"></canvas>
   <div id="elflala-teaser">¡Hola! Consultá lo que quieras sobre el servidor a Elf Lala.</div>
   <button id="elflala-toggle" aria-label="Abrir chat con Elf Lala">
-    <img id="elflala-toggle-icon" src="images/ElfaLala2.png" alt="Elf Lala">
+    <img id="elflala-toggle-icon" src="images/ElfaLala2.webp" alt="Elf Lala" width="260" height="260" fetchpriority="high">
   </button>
   <div id="elflala-panel">
     <div id="elflala-header">

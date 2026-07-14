@@ -50,13 +50,38 @@ BUFF DE ELF SOLDIER: dura 3 horas (no los 30 minutos del MU original), para no t
 
 DROP DE JOYAS: las joyas (Bless, Soul, Chaos, Life, Creation) tienen su propia tasa de drop especifica, separada del Drop Rate general del servidor (60%/75% con VIP, que aplica a otro tipo de items). Dropean de mobs nivel 72 a 150, con una chance de 700 en 1.000.000 por kill (0.07% por kill). Es una chance baja a proposito, pensada para juntarse farmeando de a poco (no de golpes puntuales), evitando que se rompa la economia con cuentas mula.
 
-CUSTOM MIX (se arma en la Chaos Machine in-game, videos en Guias > Custom Mix de la web):
-- Escalera de armas: cada familia de armas usa UN arma nativa especifica como base (no cualquier arma nativa sirve). El unico caso confirmado que tenes es: Daybreak +15 + 5 Jewel of Bless + 5 Jewel of Soul (o 5 Jewel of Life si sos Magic Gladiator) + 1.000.000 zen = "Divine Sword of Archangel". Repetir el mix con Divine Sword of Archangel +15 = version BloodAngel Excellent de espada. Repetir con esa BloodAngel Excellent +15 = DarkAngel Excellent de espada (el tier mas alto). Este mismo esquema de 3 pasos (Divine -> BloodAngel -> DarkAngel) existe tambien para staff, scepter, stick, crossbow y claws, pero el arma nativa base exacta de cada una de esas otras categorias NO esta confirmada en esta informacion - si te preguntan por otra arma que no sea espada/Daybreak, explicas que existe el mismo tipo de mix de 3 pasos para su categoria de arma, pero que no tenes confirmado el nombre exacto del arma nativa base para ese caso especifico, y sugeris el Discord o un GM in-game para el dato preciso.
-- Escalera de sets de armadura: mismo esquema con piezas de set +15 + 10 Bundled Jewel of Bless + 10 Bundled Jewel of Soul, BloodAngel -> DarkAngel.
+CUSTOM MIX (se arma en la Chaos Machine in-game, videos en Guias > Custom Mix de la web). Sistema de 3 escalones para armas: arma nativa +15 -> Divine of the Archangel -> BloodAngel Excellent -> DarkAngel Excellent.
+
+ESCALON 1 (arma nativa +15 a Divine of the Archangel): 100% de exito, 1.000.000 zen, siempre 5 Jewel of Bless sueltas + 5 Jewel of Soul sueltas (sin importar la clase). Las 6 recetas confirmadas:
+- Daybreak +15 -> Divine Sword of the Archangel
+- Platina Staff +15 -> Divine Staff of the Archangel
+- Shining Scepter +15 -> Divine Scepter of the Archangel
+- Demonic Stick +15 -> Divine Stick of the Archangel
+- Albatross Bow +15 -> Divine Crossbow of the Archangel
+- Phoenix Soul Star +15 -> Divine Claws of Archangel
+
+ESCALON 2 (Divine +15 a BloodAngel Excellent): 100% de exito, 1.000.000 zen, skill garantizado, 30% de chance de luck, siempre viene con 1 opcion excelente. Normalmente 5 Jewel of Bless + 5 Jewel of Soul, EXCEPTO el Magic Gladiator que en vez de Soul usa 5 Jewel of Life para su propia espada (MagicSword):
+- Divine Sword +15 + 5 Bless + 5 Soul -> BloodAngel Sword
+- Divine Sword +15 + 5 Bless + 5 Life (Life en vez de Soul, receta especial del Magic Gladiator) -> BloodAngel MagicSword
+- Divine Staff +15 + 5 Bless + 5 Soul -> BloodAngel Staff (Wizard)
+- Divine Scepter +15 + 5 Bless + 5 Soul -> BloodAngel Scepter (Dark Lord)
+- Divine Stick +15 + 5 Bless + 5 Soul -> BloodAngel Stick (Summoner)
+- Divine Crossbow +15 + 5 Bless + 5 Soul -> BloodAngel Bow (Elf)
+- Divine Claws +15 + 5 Bless + 5 Soul -> BloodAngel Claws (Rage Fighter)
+
+ESCALON 3 (BloodAngel Excellent +15 a DarkAngel Excellent, el tier mas alto): 100% de exito, 1.000.000 zen, 5 Jewel of Bless + 5 Jewel of Soul. El arma de entrada TIENE que ser la version Excellent del BloodAngel (si no tiene ninguna opcion excelente, el mix la rechaza). Ejemplo: BloodAngel Sword Excellent +15 -> DarkAngel Sword Excellent. Mismo patron para las otras 6 armas.
+
+ESCALERA DE SETS DE ARMADURA (mismo esquema de 3 escalones, con piezas de armadura en vez de armas):
+- Set clasico +15 + 10 Bundled Jewel of Bless + 10 Bundled Jewel of Soul + 1.000.000 zen -> pieza BloodAngel Excellent (misma clase y pieza), 100% de exito.
+- BloodAngel Excellent +15 (tiene que ser la version Excellent) + 10 Bundled Jewel of Bless + 10 Bundled Jewel of Soul + 1.000.000 zen -> pieza DarkAngel Excellent (mismo tipo), 100% de exito.
+
+ALAS:
 - Alas 2.5: ala S2 nativa +15 + 1 Jewel of Chaos + 1 Jewel of Creation + material especial (Hell Maine's Leather/Death King's Bone/Death Beam Knight Soul/Dark Phoenix Flame) = ala Chaos/Death/Life/Magic.
 - Alas custom por clase: ala o capa S3 nativa +15 + 5 Jewel of Bless + 5 Jewel of Soul = ala exclusiva de tu clase.
 
-PRIORIDAD CUANDO TE ESCRIBEN SOLO EL NOMBRE DE UN ARMA (sin pregunta explicita, ej: alguien te escribe nada mas "daybreak" o "divine sword"): esto NO es automaticamente una pregunta de drop. Es parte del sistema de Custom Mix. En estos casos respondes con la info de la Escalera de Armas de arriba (usando el dato confirmado de Daybreak/Divine Sword si aplica, o aclarando que no tenes el dato exacto para esa arma puntual si no es Daybreak/Divine Sword/BloodAngel Sword), en vez de responder directamente que no tenes datos de drop. Solo aplica la regla de drops (mas abajo) si la pregunta es explicitamente sobre donde cae o dropea el item.
+PRIORIDAD CUANDO TE ESCRIBEN SOLO EL NOMBRE DE UN ARMA O PIEZA (sin pregunta explicita, ej: alguien te escribe nada mas "daybreak", "divine sword" o "bloodangel set"): esto NO es automaticamente una pregunta de drop. Es parte del sistema de Custom Mix, respondes con la info de la escalera correspondiente de arriba, en vez de responder directamente que no tenes datos de drop. Solo aplica la regla de drops (mas abajo) si la pregunta es explicitamente sobre donde cae o dropea el item.
+
+IMPORTANTE - PRIORIDAD SOBRE DATOS ESPECIFICOS EN PREGUNTAS DE CUSTOM MIX: si la pregunta menciona "divine", "bloodangel", "darkangel", "custom mix" o el nombre de una de las 7 armas/sets de la escalera, la informacion de CUSTOM MIX de arriba SIEMPRE tiene prioridad sobre cualquier cosa que aparezca en "DATOS ESPECIFICOS PARA ESTA CONSULTA" mas abajo (esa seccion es para preguntas de DROP de items random, puede traerte resultados irrelevantes por coincidencia de palabras sueltas - ejemplo: "divine claw" NO tiene relacion con el item "Claw of Beast" aunque comparta la palabra "claw"). En las respuestas de Custom Mix SIEMPRE usa el nombre EXACTO del arma nativa tal cual esta escrito en la lista de arriba (Daybreak, Platina Staff, Shining Scepter, Demonic Stick, Albatross Bow, Phoenix Soul Star) - NUNCA un nombre generico como "Scepter +15" o "Staff +15".
 
 REGLA CLAVE SOBRE DROPS: si te preguntan donde cae o dropea un item/arma/set especifico, primero revisa la seccion "DATOS ESPECIFICOS PARA ESTA CONSULTA" si aparece mas abajo. Si el item que preguntan NO aparece ahi ni en el resto de esta informacion, respondes que ese item no tiene un mob puntual asignado en nuestro servidor - sale del sistema de drop generico segun el nivel del mob, que no modificamos respecto al MU Online original, asi que se puede guiar por guias oficiales de MU Online Season 6 para ese caso especifico. NUNCA inventes un mapa o mob concreto que no este confirmado en esta informacion.
 
@@ -117,6 +142,27 @@ function findMatches(message, records, labelFields) {
   return hits;
 }
 
+const MIX_WEAPONS = [
+  { cat: "claws (Rage Fighter)", keys: ["claw", "claws", "garra", "garras", "phoenix"], nativa: "Phoenix Soul Star", divine: "Divine Claws of Archangel", blood: "BloodAngel Claws", dark: "DarkAngel Claws" },
+  { cat: "espada", keys: ["sword", "espada", "daybreak"], nativa: "Daybreak", divine: "Divine Sword of the Archangel", blood: "BloodAngel Sword", dark: "DarkAngel Sword", nota: "Para el Magic Gladiator: el mismo Divine Sword of the Archangel +15 + 5 Jewel of Bless + 5 Jewel of LIFE (en vez de Soul) da BloodAngel MagicSword Excellent, y repitiendo el mix da DarkAngel MagicSword Excellent." },
+  { cat: "staff (Wizard)", keys: ["staff", "platina", "baculo"], nativa: "Platina Staff", divine: "Divine Staff of the Archangel", blood: "BloodAngel Staff", dark: "DarkAngel Staff" },
+  { cat: "scepter (Dark Lord)", keys: ["scepter", "sceptre", "cetro", "shining"], nativa: "Shining Scepter", divine: "Divine Scepter of the Archangel", blood: "BloodAngel Scepter", dark: "DarkAngel Scepter" },
+  { cat: "stick (Summoner)", keys: ["stick", "demonic"], nativa: "Demonic Stick", divine: "Divine Stick of the Archangel", blood: "BloodAngel Stick", dark: "DarkAngel Stick" },
+  { cat: "crossbow/arco (Elf)", keys: ["crossbow", "bow", "arco", "ballesta", "albatross"], nativa: "Albatross Bow", divine: "Divine Crossbow of the Archangel", blood: "BloodAngel Bow", dark: "DarkAngel Bow" },
+];
+
+function findMixRecipe(message) {
+  const msgNorm = normalize(message);
+  if (!/divine|blood\s*angel|dark\s*angel|archangel|mix/.test(msgNorm)) return null;
+  const words = msgNorm.split(/[^a-z0-9]+/).filter((w) => w.length >= 3);
+  for (const w of MIX_WEAPONS) {
+    for (const k of w.keys) {
+      if (words.some((mw) => mw === k || levenshtein(mw, k) <= fuzzyThreshold(k.length))) return w;
+    }
+  }
+  return null;
+}
+
 function corsHeaders(origin) {
   return {
     "Access-Control-Allow-Origin": origin || "*",
@@ -161,8 +207,19 @@ export default {
 
     let systemPrompt = BASE_PROMPT;
 
+    const mixHit = findMixRecipe(userMessage);
+    if (mixHit) {
+      systemPrompt = BASE_PROMPT +
+        "\n\nDATOS ESPECIFICOS PARA ESTA CONSULTA (receta EXACTA de la escalera de Custom Mix para " + mixHit.cat + " - responde usando EXACTAMENTE estos nombres de items, no cambies ninguno):\n" +
+        "- Arma nativa base: " + mixHit.nativa + "\n" +
+        "- Paso 1: " + mixHit.nativa + " +15 + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen = " + mixHit.divine + " (100% de exito)\n" +
+        "- Paso 2: " + mixHit.divine + " +15 + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen = " + mixHit.blood + " Excellent (100% de exito, skill garantizado, 30% de chance de luck, 1 opcion excelente)\n" +
+        "- Paso 3: " + mixHit.blood + " Excellent +15 + 5 Jewel of Bless + 5 Jewel of Soul + 1.000.000 zen = " + mixHit.dark + " Excellent (el tier mas alto)\n" +
+        (mixHit.nota ? "- Nota: " + mixHit.nota + "\n" : "");
+    }
+
     try {
-      if (env.ELFLALA_KV) {
+      if (!mixHit && env.ELFLALA_KV) {
         const [itemDropsRaw, bossDropsRaw] = await Promise.all([
           env.ELFLALA_KV.get("itemDrops"),
           env.ELFLALA_KV.get("bossDrops"),
