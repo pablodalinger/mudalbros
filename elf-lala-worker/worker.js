@@ -9,6 +9,8 @@ INFORMACION GENERAL DEL SERVIDOR:
 - Descarga: cliente gratis desde mudalbros.com/descargas.html (link de Mega), instalacion rapida.
 - Comunidad: Discord, Instagram y Facebook, con enlaces en la web.
 
+CLASES DE PERSONAJE (7 en total, todas disponibles desde la creacion del personaje): Dark Wizard, Dark Knight, Fairy Elf, Magic Gladiator, Dark Lord, Summoner, Rage Fighter.
+
 EVENTOS CLASICOS Y SUS HORARIOS:
 - Blood Castle: combate en masa. Cada 2 horas en punto, dura 15 minutos, hasta 10 jugadores.
 - Devil Square: oleadas de monstruos. Cada 2 horas y media, dura 3 minutos, hasta 15 jugadores.
@@ -27,7 +29,7 @@ QUESTS DE EVOLUCION DE CLASE (sistema nativo de MU Online Season 6, sin modifica
 SISTEMAS:
 - Lucky Wheel: premio de alto valor, sistema premium en el Special Menu.
 - Item Bank: guarda joyas sin ocupar espacio en el baul.
-- GP Automatico: 10 Goblin Points cada hora a todos los conectados (la tienda de canje todavia no esta lista, esta en desarrollo).
+- GP Automatico: 10 Goblin Points cada hora, a partir de nivel 150 (no antes, para evitar cuentas mulas de nivel 1 creadas solo para juntar GP). Todavia no esta activo en el servidor (esta pendiente de implementar) y la tienda de canje tampoco esta lista todavia.
 - Lluvia de Joyas: todos los dias 17:00 y 22:00 en Lorencia.
 - WCoin: se compra desde la pagina mudalbros.com/wcoin.html (NO desde el Cash Shop in-game), pagando con Mercado Pago (1 WC = $1 ARS), se acredita automaticamente a la cuenta del juego. Packs: 5.000 WC por $5.000 ARS, 10.000 por $10.000, 15.000 por $15.000, 100.000 por $90.000 (bonus +10.000).
 - VIP: cuesta 10.000 WCoin, dura 30 dias, da Experiencia 15x y Drop Rate 75%. Una vez que ya tenes el WCoin cargado en la cuenta, la VIP se compra in-game desde el Cash Shop.
@@ -49,6 +51,13 @@ MAPA (tecla M o TAB): SI muestra los Spot y HotSpot marcados para encontrar los 
 BUFF DE ELF SOLDIER: dura 3 horas (no los 30 minutos del MU original), para no tener que estar recargandolo todo el tiempo.
 
 DROP DE JOYAS: las joyas (Bless, Soul, Chaos, Life, Creation) tienen su propia tasa de drop especifica, separada del Drop Rate general del servidor (60%/75% con VIP, que aplica a otro tipo de items). Dropean de mobs nivel 72 a 150, con una chance de 700 en 1.000.000 por kill (0.07% por kill). Es una chance baja a proposito, pensada para juntarse farmeando de a poco (no de golpes puntuales), evitando que se rompa la economia con cuentas mula.
+
+PARA QUE SIRVE CADA JOYA:
+- Jewel of Bless: se usa con click derecho sobre un item para subirle el nivel + de a uno (por ejemplo de +5 a +6). En MU DalBros tiene 100% de exito, nunca rompe ni baja el item.
+- Jewel of Soul: mismo uso que la Bless (subir el nivel + del item de a uno). En MU DalBros TAMBIEN tiene 100% de exito (a diferencia del MU Online original, donde la Soul suele tener riesgo de romper el item - en nuestro servidor no hay ese riesgo).
+- Jewel of Life: se usa para agregar la opcion "Life" (vida extra) a ciertos items, y como ingrediente de algunas recetas del Custom Mix (ver seccion de Custom Mix).
+- Jewel of Chaos: se usa en la Chaos Machine para combinar 2 items iguales +15 en 1 item Excellent al azar (mecanica clasica de MU), y tambien como ingrediente de las Alas 2.5 (ver Custom Mix).
+- Jewel of Creation: se usa como ingrediente de crafteos de nivel alto, como las Alas 2.5 (ver Custom Mix).
 
 CUSTOM MIX (se arma en la Chaos Machine in-game, videos en Guias > Custom Mix de la web). Sistema de 3 escalones para armas: arma nativa +15 -> Divine of the Archangel -> BloodAngel Excellent -> DarkAngel Excellent.
 
