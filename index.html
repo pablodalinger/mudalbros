@@ -109,10 +109,11 @@ nav {
 .nav-social-btn {
   display: flex; align-items: center; justify-content: center;
   width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(255,255,255,0.07); color: var(--text-muted);
-  transition: background 0.2s, color 0.2s; text-decoration: none;
+  background: rgba(255,255,255,0.14); color: #e8e6f0;
+  border: 1px solid rgba(255,255,255,0.18);
+  transition: background 0.2s, color 0.2s, border-color 0.2s; text-decoration: none;
 }
-.nav-social-btn:hover { background: var(--gold); color: #000; }
+.nav-social-btn:hover { background: var(--gold); color: #000; border-color: var(--gold); }
 
 #nav-hamburger { display: none; }
 
@@ -1185,16 +1186,19 @@ footer {
   </div>
 </div>
 <style>
-#elflala-widget { position: fixed; bottom: 1.2rem; right: 1.2rem; z-index: 3000; font-family: inherit; }
+#elflala-widget {
+  position: fixed; bottom: max(0.9rem, 2vw); right: max(0.9rem, 2vw); z-index: 3000; font-family: inherit;
+  --elflala-btn: clamp(92px, 24vw, 260px);
+}
 #elflala-dust {
   position: absolute; bottom: 0; right: 0;
-  width: 260px; height: 420px;
+  width: var(--elflala-btn); height: calc(var(--elflala-btn) * 420 / 260);
   pointer-events: none;
   z-index: 3;
 }
 #elflala-widget.open #elflala-dust { display: none; }
 #elflala-toggle {
-  width: 260px; height: 260px; border-radius: 50%;
+  width: var(--elflala-btn); height: var(--elflala-btn); border-radius: 50%;
   background: linear-gradient(135deg, #b8941e, #e0b840);
   border: none; cursor: pointer;
   box-shadow: 0 4px 24px rgba(255,255,255,0.55);
@@ -1212,13 +1216,13 @@ footer {
 #elflala-widget.open #elflala-toggle { display: none; }
 #elflala-toggle-icon { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
 #elflala-teaser {
-  position: absolute; bottom: 278px; right: 0;
-  width: 220px;
+  position: absolute; bottom: calc(var(--elflala-btn) + 1rem); right: 0;
+  width: min(220px, 60vw);
   background: rgba(10,9,16,0.98);
   border: 1px solid rgba(212,168,67,0.35);
   border-radius: 12px;
   padding: 0.7rem 0.9rem;
-  color: #e8e6f0; font-size: 0.82rem; line-height: 1.4;
+  color: #e8e6f0; font-size: clamp(0.72rem, 2.6vw, 0.82rem); line-height: 1.4;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   z-index: 4;
 }
@@ -1234,7 +1238,7 @@ footer {
 #elflala-panel {
   display: none;
   position: absolute; bottom: 0; right: 0;
-  width: 320px; height: 440px;
+  width: min(320px, 92vw); height: min(440px, 72vh);
   background: rgba(10,9,16,0.98);
   border: 1px solid rgba(212,168,67,0.3);
   border-radius: 14px;
