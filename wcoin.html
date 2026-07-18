@@ -1428,23 +1428,26 @@ footer {
     msgEl.className = 'wc-msg';
     msgEl.textContent = '';
 
-    // ─── TODO (VPS): reemplazar este fetch con la URL real del backend ───
-    // fetch('/api/crear-pago', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ cuenta: cuenta, email: email, pack_wc: selectedPack.wc, precio: selectedPack.price })
-    // })
-    // .then(function(r){ return r.json(); })
-    // .then(function(data){ window.location.href = data.init_point; })
-    // .catch(function(){ mostrarError('Error al conectar. Intentá de nuevo.'); });
-    // ────────────────────────────────────────────────────────────────────
-
-    // Placeholder hasta que el VPS esté listo
-    setTimeout(function(){
-      mostrarError('El sistema de pagos estará disponible muy pronto. Por ahora contactanos por Discord.');
+    fetch('https://mudalbros-pagos.pablodalinger77.workers.dev/crear-pago', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cuenta: cuenta, email: email, pack: selectedPack.wc })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data && data.init_point) {
+        window.location.href = data.init_point;
+      } else {
+        mostrarError('No se pudo generar el pago. Revisá tus datos e intentá de nuevo.');
+        btnPagar.disabled = false;
+        btnPagar.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pagar con Mercado Pago';
+      }
+    })
+    .catch(function(){
+      mostrarError('Error al conectar. Intentá de nuevo.');
       btnPagar.disabled = false;
       btnPagar.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pagar con Mercado Pago';
-    }, 800);
+    });
   });
 
   function mostrarError(msg){
