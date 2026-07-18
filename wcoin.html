@@ -1248,6 +1248,7 @@ footer {
 }
 .btn-pagar:hover { filter: brightness(1.1); transform: translateY(-1px); }
 .btn-pagar:disabled { opacity: 0.4; cursor: not-allowed; transform: none; filter: none; }
+.btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); }
 
 .wc-msg {
   margin-top: 0.75rem;
@@ -1303,7 +1304,7 @@ footer {
       <div class="s-label">Potenciá tu cuenta</div>
       <h2 class="s-title">Comprar <span>WCoin</span></h2>
       <div class="s-line"></div>
-      <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.9rem">1 WC = $1 ARS · El pago se procesa por Mercado Pago · Los WC se acreditan automáticamente</p>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.9rem">1 WC = $1 ARS · Pago por transferencia bancaria · Te pasamos el alias por WhatsApp</p>
     </div>
 
     <!-- PACKS -->
@@ -1354,8 +1355,8 @@ footer {
 
     <!-- FORM -->
     <div class="wc-form-wrap">
-      <div class="wc-form-title">Datos de tu cuenta</div>
-      <div class="wc-form-sub">Seleccioná un pack arriba y completá tus datos. Los WC se acreditan automáticamente una vez confirmado el pago.</div>
+      <div class="wc-form-title">Datos de tu personaje</div>
+      <div class="wc-form-sub">Seleccioná un pack arriba, completá tus datos, y escribinos por WhatsApp a cualquiera de los dos admins. Te pasamos el alias, y apenas nos llega la transferencia te acreditamos el WC.</div>
 
       <div class="wc-form-selected" id="wc-selected-label"></div>
 
@@ -1365,17 +1366,21 @@ footer {
       </div>
 
       <div class="wc-field">
-        <label class="wc-label" for="wc-email">Mail (para el comprobante)</label>
-        <input class="wc-input" type="email" id="wc-email" placeholder="tu@mail.com" autocomplete="email">
+        <label class="wc-label" for="wc-personaje">Nombre del personaje</label>
+        <input class="wc-input" type="text" id="wc-personaje" placeholder="NombrePersonaje" autocomplete="off" spellcheck="false">
       </div>
 
       <div class="wc-notice">
-        <strong>¿Cómo sé que es mi cuenta?</strong> Es el usuario con el que iniciás sesión en el juego (no el nombre del personaje). Si no recordás cuál es, podés verlo en la pantalla de login.
+        <strong>¿Cómo sé cuál es cada dato?</strong> La cuenta es con la que iniciás sesión en el juego; el personaje es el que aparece dentro del server (necesitamos el personaje para cargarte el WC).
       </div>
 
-      <button class="btn-pagar" id="btn-pagar" disabled>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Pagar con Mercado Pago
+      <button class="btn-pagar btn-whatsapp" id="btn-wa-bardock" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M20.52 3.449C12.831-3.984.176 1.594.171 11.923c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.953 3.71 1.457 5.71 1.457h.005c9.607 0 15.51-9.5 14.11-16.965a11.83 11.83 0 00-5.64-3.391zM12.05 21.785h-.004c-1.848 0-3.66-.497-5.235-1.437l-.375-.223-3.892 1.02 1.04-3.795-.244-.389a9.86 9.86 0 01-1.5-5.29c0-5.462 4.436-9.9 9.897-9.9 5.462 0 9.898 4.438 9.898 9.898 0 5.462-4.436 9.899-9.897 9.899z"/></svg>
+        Escribir a BARDOCK
+      </button>
+      <button class="btn-pagar btn-whatsapp" id="btn-wa-popot" disabled style="margin-top:0.6rem">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M20.52 3.449C12.831-3.984.176 1.594.171 11.923c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.953 3.71 1.457 5.71 1.457h.005c9.607 0 15.51-9.5 14.11-16.965a11.83 11.83 0 00-5.64-3.391zM12.05 21.785h-.004c-1.848 0-3.66-.497-5.235-1.437l-.375-.223-3.892 1.02 1.04-3.795-.244-.389a9.86 9.86 0 01-1.5-5.29c0-5.462 4.436-9.9 9.897-9.9 5.462 0 9.898 4.438 9.898 9.898 0 5.462-4.436 9.899-9.897 9.899z"/></svg>
+        Escribir a Popot
       </button>
       <div class="wc-msg" id="wc-msg"></div>
     </div>
@@ -1387,11 +1392,17 @@ footer {
 (function(){
   var selectedPack = null;
   var packs = document.querySelectorAll('.wc-pack');
-  var btnPagar = document.getElementById('btn-pagar');
+  var btnBardock = document.getElementById('btn-wa-bardock');
+  var btnPopot = document.getElementById('btn-wa-popot');
   var msgEl = document.getElementById('wc-msg');
   var selectedLabel = document.getElementById('wc-selected-label');
   var inputCuenta = document.getElementById('wc-cuenta');
-  var inputEmail = document.getElementById('wc-email');
+  var inputPersonaje = document.getElementById('wc-personaje');
+
+  var NUMEROS = {
+    bardock: '543516772343',
+    popot:   '543512468219'
+  };
 
   packs.forEach(function(pack){
     pack.addEventListener('click', function(){
@@ -1411,49 +1422,26 @@ footer {
   function checkForm(){
     var ok = selectedPack &&
               inputCuenta.value.trim().length >= 3 &&
-              /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail.value.trim());
-    btnPagar.disabled = !ok;
+              inputPersonaje.value.trim().length >= 3;
+    btnBardock.disabled = !ok;
+    btnPopot.disabled = !ok;
   }
 
   inputCuenta.addEventListener('input', checkForm);
-  inputEmail.addEventListener('input', checkForm);
+  inputPersonaje.addEventListener('input', checkForm);
 
-  btnPagar.addEventListener('click', function(){
+  function abrirWhatsapp(numero){
     if(!selectedPack) return;
     var cuenta = inputCuenta.value.trim();
-    var email  = inputEmail.value.trim();
-
-    btnPagar.disabled = true;
-    btnPagar.textContent = 'Generando link de pago...';
-    msgEl.className = 'wc-msg';
-    msgEl.textContent = '';
-
-    fetch('https://mudalbros-pagos.pablodalinger77.workers.dev/crear-pago', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cuenta: cuenta, email: email, pack: selectedPack.wc })
-    })
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if (data && data.init_point) {
-        window.location.href = data.init_point;
-      } else {
-        mostrarError('No se pudo generar el pago. Revisá tus datos e intentá de nuevo.');
-        btnPagar.disabled = false;
-        btnPagar.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pagar con Mercado Pago';
-      }
-    })
-    .catch(function(){
-      mostrarError('Error al conectar. Intentá de nuevo.');
-      btnPagar.disabled = false;
-      btnPagar.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pagar con Mercado Pago';
-    });
-  });
-
-  function mostrarError(msg){
-    msgEl.className = 'wc-msg error';
-    msgEl.textContent = msg;
+    var personaje = inputPersonaje.value.trim();
+    var texto = '¡Hola! Quiero comprar ' + selectedPack.label +
+      '. Cuenta: ' + cuenta + '. Personaje: ' + personaje + '.';
+    var url = 'https://wa.me/' + numero + '?text=' + encodeURIComponent(texto);
+    window.open(url, '_blank');
   }
+
+  btnBardock.addEventListener('click', function(){ abrirWhatsapp(NUMEROS.bardock); });
+  btnPopot.addEventListener('click', function(){ abrirWhatsapp(NUMEROS.popot); });
 })();
 </script>
 <div id="footer-char"></div>
