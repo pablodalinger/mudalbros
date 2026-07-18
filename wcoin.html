@@ -1430,12 +1430,18 @@ footer {
   inputCuenta.addEventListener('input', checkForm);
   inputPersonaje.addEventListener('input', checkForm);
 
+  function formatMiles(n){
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
   function abrirWhatsapp(numero){
     if(!selectedPack) return;
     var cuenta = inputCuenta.value.trim();
     var personaje = inputPersonaje.value.trim();
-    var texto = '¡Hola! Quiero comprar ' + selectedPack.label +
-      '. Cuenta: ' + cuenta + '. Personaje: ' + personaje + '.';
+    var texto = '¡Hola!\n' +
+      'Quiero comprar ' + formatMiles(selectedPack.wc) + ' WC ($' + formatMiles(selectedPack.price) + ')\n' +
+      'Cuenta: ' + cuenta + '\n' +
+      'Personaje: ' + personaje;
     var url = 'https://wa.me/' + numero + '?text=' + encodeURIComponent(texto);
     window.open(url, '_blank');
   }
