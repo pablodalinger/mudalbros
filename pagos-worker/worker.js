@@ -210,8 +210,8 @@ export default {
       if (body.secret !== env.POLLER_SECRET) return json({ error: "no autorizado" }, 401, H);
 
       const data = {
-        topLevel: Array.isArray(body.topLevel) ? body.topLevel.slice(0, 10) : [],
-        topReset: Array.isArray(body.topReset) ? body.topReset.slice(0, 10) : [],
+        topLevel: Array.isArray(body.topLevel) ? body.topLevel.slice(0, 50) : [],
+        topReset: Array.isArray(body.topReset) ? body.topReset.slice(0, 50) : [],
         updated: Date.now(),
       };
       await env.PAGOS_KV.put("ranking_data", JSON.stringify(data));

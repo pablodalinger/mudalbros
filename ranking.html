@@ -816,6 +816,17 @@ table.rtable tr:hover td { background: rgba(255,255,255,0.02); }
   font-size: 0.78rem; color: var(--text-muted); font-style: italic;
 }
 
+.rank-more-btn {
+  display: block; width: 100%;
+  padding: 0.75rem;
+  background: none; border: none; border-top: 1px solid var(--border);
+  color: var(--gold);
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s;
+}
+.rank-more-btn:hover { background: rgba(255,255,255,0.03); }
+
 /* ── DOWNLOAD ── */
 #download {
   background: var(--bg2);
@@ -1144,12 +1155,10 @@ footer {
 <script>
 (function(){
   var MEDALLA = ['g', 's', 'b'];
+  var PASO = 10;
 
-  function construirTabla(lista, principal, secundario){
-    if (!lista || !lista.length) {
-      return '<div class="rank-empty">Todavía no hay datos de ranking.</div>';
-    }
-    var filas = lista.map(function(row, i){
+  function construirFilas(lista, principal, secundario){
+    return lista.map(function(row, i){
       var claseRpos = i < 3 ? ' ' + MEDALLA[i] : '';
       return '<tr>' +
         '<td class="rpos' + claseRpos + '">' + (i + 1) + '</td>' +
@@ -1158,19 +1167,47 @@ footer {
         '<td class="rval">' + principal(row) + '</td>' +
       '</tr>';
     }).join('');
-    return '<table class="rtable"><tbody>' + filas + '</tbody></table>';
+  }
+
+  // Arma un panel con paginado local (no hace falta pedir mas datos: ya
+  // tenemos hasta 50 en memoria, el boton solo revela mas filas).
+  function armarPanel(wrapId, lista, principal, secundario){
+    var wrap = document.getElementById(wrapId);
+    if (!lista || !lista.length) {
+      wrap.innerHTML = '<div class="rank-empty">Todavía no hay datos de ranking.</div>';
+      return;
+    }
+    var mostrando = Math.min(PASO, lista.length);
+
+    function render(){
+      var tabla = '<table class="rtable"><tbody>' +
+        construirFilas(lista.slice(0, mostrando), principal, secundario) +
+        '</tbody></table>';
+      var boton = '';
+      if (mostrando < lista.length) {
+        boton = '<button class="rank-more-btn">Ver ' +
+          Math.min(PASO, lista.length - mostrando) + ' más »</button>';
+      }
+      wrap.innerHTML = tabla + boton;
+      var btn = wrap.querySelector('.rank-more-btn');
+      if (btn) {
+        btn.addEventListener('click', function(){
+          mostrando = Math.min(mostrando + PASO, lista.length);
+          render();
+        });
+      }
+    }
+    render();
   }
 
   fetch('https://mudalbros-pagos.pablodalinger77.workers.dev/ranking-data')
     .then(function(r){ return r.json(); })
     .then(function(data){
-      document.getElementById('rank-level-wrap').innerHTML = construirTabla(
-        data.topLevel,
+      armarPanel('rank-level-wrap', data.topLevel,
         function(row){ return 'Lvl ' + row.level; },
         function(row){ return row.resets + ' resets'; }
       );
-      document.getElementById('rank-reset-wrap').innerHTML = construirTabla(
-        data.topReset,
+      armarPanel('rank-reset-wrap', data.topReset,
         function(row){ return row.resets + ' resets'; },
         function(row){ return 'Lvl ' + row.level; }
       );
