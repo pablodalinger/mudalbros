@@ -37,6 +37,31 @@ function json(data, status, headers) {
   });
 }
 
+// ---------------------------------------------------------------------------
+// Indice de pendientes: 1 sola key de KV con un array de txids. Evita usar
+// KV.list() (cuota diaria muy chica en el plan free de Cloudflare) para que
+// el poller pueda consultar /pull-pendientes cada 10s sin agotarla.
+// ---------------------------------------------------------------------------
+async function leerIndice(env) {
+  const v = await env.PAGOS_KV.get("pending_index");
+  if (!v) return [];
+  try { return JSON.parse(v); } catch (e) { return []; }
+}
+async function agregarAIndice(env, txid) {
+  const idx = await leerIndice(env);
+  if (!idx.includes(txid)) {
+    idx.push(txid);
+    await env.PAGOS_KV.put("pending_index", JSON.stringify(idx));
+  }
+}
+async function quitarDeIndice(env, txid) {
+  const idx = await leerIndice(env);
+  const nuevo = idx.filter((t) => t !== txid);
+  if (nuevo.length !== idx.length) {
+    await env.PAGOS_KV.put("pending_index", JSON.stringify(nuevo));
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -127,6 +152,7 @@ export default {
               tipo: "wcoin", cuenta, wc: parseInt(wc, 10),
               estado: "pendiente", ts: Date.now(),
             }));
+            await agregarAIndice(env, txid);
           }
         }
       }
@@ -135,19 +161,21 @@ export default {
 
     // ----------------------------------------------------------------------
     // GET /pull-pendientes?secret=...  -> el poller del VPS baja lo pendiente
+    // NO usa KV.list() (tiene cuota diaria muy baja en el plan free) - en vez
+    // de eso mantenemos un "indice" chico (1 sola key) con los txid pendientes.
     // ----------------------------------------------------------------------
     if (path === "/pull-pendientes" && request.method === "GET") {
       if (url.searchParams.get("secret") !== env.POLLER_SECRET)
         return json({ error: "no autorizado" }, 401, H);
 
-      const list = await env.PAGOS_KV.list();
+      const indice = await leerIndice(env);
       const pend = [];
-      for (const k of list.keys) {
-        const v = await env.PAGOS_KV.get(k.name);
+      for (const txid of indice) {
+        const v = await env.PAGOS_KV.get(txid);
         if (!v) continue;
         let rec;
         try { rec = JSON.parse(v); } catch (e) { continue; } // saltea entradas corruptas
-        if (rec && rec.estado === "pendiente") pend.push({ txid: k.name, ...rec });
+        if (rec && rec.estado === "pendiente") pend.push({ txid, ...rec });
       }
       return json({ pendientes: pend }, 200, H);
     }
@@ -168,6 +196,7 @@ export default {
         rec.aplicado_ts = Date.now();
         await env.PAGOS_KV.put(body.txid, JSON.stringify(rec)); // se conserva = idempotencia
       }
+      await quitarDeIndice(env, body.txid);
       return json({ ok: true }, 200, H);
     }
 
