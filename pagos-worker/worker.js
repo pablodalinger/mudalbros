@@ -94,6 +94,8 @@ export default {
       const data = await r.json();
       if (!r.ok) return json({ error: "MP rechazo la preferencia", detail: data }, 502, H);
 
+      // PRODUCCION: usar init_point (el checkout real). Con credencial de PRUEBA
+      // habia que usar data.sandbox_init_point, pero ya estamos en produccion.
       return json({ init_point: data.init_point }, 200, H);
     }
 
@@ -143,8 +145,9 @@ export default {
       for (const k of list.keys) {
         const v = await env.PAGOS_KV.get(k.name);
         if (!v) continue;
-        const rec = JSON.parse(v);
-        if (rec.estado === "pendiente") pend.push({ txid: k.name, ...rec });
+        let rec;
+        try { rec = JSON.parse(v); } catch (e) { continue; } // saltea entradas corruptas
+        if (rec && rec.estado === "pendiente") pend.push({ txid: k.name, ...rec });
       }
       return json({ pendientes: pend }, 200, H);
     }
@@ -166,6 +169,36 @@ export default {
         await env.PAGOS_KV.put(body.txid, JSON.stringify(rec)); // se conserva = idempotencia
       }
       return json({ ok: true }, 200, H);
+    }
+
+    // ----------------------------------------------------------------------
+    // POST /push-ranking  -> el VPS empuja el top de jugadores (cada X min)
+    // body: { secret, topLevel: [{name,level,resets}], topReset: [...] }
+    // ----------------------------------------------------------------------
+    if (path === "/push-ranking" && request.method === "POST") {
+      let body;
+      try { body = await request.json(); } catch { return json({ error: "JSON invalido" }, 400, H); }
+      if (body.secret !== env.POLLER_SECRET) return json({ error: "no autorizado" }, 401, H);
+
+      const data = {
+        topLevel: Array.isArray(body.topLevel) ? body.topLevel.slice(0, 10) : [],
+        topReset: Array.isArray(body.topReset) ? body.topReset.slice(0, 10) : [],
+        updated: Date.now(),
+      };
+      await env.PAGOS_KV.put("ranking_data", JSON.stringify(data));
+      return json({ ok: true }, 200, H);
+    }
+
+    // ----------------------------------------------------------------------
+    // GET /ranking-data  -> publico, lo consume ranking.html
+    // ----------------------------------------------------------------------
+    if (path === "/ranking-data" && request.method === "GET") {
+      const v = await env.PAGOS_KV.get("ranking_data");
+      let data = { topLevel: [], topReset: [], updated: 0 };
+      if (v) {
+        try { data = JSON.parse(v); } catch (e) {}
+      }
+      return json(data, 200, H);
     }
 
     return json({ error: "ruta no encontrada" }, 404, H);

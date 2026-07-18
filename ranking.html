@@ -1128,19 +1128,60 @@ footer {
           <span class="rank-panel-icon">👑</span>
           <span class="rank-panel-title">Top Jugadores — Nivel</span>
         </div>
-        <div class="rank-empty">El ranking estará disponible cuando el servidor esté en producción.</div>
+        <div id="rank-level-wrap"><div class="rank-empty">Cargando ranking...</div></div>
       </div>
       <div class="rank-panel">
         <div class="rank-panel-head">
           <span class="rank-panel-icon">🔄</span>
           <span class="rank-panel-title">Top Resets</span>
         </div>
-        <div class="rank-empty">El ranking estará disponible cuando el servidor esté en producción.</div>
+        <div id="rank-reset-wrap"><div class="rank-empty">Cargando ranking...</div></div>
       </div>
     </div>
 
   </div>
 </section>
+<script>
+(function(){
+  var MEDALLA = ['g', 's', 'b'];
+
+  function construirTabla(lista, principal, secundario){
+    if (!lista || !lista.length) {
+      return '<div class="rank-empty">Todavía no hay datos de ranking.</div>';
+    }
+    var filas = lista.map(function(row, i){
+      var claseRpos = i < 3 ? ' ' + MEDALLA[i] : '';
+      return '<tr>' +
+        '<td class="rpos' + claseRpos + '">' + (i + 1) + '</td>' +
+        '<td class="rname">' + row.name + '</td>' +
+        '<td class="rmut">' + secundario(row) + '</td>' +
+        '<td class="rval">' + principal(row) + '</td>' +
+      '</tr>';
+    }).join('');
+    return '<table class="rtable"><tbody>' + filas + '</tbody></table>';
+  }
+
+  fetch('https://mudalbros-pagos.pablodalinger77.workers.dev/ranking-data')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      document.getElementById('rank-level-wrap').innerHTML = construirTabla(
+        data.topLevel,
+        function(row){ return 'Lvl ' + row.level; },
+        function(row){ return row.resets + ' resets'; }
+      );
+      document.getElementById('rank-reset-wrap').innerHTML = construirTabla(
+        data.topReset,
+        function(row){ return row.resets + ' resets'; },
+        function(row){ return 'Lvl ' + row.level; }
+      );
+    })
+    .catch(function(){
+      var msg = '<div class="rank-empty">No se pudo cargar el ranking. Intentá de nuevo más tarde.</div>';
+      document.getElementById('rank-level-wrap').innerHTML = msg;
+      document.getElementById('rank-reset-wrap').innerHTML = msg;
+    });
+})();
+</script>
 <div id="footer-char"></div>
 
 <!-- ═══ FOOTER ═══ -->
