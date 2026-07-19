@@ -816,16 +816,24 @@ table.rtable tr:hover td { background: rgba(255,255,255,0.02); }
   font-size: 0.78rem; color: var(--text-muted); font-style: italic;
 }
 
-.rank-more-btn {
-  display: block; width: 100%;
-  padding: 0.75rem;
-  background: none; border: none; border-top: 1px solid var(--border);
+.rank-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.rank-nav-btn {
+  background: none; border: none;
   color: var(--gold);
   font-size: 0.75rem; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase;
-  cursor: pointer; transition: background 0.2s;
+  cursor: pointer; padding: 0.35rem 0.5rem; transition: color 0.2s;
 }
-.rank-more-btn:hover { background: rgba(255,255,255,0.03); }
+.rank-nav-btn:hover { color: var(--gold-light); }
+
+.rank-nav-info {
+  font-size: 0.72rem; color: var(--text-muted);
+}
 
 /* ── DOWNLOAD ── */
 #download {
@@ -1157,11 +1165,14 @@ footer {
   var MEDALLA = ['g', 's', 'b'];
   var PASO = 10;
 
-  function construirFilas(lista, principal, secundario){
+  // offset = posicion global de la primera fila de esta pagina (para que la
+  // numeracion siga 11,12,13... en la 2da pagina en vez de reiniciar en 1).
+  function construirFilas(lista, principal, secundario, offset){
     return lista.map(function(row, i){
-      var claseRpos = i < 3 ? ' ' + MEDALLA[i] : '';
+      var pos = offset + i;
+      var claseRpos = pos < 3 ? ' ' + MEDALLA[pos] : '';
       return '<tr>' +
-        '<td class="rpos' + claseRpos + '">' + (i + 1) + '</td>' +
+        '<td class="rpos' + claseRpos + '">' + (pos + 1) + '</td>' +
         '<td class="rname">' + row.name + '</td>' +
         '<td class="rmut">' + secundario(row) + '</td>' +
         '<td class="rval">' + principal(row) + '</td>' +
@@ -1169,30 +1180,39 @@ footer {
     }).join('');
   }
 
-  // Arma un panel con paginado local (no hace falta pedir mas datos: ya
-  // tenemos hasta 50 en memoria, el boton solo revela mas filas).
+  // Arma un panel con paginado local en ventanas fijas de 10 (1-10, 11-20,
+  // 21-30...). No hace falta pedir mas datos: ya tenemos hasta 50 en memoria,
+  // el boton solo cambia que ventana se muestra.
   function armarPanel(wrapId, lista, principal, secundario){
     var wrap = document.getElementById(wrapId);
     if (!lista || !lista.length) {
       wrap.innerHTML = '<div class="rank-empty">Todavía no hay datos de ranking.</div>';
       return;
     }
-    var mostrando = Math.min(PASO, lista.length);
+    var totalPaginas = Math.ceil(lista.length / PASO);
+    var pagina = 0;
 
     function render(){
+      var desde = pagina * PASO;
+      var hasta = Math.min(desde + PASO, lista.length);
       var tabla = '<table class="rtable"><tbody>' +
-        construirFilas(lista.slice(0, mostrando), principal, secundario) +
+        construirFilas(lista.slice(desde, hasta), principal, secundario, desde) +
         '</tbody></table>';
-      var boton = '';
-      if (mostrando < lista.length) {
-        boton = '<button class="rank-more-btn">Ver ' +
-          Math.min(PASO, lista.length - mostrando) + ' más »</button>';
+
+      var nav = '';
+      if (totalPaginas > 1) {
+        nav = '<div class="rank-nav">' +
+          (pagina > 0 ? '<button class="rank-nav-btn" data-dir="prev">&lt;&lt; Anterior</button>' : '<span></span>') +
+          '<span class="rank-nav-info">' + (desde + 1) + '–' + hasta + ' de ' + lista.length + '</span>' +
+          (pagina < totalPaginas - 1 ? '<button class="rank-nav-btn" data-dir="next">Siguiente &gt;&gt;</button>' : '<span></span>') +
+          '</div>';
       }
-      wrap.innerHTML = tabla + boton;
-      var btn = wrap.querySelector('.rank-more-btn');
-      if (btn) {
-        btn.addEventListener('click', function(){
-          mostrando = Math.min(mostrando + PASO, lista.length);
+      wrap.innerHTML = tabla + nav;
+
+      var botones = wrap.querySelectorAll('.rank-nav-btn');
+      for (var b = 0; b < botones.length; b++) {
+        botones[b].addEventListener('click', function(e){
+          pagina += e.target.getAttribute('data-dir') === 'next' ? 1 : -1;
           render();
         });
       }
