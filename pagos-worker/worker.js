@@ -181,8 +181,10 @@ export default {
     }
 
     // ----------------------------------------------------------------------
-    // POST /marcar-hecho  -> el poller confirma que aplico un credito
-    // body: { txid, secret }
+    // POST /marcar-hecho  -> el poller confirma que aplico un credito o un alta
+    // body: { txid, secret, resultado? }
+    //   resultado (solo altas de cuenta): "ok" | "duplicada" | "error"
+    //   si no viene, se asume "ok" (flujo viejo de WCoin, no se toca)
     // ----------------------------------------------------------------------
     if (path === "/marcar-hecho" && request.method === "POST") {
       let body;
@@ -193,11 +195,85 @@ export default {
       if (v) {
         const rec = JSON.parse(v);
         rec.estado = "aplicado";
+        rec.resultado = body.resultado || "ok";
         rec.aplicado_ts = Date.now();
-        await env.PAGOS_KV.put(body.txid, JSON.stringify(rec)); // se conserva = idempotencia
+        // La password solo hace falta hasta que el poller crea la cuenta.
+        // Una vez aplicada, se borra del KV (no queda guardada en ningun lado).
+        if (rec.pass) delete rec.pass;
+        await env.PAGOS_KV.put(body.txid, JSON.stringify(rec), { expirationTtl: 86400 });
       }
       await quitarDeIndice(env, body.txid);
       return json({ ok: true }, 200, H);
+    }
+
+    // ----------------------------------------------------------------------
+    // POST /crear-cuenta  -> alta de cuenta del juego desde la web
+    // body: { cuenta, pass, email, pid }
+    // Deja el alta PENDIENTE en KV; el poller del VPS la inserta en MEMB_INFO
+    // y confirma con /marcar-hecho + resultado. La web sigue el estado con
+    // /estado-alta?ticket=...
+    // ----------------------------------------------------------------------
+    if (path === "/crear-cuenta" && request.method === "POST") {
+      let body;
+      try { body = await request.json(); } catch { return json({ error: "JSON invalido" }, 400, H); }
+
+      const cuenta = String(body.cuenta || "").trim();
+      const pass   = String(body.pass || "");
+      const email  = String(body.email || "").trim();
+      const pid    = String(body.pid || "").trim();
+
+      // Validaciones server-side: el front tambien valida, pero no se confia
+      // en el cliente (los limites salen del schema real de MEMB_INFO).
+      if (!/^[A-Za-z0-9]{4,10}$/.test(cuenta))
+        return json({ error: "El nombre de cuenta debe tener entre 4 y 10 caracteres, solo letras y numeros." }, 400, H);
+      if (pass.length < 4 || pass.length > 10)
+        return json({ error: "La contrasena debe tener entre 4 y 10 caracteres." }, 400, H);
+      if (email.length > 50 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))
+        return json({ error: "Email invalido." }, 400, H);
+      if (!/^[0-9]{10}$/.test(pid))
+        return json({ error: "El Personal ID debe tener exactamente 10 numeros." }, 400, H);
+
+      // Limite anti-abuso: 3 cuentas por IP por hora (sin captcha ni mail).
+      const ip = request.headers.get("CF-Connecting-IP") || "sin-ip";
+      const hora = Math.floor(Date.now() / 3600000);
+      const rlKey = "rl_alta_" + ip + "_" + hora;
+      const usadas = parseInt((await env.PAGOS_KV.get(rlKey)) || "0", 10);
+      if (usadas >= 3)
+        return json({ error: "Demasiadas cuentas creadas desde esta conexion. Esperá un rato." }, 429, H);
+      await env.PAGOS_KV.put(rlKey, String(usadas + 1), { expirationTtl: 3700 });
+
+      const txid = "alta_" + crypto.randomUUID();
+      const rec = {
+        tipo: "cuenta",
+        estado: "pendiente",
+        cuenta: cuenta,
+        pass: pass,
+        email: email,
+        pid: pid,
+        creado_ts: Date.now(),
+      };
+      // TTL de 1 dia: si el poller estuviera caido, el alta no queda para siempre.
+      await env.PAGOS_KV.put(txid, JSON.stringify(rec), { expirationTtl: 86400 });
+      await agregarAIndice(env, txid);
+
+      return json({ ok: true, ticket: txid }, 200, H);
+    }
+
+    // ----------------------------------------------------------------------
+    // GET /estado-alta?ticket=...  -> publico, lo consulta registro.html
+    // Devuelve SOLO el estado (nunca datos de la cuenta).
+    // ----------------------------------------------------------------------
+    if (path === "/estado-alta" && request.method === "GET") {
+      const ticket = url.searchParams.get("ticket") || "";
+      if (!ticket.startsWith("alta_")) return json({ estado: "error" }, 400, H);
+
+      const v = await env.PAGOS_KV.get(ticket);
+      if (!v) return json({ estado: "pendiente" }, 200, H);
+
+      let rec;
+      try { rec = JSON.parse(v); } catch (e) { return json({ estado: "error" }, 200, H); }
+      if (rec.estado !== "aplicado") return json({ estado: "pendiente" }, 200, H);
+      return json({ estado: rec.resultado || "ok" }, 200, H);
     }
 
     // ----------------------------------------------------------------------
