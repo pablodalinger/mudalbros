@@ -8,8 +8,18 @@
 // SECRETS que hay que cargar en el panel de Cloudflare (Settings > Variables):
 //   MP_ACCESS_TOKEN  = Access Token de MercadoPago (empieza TEST-/APP_USR- en prueba)
 //   POLLER_SECRET    = una clave larga inventada, compartida con el poller del VPS
-// BINDING de KV (Settings > Variables > KV Namespace Bindings):
-//   PAGOS_KV         = namespace nuevo para guardar creditos pendientes + idempotencia
+// BINDINGS (Settings > Bindings):
+//   PAGOS_KV         = KV namespace: creditos WCoin pendientes + idempotencia + ranking
+//   DB               = D1 database "mudalbros": cola de ALTAS DE CUENTA (tabla `altas`)
+//
+// ⚠️ POR QUE LAS ALTAS VAN EN D1 Y NO EN KV (medido el 2026-08-01, NO volver a KV):
+// Workers KV es *eventually consistent* y cachea las lecturas en cada edge hasta
+// 60 segundos, sin forma de bajarlo (cacheTtl minimo = 60). El poller consulta
+// desde otro colo que el navegador del jugador, y encima su propio polling
+// mantiene el cache caliente -> un alta tardaba ~55s en ser visible. Medicion
+// real: POST 1,7s + 54,4s hasta que el poller la vio. Con D1 la lectura es
+// consistente y el alta se ve al instante (el tiempo pasa a ser el ciclo del
+// poller). El WCoin se deja en KV a proposito: ahi 1 minuto no molesta.
 //
 // PACKS: definidos server-side aca para que el precio NO se pueda manipular
 // desde el cliente (el front manda solo el id de pack, no el precio).
@@ -168,8 +178,17 @@ export default {
       if (url.searchParams.get("secret") !== env.POLLER_SECRET)
         return json({ error: "no autorizado" }, 401, H);
 
-      const indice = await leerIndice(env);
       const pend = [];
+
+      // 1) ALTAS DE CUENTA -> D1 (lectura consistente: el poller las ve al toque)
+      const { results } = await env.DB.prepare(
+        "SELECT txid, cuenta, pass, email, pid FROM altas " +
+        "WHERE estado = 'pendiente' ORDER BY creado_ts LIMIT 25"
+      ).all();
+      for (const r of results || []) pend.push({ tipo: "cuenta", ...r });
+
+      // 2) WCOIN -> sigue en KV (hoy dormido; la demora de KV no molesta acá)
+      const indice = await leerIndice(env);
       for (const txid of indice) {
         const v = await env.PAGOS_KV.get(txid);
         if (!v) continue;
@@ -177,6 +196,7 @@ export default {
         try { rec = JSON.parse(v); } catch (e) { continue; } // saltea entradas corruptas
         if (rec && rec.estado === "pendiente") pend.push({ txid, ...rec });
       }
+
       return json({ pendientes: pend }, 200, H);
     }
 
@@ -191,14 +211,22 @@ export default {
       try { body = await request.json(); } catch { return json({ error: "JSON invalido" }, 400, H); }
       if (body.secret !== env.POLLER_SECRET) return json({ error: "no autorizado" }, 401, H);
 
+      // Las altas de cuenta viven en D1 (ver nota de consistencia arriba).
+      if (String(body.txid || "").startsWith("alta_")) {
+        // La password solo hace falta hasta que el poller crea la cuenta:
+        // al aplicarse se borra (no queda guardada en ningun lado).
+        await env.DB.prepare(
+          "UPDATE altas SET estado='aplicado', resultado=?, aplicado_ts=?, pass=NULL WHERE txid=?"
+        ).bind(body.resultado || "ok", Date.now(), body.txid).run();
+        return json({ ok: true }, 200, H);
+      }
+
       const v = await env.PAGOS_KV.get(body.txid);
       if (v) {
         const rec = JSON.parse(v);
         rec.estado = "aplicado";
         rec.resultado = body.resultado || "ok";
         rec.aplicado_ts = Date.now();
-        // La password solo hace falta hasta que el poller crea la cuenta.
-        // Una vez aplicada, se borra del KV (no queda guardada en ningun lado).
         if (rec.pass) delete rec.pass;
         await env.PAGOS_KV.put(body.txid, JSON.stringify(rec), { expirationTtl: 86400 });
       }
@@ -233,28 +261,26 @@ export default {
       if (!/^[0-9]{10}$/.test(pid))
         return json({ error: "El Personal ID debe tener exactamente 10 numeros." }, 400, H);
 
-      // Limite anti-abuso: 3 cuentas por IP por hora (sin captcha ni mail).
+      const ahora = Date.now();
       const ip = request.headers.get("CF-Connecting-IP") || "sin-ip";
-      const hora = Math.floor(Date.now() / 3600000);
-      const rlKey = "rl_alta_" + ip + "_" + hora;
-      const usadas = parseInt((await env.PAGOS_KV.get(rlKey)) || "0", 10);
-      if (usadas >= 3)
+
+      // Limite anti-abuso: 3 cuentas por IP por hora (sin captcha ni mail).
+      // Se cuenta en D1 y no en KV: el KV cacheado devolvia contadores viejos.
+      const rl = await env.DB.prepare(
+        "SELECT COUNT(*) AS n FROM altas WHERE ip = ? AND creado_ts > ?"
+      ).bind(ip, ahora - 3600000).first();
+      if (rl && rl.n >= 3)
         return json({ error: "Demasiadas cuentas creadas desde esta conexion. Esperá un rato." }, 429, H);
-      await env.PAGOS_KV.put(rlKey, String(usadas + 1), { expirationTtl: 3700 });
 
       const txid = "alta_" + crypto.randomUUID();
-      const rec = {
-        tipo: "cuenta",
-        estado: "pendiente",
-        cuenta: cuenta,
-        pass: pass,
-        email: email,
-        pid: pid,
-        creado_ts: Date.now(),
-      };
-      // TTL de 1 dia: si el poller estuviera caido, el alta no queda para siempre.
-      await env.PAGOS_KV.put(txid, JSON.stringify(rec), { expirationTtl: 86400 });
-      await agregarAIndice(env, txid);
+      await env.DB.prepare(
+        "INSERT INTO altas (txid, cuenta, pass, email, pid, ip, estado, creado_ts) " +
+        "VALUES (?, ?, ?, ?, ?, ?, 'pendiente', ?)"
+      ).bind(txid, cuenta, pass, email, pid, ip, ahora).run();
+
+      // Limpieza barata de altas viejas para que la tabla no crezca sin fin.
+      await env.DB.prepare("DELETE FROM altas WHERE creado_ts < ?")
+        .bind(ahora - 7 * 86400000).run();
 
       return json({ ok: true, ticket: txid }, 200, H);
     }
@@ -267,13 +293,13 @@ export default {
       const ticket = url.searchParams.get("ticket") || "";
       if (!ticket.startsWith("alta_")) return json({ estado: "error" }, 400, H);
 
-      const v = await env.PAGOS_KV.get(ticket);
-      if (!v) return json({ estado: "pendiente" }, 200, H);
+      const row = await env.DB.prepare(
+        "SELECT estado, resultado FROM altas WHERE txid = ?"
+      ).bind(ticket).first();
 
-      let rec;
-      try { rec = JSON.parse(v); } catch (e) { return json({ estado: "error" }, 200, H); }
-      if (rec.estado !== "aplicado") return json({ estado: "pendiente" }, 200, H);
-      return json({ estado: rec.resultado || "ok" }, 200, H);
+      if (!row) return json({ estado: "pendiente" }, 200, H);
+      if (row.estado !== "aplicado") return json({ estado: "pendiente" }, 200, H);
+      return json({ estado: row.resultado || "ok" }, 200, H);
     }
 
     // ----------------------------------------------------------------------
