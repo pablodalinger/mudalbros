@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-<script>if(window!==window.top){document.write('<style>nav,#music-player,#bg-music{display:none!important}body{padding-top:0!important}<\/style>');document.addEventListener('DOMContentLoaded',function(){var a=document.getElementById('bg-music');if(a){a.pause();a.src='';a.remove();}window.parent.postMessage({page:'inicio.html'},'*');});}
+<script>if(window!==window.top){document.write('<style>nav,#music-player,#bg-music{display:none!important}body{padding-top:0!important}#cd-open{margin-top:1.6rem!important}#hero{padding-top:0!important}<\/style>');document.addEventListener('DOMContentLoaded',function(){var a=document.getElementById('bg-music');if(a){a.pause();a.src='';a.remove();}window.parent.postMessage({page:'inicio.html'},'*');});}
 </script>
 
 <meta charset="UTF-8">
@@ -148,7 +148,7 @@ nav {
 
 /* ══ CUENTA REGRESIVA AL OPEN OFICIAL (arriba del logo) ══ */
 #cd-open {
-  margin: -58px auto 0.75rem;
+  margin: -58px auto 1.4rem;
   display: flex; flex-direction: column; align-items: center;
   animation: cd-in 0.8s ease-out both;
 }
@@ -1139,7 +1139,10 @@ footer {
   .nav-btn { padding: 0.4rem 0.75rem; font-size: 0.7rem; }
 
   /* HERO */
-  #hero { min-height: 100svh; }
+  /* En celular el contenido (contador + logo + datos + botones) no entra en
+     una pantalla, y al estar centrado verticalmente se desbordaba HACIA ARRIBA
+     y cortaba el contador. Se alinea arriba y se deja crecer hacia abajo. */
+  #hero { min-height: 100svh; height: auto; justify-content: flex-start; padding-top: 1.2rem; padding-bottom: 2.5rem; }
   .hero-logo { width: 85vw; height: auto; margin-top: -40px; }
   .hero-title { font-size: clamp(1.6rem, 7vw, 2.4rem) !important; }
   .hero-sub { font-size: 0.85rem !important; }
