@@ -1429,14 +1429,22 @@ footer {
 }
 #beta-modal{
   position:relative;
-  max-width:1200px; width:96vw;
+  /* La imagen es VERTICAL (1024x1536) y va sola, sin texto debajo. Se la
+     dimensiona por ALTURA para que ocupe todo lo que la pantalla permita:
+     el modal se ajusta al tamano de la imagen, sin deformarla ni cortarla. */
+  display:inline-block;
+  line-height:0;
   background:#0a0d18;
   border:1px solid rgba(212,168,67,0.5);
   border-radius:12px;
   box-shadow:0 20px 70px rgba(0,0,0,0.85);
   overflow:hidden;
 }
-#beta-modal img{ display:block; width:100%; height:auto; }
+#beta-modal img{
+  display:block;
+  width:auto; height:auto;
+  max-height:94vh; max-width:94vw;
+}
 #beta-close{
   position:absolute; top:10px; left:10px;
   width:32px; height:32px;
@@ -1450,37 +1458,11 @@ footer {
   transition:background 0.2s, transform 0.2s;
 }
 #beta-close:hover{ background:rgba(212,168,67,0.25); transform:scale(1.08); }
-#beta-text{
-  padding:1.1rem 1.4rem 1.4rem;
-  text-align:center;
-}
-#beta-text strong{
-  display:block;
-  color:var(--gold-light);
-  font-size:1rem;
-  letter-spacing:0.05em;
-  margin-bottom:0.5rem;
-}
-#beta-text p{
-  color:rgba(255,255,255,0.82);
-  font-size:0.88rem;
-  line-height:1.5;
-  margin:0;
-}
-#beta-text p b{ color:var(--gold-light); }
-@media (max-width:560px){
-  #beta-text strong{ font-size:0.9rem; }
-  #beta-text p{ font-size:0.8rem; }
-}
 </style>
 <div id="beta-overlay">
   <div id="beta-modal">
     <button id="beta-close" aria-label="Cerrar">&times;</button>
-    <img src="images/VentanaFlotante.png" alt="MU DalBros - Servidor en BETA">
-    <div id="beta-text">
-      <strong>⚠ ESTAMOS EN BETA</strong>
-      <p>Durante esta BETA, los <b>NPCs, la experiencia y el drop rate</b> están aumentados para facilitar las pruebas. <b>El servidor oficial no tendrá estos valores</b> — esto es solo temporal mientras testeamos.</p>
-    </div>
+    <img src="images/NuevaVentanaFlotante.png" alt="MU DalBros - Apertura oficial 8 de agosto">
   </div>
 </div>
 <script>

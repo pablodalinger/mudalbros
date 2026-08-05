@@ -145,6 +145,94 @@ nav {
   filter: drop-shadow(0 0 40px rgba(212,168,67,0.7)) drop-shadow(0 0 80px rgba(212,168,67,0.3));
   animation: float 4s ease-in-out infinite, logo-flash 6s ease-in-out infinite;
 }
+
+/* ══ CUENTA REGRESIVA AL OPEN OFICIAL (arriba del logo) ══ */
+#cd-open {
+  margin: -58px auto 0.75rem;
+  display: flex; flex-direction: column; align-items: center;
+  animation: cd-in 0.8s ease-out both;
+}
+/* El logo trae margin-top:-80px para subirse en el hero; con el contador
+   arriba ese negativo lo hacia pisarlo. El corrimiento pasa al contador. */
+#hero .hero-content .hero-logo { margin-top: 0; }
+@keyframes cd-in { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:none; } }
+
+.cd-title {
+  font-size: 1.05rem; font-weight: 900;
+  letter-spacing: 0.34em; text-transform: uppercase;
+  color: var(--gold-light);
+  text-shadow: 0 0 18px rgba(240,200,90,0.95), 0 0 38px rgba(212,168,67,0.55),
+               0 2px 6px rgba(0,0,0,0.95),
+               -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  margin-bottom: 0.55rem;
+  animation: cd-glow 2.8s ease-in-out infinite;
+}
+@keyframes cd-glow {
+  0%,100% { text-shadow: 0 0 14px rgba(240,200,90,0.75), 0 0 28px rgba(212,168,67,0.4), 0 2px 6px rgba(0,0,0,0.95), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+  50%     { text-shadow: 0 0 22px rgba(255,225,130,1), 0 0 48px rgba(212,168,67,0.75), 0 2px 6px rgba(0,0,0,0.95), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+}
+
+.cd-boxes { display: flex; align-items: center; gap: 0.4rem; }
+
+.cd-box {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 74px; padding: 0.5rem 0.7rem 0.4rem;
+  background: linear-gradient(180deg, rgba(11,15,30,0.88), rgba(6,8,18,0.92));
+  border: 1px solid rgba(212,168,67,0.45);
+  border-radius: 6px;
+  box-shadow: 0 0 18px rgba(212,168,67,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
+  backdrop-filter: blur(4px);
+}
+
+.cd-num {
+  font-size: 2.1rem; font-weight: 900; line-height: 1;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 16px rgba(240,200,90,0.85), 0 2px 6px rgba(0,0,0,0.95);
+}
+
+.cd-lbl {
+  font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-top: 0.28rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+}
+
+.cd-sep {
+  font-size: 1.6rem; font-weight: 900; color: var(--gold);
+  opacity: 0.75; margin-bottom: 0.9rem;
+  text-shadow: 0 0 10px rgba(212,168,67,0.6);
+}
+
+.cd-date {
+  margin-top: 1.35rem;
+  /* Es el dato mas importante del hero: ocupa casi todo el ancho del bloque. */
+  font-size: clamp(1.1rem, 3.6vw, 2.05rem); font-weight: 900;
+  white-space: nowrap;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold-light);
+  text-shadow: 0 0 16px rgba(240,200,90,0.95), 0 0 34px rgba(212,168,67,0.55),
+               0 2px 6px rgba(0,0,0,0.95),
+               -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  animation: cd-date-glow 2.8s ease-in-out infinite;
+}
+@keyframes cd-date-glow {
+  0%,100% { text-shadow: 0 0 12px rgba(240,200,90,0.7), 0 0 24px rgba(212,168,67,0.35), 0 2px 6px rgba(0,0,0,0.95), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+  50%     { text-shadow: 0 0 24px rgba(255,228,140,1), 0 0 52px rgba(212,168,67,0.8), 0 2px 6px rgba(0,0,0,0.95), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+}
+
+/* Cuando el server ya abrio */
+#cd-open.abierto .cd-boxes, #cd-open.abierto .cd-date { display: none; }
+#cd-open.abierto .cd-title { font-size: 1.5rem; letter-spacing: 0.2em; }
+
+@media (max-width: 560px) {
+  #cd-open { margin: -70px auto 1.1rem; }
+  .cd-title { font-size: 0.8rem; letter-spacing: 0.22em; }
+  .cd-box { min-width: 56px; padding: 0.4rem 0.45rem 0.32rem; }
+  .cd-num { font-size: 1.5rem; }
+  .cd-lbl { font-size: 0.5rem; letter-spacing: 0.14em; }
+  .cd-sep { font-size: 1.1rem; margin-bottom: 0.75rem; }
+  .cd-date { font-size: 0.82rem; letter-spacing: 0.12em; margin-top: 0.8rem; }
+}
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
 .hero-logo {
   animation: float 4s ease-in-out infinite;
@@ -1236,6 +1324,51 @@ footer {
   <div id="dl-hair-glow"></div>
 
   <div class="hero-content">
+
+    <!-- ── CUENTA REGRESIVA AL OPEN OFICIAL ── -->
+    <div id="cd-open">
+      <div class="cd-title">⚔ Oficial Open ⚔</div>
+      <div class="cd-boxes">
+        <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Días</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Horas</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Min</span></div>
+      </div>
+      <div class="cd-date">Sábado 8 de Agosto · 20:00 hs</div>
+    </div>
+    <script>
+    (function(){
+      // Apertura oficial: 8 de agosto de 2026, 20:00 hora de Argentina (UTC-3).
+      // Se ancla el huso horario a proposito: el que entre desde otro pais ve
+      // cuanto falta para ESE momento, no para las 20:00 de su reloj.
+      var OPEN = new Date('2026-08-08T20:00:00-03:00').getTime();
+      var elD = document.getElementById('cd-d'),
+          elH = document.getElementById('cd-h'),
+          elM = document.getElementById('cd-m'),
+          caja = document.getElementById('cd-open');
+
+      function dosDigitos(n){ return (n < 10 ? '0' : '') + n; }
+
+      function tick(){
+        var falta = OPEN - Date.now();
+        if (falta <= 0) {
+          caja.classList.add('abierto');
+          caja.querySelector('.cd-title').textContent = '⚔ ¡Servidor Online! ⚔';
+          clearInterval(timer);
+          return;
+        }
+        var min = Math.floor(falta / 60000);
+        elD.textContent = dosDigitos(Math.floor(min / 1440));
+        elH.textContent = dosDigitos(Math.floor(min % 1440 / 60));
+        elM.textContent = dosDigitos(min % 60);
+      }
+
+      tick();
+      var timer = setInterval(tick, 1000);
+    })();
+    </script>
+
     <img src="images/MuDalBrosLogo.webp" alt="MU DalBros" class="hero-logo" width="520" height="347" fetchpriority="high">
     <div class="hero-label">Servidor Privado Argentino</div>
     <div class="hero-sub">Season 6 · La experiencia clásica de MU Online<br>
