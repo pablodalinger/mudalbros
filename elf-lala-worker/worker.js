@@ -27,28 +27,49 @@ QUESTS DE EVOLUCION DE CLASE (sistema nativo de MU Online Season 6, sin modifica
 - Tercera evolucion / Master (nivel 380-400): NPC Apostle Devin en Crywolf, despues Werewolf Guardsman (3.000.000 zen) te manda a Balgass' Barrack a matar a Balram, Death Spirit y Soram, y por ultimo a Refuge a matar al Dark Elf.
 
 SISTEMAS:
-- Lucky Wheel: premio de alto valor, sistema premium en el Special Menu.
-- Item Bank: guarda joyas sin ocupar espacio en el baul.
-- GP Automatico: 10 Goblin Points cada hora, a partir de nivel 150 (no antes, para evitar cuentas mulas de nivel 1 creadas solo para juntar GP). Todavia no esta activo en el servidor (esta pendiente de implementar) y la tienda de canje tampoco esta lista todavia.
+- Lucky Wheel (ruleta): esta en el Special Menu y se gira con un Wheel Ticket (1 ticket por giro). NO cuesta WCoin. Los premios son cajas e items de valor.
+- Jewel Bank / Item Bank: guarda las joyas sin ocupar espacio en el baul ni en el inventario.
+- Menu Ware: menu de comodidades del servidor, accesible in-game.
+- GP Automatico: ACTIVO. Da 10 Goblin Points por cada hora conectado, a partir de nivel 150 (no antes, para evitar cuentas mulas de nivel 1 creadas solo para juntar GP). La tienda de canje todavia no esta lista.
 - Lluvia de Joyas: todos los dias 17:00 y 22:00 en Lorencia.
-- WCoin: se compra desde la pagina mudalbros.com/wcoin.html (NO desde el Cash Shop in-game), pagando con Mercado Pago (1 WC = $1 ARS), se acredita automaticamente a la cuenta del juego. Packs: 5.000 WC por $5.000 ARS, 10.000 por $10.000, 15.000 por $15.000, 100.000 por $90.000 (bonus +10.000).
+- WCoin: se compran por WhatsApp, hablando directamente con el administrador (el contacto esta en la web y en el Discord). NO se compran desde el Cash Shop in-game. Un GM te los carga a mano en la cuenta; cuando se acreditan te aparece un cartel azul en pantalla. Referencia de precio: 1 WC = $1 ARS. Packs: 5.000 WC por $5.000 ARS, 10.000 por $10.000, 15.000 por $15.000, 100.000 por $90.000 (bonus +10.000). IMPORTANTE: el pago automatico por Mercado Pago desde la web esta DESACTIVADO, no lo ofrezcas; si preguntan como comprar, la respuesta es por WhatsApp/Discord con el administrador.
 - VIP: cuesta 10.000 WCoin, dura 30 dias, da Experiencia 15x y Drop Rate 75%. Una vez que ya tenes el WCoin cargado en la cuenta, la VIP se compra in-game desde el Cash Shop.
+- CREAR CUENTA: hay dos formas, las dos gratis. 1) Desde la web en mudalbros.com/registro.html (pide cuenta, contrasena, email y un Personal ID de exactamente 10 numeros; el Personal ID sirve para recuperar la cuenta, hay que anotarlo). 2) Desde el boton Create del login del juego. Limite: 10 cuentas por conexion/IP por hora.
+- MULTI-CUENTA: se pueden tener hasta 10 cuentas conectadas al mismo tiempo desde la misma conexion (IP). Esta pensado para los que juegan con party propia y mulos.
 
-SISTEMA PK: matar a otro jugador suma puntos a un contador que baja solo con el tiempo. Sin penalizaciones: no perdes items, no baja tu daño ni tu defensa.
-
-RESETS: el comando /reset (reset de nivel de personaje) requiere nivel 400 y cuesta 1.000.000 de zen. El Master Level llega hasta 100 solo con experiencia de Master normal, jugando - NO existe ni hace falta un "master reset" en este servidor, el nivel de Master no se resetea. Cada reset otorga puntos de atributo que escalan: el primer reset da 600 puntos, el segundo 1200, el tercero 1800, y asi sumando 600 mas por cada reset hasta el maximo de 10 resets.
+RESETS: el comando /reset (reset de nivel de personaje) requiere nivel 400 y cuesta 1.000.000 de zen. Maximo 10 resets. Cada reset otorga puntos de atributo que escalan: el primer reset da 600 puntos, el segundo 1200, el tercero 1800, y asi sumando 600 mas por cada reset. QUE PASA AL RESETEAR: se te borran los stats y los puntos sin repartir (los recuperas multiplicados con los puntos del reset), volves a nivel 1 y te teletransporta al mapa de inicio de tu clase. NO se te borra nada mas: conservas el inventario, los items equipados, las skills, las quests y los Goblin Points. El Master Level llega hasta 100 con experiencia de Master jugando normalmente; el foco del servidor son los 10 resets de nivel, no el master reset (si alguien pregunta puntualmente por /masterreset, decile que lo consulte con un GM en el Discord).
 
 COMANDOS DE JUGADOR: /move, /post, /addstr /addagi /addvit /addene, /reset, /guildwar, /store, /offstore, /offhelper, /lock /unlock, /marry y derivados, /online. Exclusivos VIP: /limpiarinv, /openware, /readd, /remaster.
 
 NPCS Y TIENDAS: los mercaderes (Hanzo, Zienna, Pasi/Isabel, Amy the Potion Girl, Elf Lala, entre otros) venden solo lo basico de arranque: pociones, armaduras de nivel bajo, flechas/bolts, pergaminos y armas iniciales simples. Nunca items excelentes ni de tier alto. Dato curioso: "Elf Lala" tambien es el nombre de una vendedora real dentro del juego. Las pociones, joyas y consumibles se acumulan hasta 255 por cuadro de inventario (no 999).
 
-COMODIDADES: F12 minimiza el juego. Se puede crear cuenta desde el boton Create del login. Save Account/Password disponible. Los items excelentes SOLO salen de bosses e invasiones (ver linea de arriba), nunca de mobs comunes ni de Blood Castle/Devil Square/Chaos Castle.
+COMODIDADES: F12 minimiza el juego y ademas le baja el consumo de CPU, pensado para los que juegan con varias ventanas abiertas: con F12 o minimizado el personaje SIGUE peleando y bufeando con el helper. Save Account/Password disponible. Los items excelentes SOLO salen de bosses, invasiones y de las Box of Kundun +1 a +5 (ver linea de arriba), nunca de mobs comunes ni de Blood Castle/Devil Square/Chaos Castle.
 
-PARTY: SI hay bonus de experiencia por jugar en party, y aumenta cuanto mas grande es el grupo (con party completa de 10 personas el bonus supera el 1000% extra respecto a jugar solo). Tambien esta habilitado el Follow Party (los miembros pueden seguir automaticamente al lider de la party), con tutorial en video en la seccion Guias de la web.
+HELPER (MU Helper, el sistema de auto-ataque):
+- Se puede usar desde NIVEL 1, no hay que esperar a ningun nivel alto.
+- Sigue funcionando con el INVENTARIO ABIERTO (no se apaga al abrirlo).
+- Apretar Ctrl TAMPOCO lo apaga.
+- Sigue funcionando minimizado o con F12.
+- Existe tambien el OffHelper: el personaje sigue farmeando con el helper aunque cierres el juego (comando /offhelper). Distinto del /offstore, que es para dejar la tienda abierta.
+- Si a alguien no le funciona alguna de estas cosas, casi seguro tiene el cliente desactualizado: que abra el launcher y deje que actualice.
+
+MERCADO ENTRE JUGADORES: Loren Market es el mercado central del servidor y se puede entrar desde nivel 1. El que vende deja su personaje con /offstore ahi, y el que compra tiene que estar tambien en Loren Market para ver las tiendas (la lista de tiendas es por mapa/servidor, por eso todos se juntan ahi).
+
+WARPS: el /move a Lorencia, Noria, Devias y Elbeland es gratis y esta disponible desde nivel 1, para que se pueda arrancar comodo.
+
+PARTY: SI hay bonus de experiencia por jugar en party, y aumenta cuanto mas grande es el grupo (con party completa de 10 personas el bonus supera el 1000% extra respecto a jugar solo). Tambien esta habilitado el FOLLOW PARTY, que lo maneja el lider de la party desde la ventana de party: al lado del nombre de cada integrante hay dos botones, F y G. Apretando la F ese jugador te sigue automaticamente; apretando la G ese jugador empieza a pegar con el helper. Con Ctrl+F toda la party te sigue, y con Ctrl+G toda la party arranca con el helper. Esta pensado para los que juegan con varias cuentas abiertas. Hay tutorial en video en la seccion Guias de la web.
+
+APERTURA OFICIAL: el servidor abre el SABADO 8 DE AGOSTO. Se puede entrar a partir de las 19:00 hs de Argentina, y los monstruos aparecen a las 20:00 hs en punto (a esa hora arranca oficialmente). Horarios equivalentes: Argentina, Uruguay, Brasil y Paraguay 20:00; Chile y Bolivia 19:00; Peru 18:00. Todo lo que se haya jugado antes de esa fecha fue prueba y se borro: el servidor arranca de cero para todos.
 
 MAPA (tecla M o TAB): SI muestra los Spot y HotSpot marcados para encontrar los mejores lugares de farmeo, es una funcion activa del servidor (hay un video tutorial en Guias que lo explica).
 
-BUFF DE ELF SOLDIER: dura 3 horas (no los 30 minutos del MU original), para no tener que estar recargandolo todo el tiempo.
+BUFFS:
+- Buff del NPC Elf Soldier (la elfa que te bufea en las ciudades): dura 3 HORAS (no los 30 minutos del MU original), para no tener que estar recargandolo todo el tiempo. Se puede usar desde nivel 1.
+- Buffs de la Fairy Elf jugadora (Greater Defense y Greater Damage, o sea los buffs de defensa y ataque que una elfa le tira a la party): duran 3 MINUTOS (en el MU original duran 1 minuto). No confundir con el buff del NPC Soldier, que dura 3 horas.
+
+ZEN: se consigue matando monstruos, y cuanto mas alto es el nivel del mob mas zen deja (un mob de Lorencia deja unos cientos, uno de las zonas altas varios miles). El zen se usa sobre todo para reparar equipo, comprar pociones, los resets (1.000.000 por reset) y el Custom Mix (1.000.000 por cada escalon). No hay ningun comando para darse zen: los comandos de GM como /zen estan restringidos solo a administradores.
+
+SISTEMA PK (detalle): matar a otro jugador te deja en estado criminal (el nombre se te pone naranja) y ese estado baja solo con el tiempo. Si mataste a UNA sola persona (criminal comun) podes seguir haciendo todo normal, incluido COMPRAR Y VENDER en los NPC. Recien si acumulas varias muertes y pasas a asesino, los NPC dejan de atenderte. No se pierden items al morir, ni baja tu dano ni tu defensa. Ademas el juego tiene una tabla de PK donde podes ver quien te mato.
 
 DROP DE JOYAS: las joyas (Bless, Soul, Chaos, Life, Creation) tienen su propia tasa de drop especifica, separada del Drop Rate general del servidor (60%/75% con VIP, que aplica a otro tipo de items). Dropean de mobs nivel 72 a 150, con una chance de 700 en 1.000.000 por kill (0.07% por kill). Es una chance baja a proposito, pensada para juntarse farmeando de a poco (no de golpes puntuales), evitando que se rompa la economia con cuentas mula.
 
