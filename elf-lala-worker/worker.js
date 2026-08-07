@@ -16,7 +16,7 @@ EVENTOS CLASICOS Y SUS HORARIOS:
 - Devil Square: oleadas de monstruos. Cada 2 horas y media, dura 3 minutos, hasta 15 jugadores.
 - Chaos Castle: battle royale. Cada 2 horas en las horas impares, dura 10 minutos, se puede entrar solo.
 - Illusion Temple: actualmente DESACTIVADO, no esta disponible.
-- IMPORTANTE: Blood Castle, Devil Square y Chaos Castle NO dropean items excelentes en MU DalBros (a diferencia de otros servidores de MU donde si puede pasar). Los items excelentes en nuestro servidor SOLO salen de los bosses y las invasiones (Skeleton King, Red Dragon, White Wizard, Medusa, Selupan, Kundun, Dark Elf, Nightmare, Golden Invasion), nunca de estos 3 eventos clasicos. Si te preguntan si estos eventos dan excelentes, la respuesta es NO.
+- IMPORTANTE: Blood Castle, Devil Square y Chaos Castle NO dropean items excelentes en MU DalBros. Si te preguntan si estos eventos dan excelentes, la respuesta es NO. La lista completa de donde SI salen esta en la seccion "DE DONDE SALEN LOS ITEMS EXCELENTES".
 
 INVASIONES (horarios generales, el detalle de drop de cada una esta en la base de datos):
 - Skeleton King (Lorencia, 8:00 y 20:00hs), Red Dragon (Vulcanus, 3:15/11:15/19:15hs), Golden Invasion (varios mapas, 10:00 y 22:00hs), White Wizard (Noria, 9:00 y 21:00hs), Medusa (Swamp of Calmness, 23:00hs), Pouch of Blessing/White Rabbits/Fire Flame Ghost (eventos de temporada, varios horarios). Silver Invasion: proximamente.
@@ -43,7 +43,23 @@ COMANDOS DE JUGADOR: /move, /post, /addstr /addagi /addvit /addene, /reset, /gui
 
 NPCS Y TIENDAS: los mercaderes (Hanzo, Zienna, Pasi/Isabel, Amy the Potion Girl, Elf Lala, entre otros) venden solo lo basico de arranque: pociones, armaduras de nivel bajo, flechas/bolts, pergaminos y armas iniciales simples. Nunca items excelentes ni de tier alto. Dato curioso: "Elf Lala" tambien es el nombre de una vendedora real dentro del juego. Las pociones, joyas y consumibles se acumulan hasta 255 por cuadro de inventario (no 999).
 
-COMODIDADES: F12 minimiza el juego y ademas le baja el consumo de CPU, pensado para los que juegan con varias ventanas abiertas: con F12 o minimizado el personaje SIGUE peleando y bufeando con el helper. Save Account/Password disponible. Los items excelentes SOLO salen de bosses, invasiones y de las Box of Kundun +1 a +5 (ver linea de arriba), nunca de mobs comunes ni de Blood Castle/Devil Square/Chaos Castle.
+COMODIDADES: F12 minimiza el juego y ademas le baja el consumo de CPU, pensado para los que juegan con varias ventanas abiertas: con F12 o minimizado el personaje SIGUE peleando y bufeando con el helper. Save Account/Password disponible.
+
+DE DONDE SALEN LOS ITEMS EXCELENTES (dato verificado en los archivos del servidor - esta es la lista COMPLETA y correcta, no agregues ni saques nada):
+
+1) BOSSES QUE SI TIRAN EXCELENTES: Medusa, Selupan, Nightmare, Hands of Maya (las manos de Maya, en Kalima), Erohim y Dark Elf. El que mas tira de todos es Hands of Maya (practicamente todo su drop es excelente).
+
+2) BOX OF KUNDUN +1 a +5: SI dan items excelentes, siempre con 1 opcion excelente. Estas cajas las tiran los monstruos DORADOS de la Invasion Dorada (Golden Invasion): cada mob dorado tira una o varias cajas segun cual sea (por ejemplo el Golden Budge Dragon tira 1 Box of Kundun +1, y el Golden Great Dragon tira 5 cajas de las mas altas). MECANICA IMPORTANTE: la caja NO se abre con doble click - hay que TIRARLA AL PISO y ahi aparece el item. Muchos jugadores no lo saben.
+
+3) BOSSES E INVASIONES QUE NO TIRAN EXCELENTES (importante para no generar falsas expectativas):
+- Skeleton King: solo joyas (Chaos, Bless, Soul, Life, Creation).
+- White Wizard: solo joyas.
+- Red Dragon: Silver Keys, Gold Keys y con muy baja probabilidad un Wheel Ticket. NO tira excelentes.
+- Kundun: segun su tabla de drop solo tira Jewel of Bless. NO es el boss de los excelentes (mucha gente lo cree por el nombre de las Box of Kundun, pero son cosas distintas: las cajas vienen de la invasion dorada).
+- Invasiones de temporada (Happy New Year, Rabbit Invasion, Pouch of Blessing, Fire Flame Ghost): tiran joyas.
+- Blood Castle, Devil Square y Chaos Castle: no tiran excelentes.
+
+4) Los mobs comunes NO tiran items excelentes directamente. La unica via "farmeando" es la Invasion Dorada, porque de ahi salen las cajas.
 
 HELPER (MU Helper, el sistema de auto-ataque):
 - Se puede usar desde NIVEL 1, no hay que esperar a ningun nivel alto.
