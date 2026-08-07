@@ -264,12 +264,40 @@ export default {
       const ahora = Date.now();
       const ip = request.headers.get("CF-Connecting-IP") || "sin-ip";
 
-      // Limite anti-abuso: 3 cuentas por IP por hora (sin captcha ni mail).
+      // ------------------------------------------------------------------
+      // Anti-bot: Cloudflare Turnstile.
+      // El secret va como VARIABLE del Worker (Settings > Variables), NUNCA
+      // en el codigo ni en el HTML. Si TURNSTILE_SECRET no esta cargado, la
+      // verificacion se saltea a proposito para que el orden del deploy no
+      // rompa el registro. => Si esta variable falta, el captcha NO protege.
+      // ------------------------------------------------------------------
+      if (env.TURNSTILE_SECRET) {
+        const tsToken = String(body.turnstile || "");
+        if (!tsToken)
+          return json({ error: "Confirmá el \"No soy un robot\" antes de continuar." }, 400, H);
+
+        const ver = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            secret: env.TURNSTILE_SECRET,
+            response: tsToken,
+            remoteip: ip,
+          }),
+        });
+        const vd = await ver.json().catch(() => ({ success: false }));
+        if (!vd.success)
+          return json({ error: "La verificación anti-bot falló. Recargá la página e intentá de nuevo." }, 403, H);
+      }
+
+      // Limite anti-abuso: 10 cuentas por IP por hora.
+      // NO bajarlo: el multi-cuenta es publico legitimo y promocionado del server
+      // (una party de 5 + los mulos para vender se crea de una sentada).
       // Se cuenta en D1 y no en KV: el KV cacheado devolvia contadores viejos.
       const rl = await env.DB.prepare(
         "SELECT COUNT(*) AS n FROM altas WHERE ip = ? AND creado_ts > ?"
       ).bind(ip, ahora - 3600000).first();
-      if (rl && rl.n >= 3)
+      if (rl && rl.n >= 10)
         return json({ error: "Demasiadas cuentas creadas desde esta conexion. Esperá un rato." }, 429, H);
 
       const txid = "alta_" + crypto.randomUUID();

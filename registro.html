@@ -346,7 +346,11 @@ footer { background: #040609; border-top: 1px solid var(--border); padding: 3rem
   .nav-btn-crear { padding: 0.4rem 0.6rem; font-size: 0.64rem; letter-spacing: 0.05em; }
   nav { padding: 0 0.6rem; gap: 0.5rem; }
 }
+.reg-captcha { display: flex; justify-content: center; margin: 0.2rem 0 1rem; min-height: 0; }
+.reg-captcha:empty { display: none; }
 </style>
+<!-- Cloudflare Turnstile (anti-bot del registro). async+defer: no frena la carga. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <nav>
@@ -434,6 +438,15 @@ footer { background: #040609; border-top: 1px solid var(--border); padding: 3rem
           <div class="reg-notice">
             <strong>Anotá tus datos.</strong> La cuenta y la contraseña son las que vas a usar para entrar al juego.
             El Personal ID sirve para recuperar la cuenta si te olvidás la contraseña — guardalo en algún lado.
+          </div>
+
+          <!-- Anti-bot (Cloudflare Turnstile). El site key es PUBLICO, va aca.
+               El secret NUNCA va en el HTML: se carga como variable en el Worker. -->
+          <div class="reg-captcha">
+            <div class="cf-turnstile"
+                 data-sitekey="0x4AAAAAAEI04FHSP9lo0_6W"
+                 data-theme="dark"
+                 data-language="es"></div>
           </div>
 
           <button class="btn-crear" id="btn-crear" disabled>Crear mi cuenta</button>
@@ -582,10 +595,34 @@ footer { background: #040609; border-top: 1px solid var(--border); padding: 3rem
       });
   }
 
+  // ── Anti-bot ────────────────────────────────────────────────────────────
+  // Si todavia no se pego el Site Key, el widget no existe y el registro sigue
+  // funcionando igual (para no romper la web por el orden del deploy).
+  var _elCap = document.querySelector('.cf-turnstile[data-sitekey]');
+  var _sk = _elCap ? _elCap.getAttribute('data-sitekey') : '';
+  var captchaActivo = !!_sk && _sk.indexOf('PEGAR_SITE_KEY') === -1;
+
+  function tokenCaptcha(){
+    if (!captchaActivo) return '';
+    try { return (window.turnstile && window.turnstile.getResponse()) || ''; }
+    catch(e){ return ''; }
+  }
+  // El token es de UN SOLO USO: si el alta falla hay que pedir uno nuevo.
+  function resetCaptcha(){
+    if (!captchaActivo) return;
+    try { if (window.turnstile) window.turnstile.reset(); } catch(e){}
+  }
+
   btn.addEventListener('click', function(){
     if (!validar()) return;
     var cuenta = elCuenta.value.trim();
     var pid = elPid.value.trim();
+
+    var tsToken = tokenCaptcha();
+    if (captchaActivo && !tsToken) {
+      setMsg('Confirmá el "No soy un robot" antes de continuar.', 'error');
+      return;
+    }
 
     btn.disabled = true;
     btn.textContent = 'Creando...';
@@ -598,26 +635,27 @@ footer { background: #040609; border-top: 1px solid var(--border); padding: 3rem
         cuenta: cuenta,
         pass: elPass.value,
         email: elEmail.value.trim(),
-        pid: pid
+        pid: pid,
+        turnstile: tsToken
       })
     })
     .then(function(r){ return r.json().then(function(d){ return { status: r.status, data: d }; }); })
     .then(function(res){
       if (res.status === 429) {
         setMsg('Estás creando demasiadas cuentas seguidas. Esperá un rato e intentá de nuevo.', 'error');
-        btn.disabled = false; btn.textContent = 'Crear mi cuenta';
+        btn.disabled = false; btn.textContent = 'Crear mi cuenta'; resetCaptcha();
         return;
       }
       if (!res.data || !res.data.ok) {
         setMsg((res.data && res.data.error) || 'No pudimos crear la cuenta. Revisá los datos e intentá de nuevo.', 'error');
-        btn.disabled = false; btn.textContent = 'Crear mi cuenta';
+        btn.disabled = false; btn.textContent = 'Crear mi cuenta'; resetCaptcha();
         return;
       }
       esperarAlta(res.data.ticket, cuenta, pid, 20);
     })
     .catch(function(){
       setMsg('No pudimos conectar con el servidor. Revisá tu conexión e intentá de nuevo.', 'error');
-      btn.disabled = false; btn.textContent = 'Crear mi cuenta';
+      btn.disabled = false; btn.textContent = 'Crear mi cuenta'; resetCaptcha();
     });
   });
 
