@@ -8,6 +8,7 @@
 // SECRETS que hay que cargar en el panel de Cloudflare (Settings > Variables):
 //   MP_ACCESS_TOKEN  = Access Token de MercadoPago (empieza TEST-/APP_USR- en prueba)
 //   POLLER_SECRET    = una clave larga inventada, compartida con el poller del VPS
+//   TURNSTILE_SECRET = Secret Key del widget Turnstile (anti-bot del registro)
 // BINDINGS (Settings > Bindings):
 //   PAGOS_KV         = KV namespace: creditos WCoin pendientes + idempotencia + ranking
 //   DB               = D1 database "mudalbros": cola de ALTAS DE CUENTA (tabla `altas`)
@@ -236,8 +237,8 @@ export default {
 
     // ----------------------------------------------------------------------
     // POST /crear-cuenta  -> alta de cuenta del juego desde la web
-    // body: { cuenta, pass, email, pid }
-    // Deja el alta PENDIENTE en KV; el poller del VPS la inserta en MEMB_INFO
+    // body: { cuenta, pass, email, pid, turnstile }
+    // Deja el alta PENDIENTE en D1; el poller del VPS la inserta en MEMB_INFO
     // y confirma con /marcar-hecho + resultado. La web sigue el estado con
     // /estado-alta?ticket=...
     // ----------------------------------------------------------------------
