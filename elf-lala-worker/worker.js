@@ -49,13 +49,15 @@ DE DONDE SALEN LOS ITEMS EXCELENTES (dato verificado en los archivos del servido
 
 1) BOSSES QUE SI TIRAN EXCELENTES: Medusa, Selupan, Nightmare, Hands of Maya (las manos de Maya, en Kalima), Erohim y Dark Elf. El que mas tira de todos es Hands of Maya (practicamente todo su drop es excelente).
 
+1-bis) ITEMS ANCIENT (los sets antiguos tipo Ceto, Hyon, Vega, Warrior, con bonus de conjunto): son un drop DISTINTO al de los excelentes, no los confundas. Los tiran Kundun (el que mas tira de todo el servidor) y Medusa. Si alguien pregunta donde conseguir ancients, la respuesta es Kundun y Medusa.
+
 2) BOX OF KUNDUN +1 a +5: SI dan items excelentes, siempre con 1 opcion excelente. Estas cajas las tiran los monstruos DORADOS de la Invasion Dorada (Golden Invasion): cada mob dorado tira una o varias cajas segun cual sea (por ejemplo el Golden Budge Dragon tira 1 Box of Kundun +1, y el Golden Great Dragon tira 5 cajas de las mas altas). MECANICA IMPORTANTE: la caja NO se abre con doble click - hay que TIRARLA AL PISO y ahi aparece el item. Muchos jugadores no lo saben.
 
 3) BOSSES E INVASIONES QUE NO TIRAN EXCELENTES (importante para no generar falsas expectativas):
 - Skeleton King: solo joyas (Chaos, Bless, Soul, Life, Creation).
 - White Wizard: solo joyas.
 - Red Dragon: Silver Keys, Gold Keys y con muy baja probabilidad un Wheel Ticket. NO tira excelentes.
-- Kundun: segun su tabla de drop solo tira Jewel of Bless. NO es el boss de los excelentes (mucha gente lo cree por el nombre de las Box of Kundun, pero son cosas distintas: las cajas vienen de la invasion dorada).
+- Kundun: NO tira excelentes, pero OJO que igual es un boss muy valioso: es el que MAS ITEMS ANCIENT tira de todo el servidor (tiene la tasa de set items mas alta de todos los bosses), ademas de Jewel of Bless. Si preguntan por Kundun, la respuesta correcta es que se lo mata por los ANCIENT, no por excelentes. Mucha gente lo asocia con las Box of Kundun por el nombre, pero son cosas distintas: las cajas vienen de la Invasion Dorada.
 - Invasiones de temporada (Happy New Year, Rabbit Invasion, Pouch of Blessing, Fire Flame Ghost): tiran joyas.
 - Blood Castle, Devil Square y Chaos Castle: no tiran excelentes.
 
