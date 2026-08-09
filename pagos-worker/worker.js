@@ -350,6 +350,34 @@ export default {
     }
 
     // ----------------------------------------------------------------------
+    // POST /push-stats  -> el poller del VPS empuja el contador (cada 1 min)
+    // body: { secret, cuentas, online }
+    // ----------------------------------------------------------------------
+    if (path === "/push-stats" && request.method === "POST") {
+      let body;
+      try { body = await request.json(); } catch { return json({ error: "JSON invalido" }, 400, H); }
+      if (body.secret !== env.POLLER_SECRET) return json({ error: "no autorizado" }, 401, H);
+
+      const data = {
+        cuentas: parseInt(body.cuentas, 10) || 0,
+        online: parseInt(body.online, 10) || 0,
+        updated: Date.now(),
+      };
+      await env.PAGOS_KV.put("stats_data", JSON.stringify(data));
+      return json({ ok: true }, 200, H);
+    }
+
+    // ----------------------------------------------------------------------
+    // GET /stats  -> publico, lo consume el contador flotante de index.html
+    // ----------------------------------------------------------------------
+    if (path === "/stats" && request.method === "GET") {
+      const v = await env.PAGOS_KV.get("stats_data", { cacheTtl: 60 });
+      let data = { cuentas: 0, online: 0, updated: 0 };
+      if (v) { try { data = JSON.parse(v); } catch (e) {} }
+      return json(data, 200, H);
+    }
+
+    // ----------------------------------------------------------------------
     // GET /ranking-data  -> publico, lo consume ranking.html
     // ----------------------------------------------------------------------
     if (path === "/ranking-data" && request.method === "GET") {

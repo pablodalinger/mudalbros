@@ -1219,8 +1219,10 @@ footer {
   </div>
 </div>
 <!-- ── CONTADOR FLOTANTE ──────────────────────────────────────────────
-     Los numeros se editan a mano aca abajo (no salen de la base).
-     Va arriba de Elf Lala y NO se puede cerrar (no tiene boton de cierre).
+     Los numeros salen del servidor REAL: el poller del VPS consulta el SQL
+     cada minuto y se los empuja al Worker (/push-stats); esta pagina los lee
+     de /stats. Los valores del HTML son solo el fallback por si el Worker
+     no responde. Va arriba de Elf Lala y no se puede cerrar.
 -->
 <div id="contador-flotante">
   <div class="cf-item">
@@ -1233,6 +1235,40 @@ footer {
     <span class="cf-lbl">online</span>
   </div>
 </div>
+<script>
+(function(){
+  var WORKER = 'https://mudalbros-pagos.pablodalinger77.workers.dev';
+  var elC = document.getElementById('cf-creadas');
+  var elO = document.getElementById('cf-online');
+
+  // Sube el numero de a poco hasta el valor nuevo, queda mejor que el salto seco.
+  function animar(el, destino){
+    var desde = parseInt(el.textContent.replace(/\D/g,''), 10) || 0;
+    if (desde === destino) return;
+    var pasos = 18, i = 0;
+    var t = setInterval(function(){
+      i++;
+      el.textContent = Math.round(desde + (destino - desde) * (i / pasos));
+      if (i >= pasos) { el.textContent = destino; clearInterval(t); }
+    }, 35);
+  }
+
+  function refrescar(){
+    fetch(WORKER + '/stats', { cache: 'no-store' })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        // Si el Worker todavia no tiene datos, se deja lo que hay en el HTML.
+        if (!d || (!d.cuentas && !d.online)) return;
+        animar(elC, d.cuentas);
+        animar(elO, d.online);
+      })
+      .catch(function(){ /* sin conexion: se queda el ultimo valor mostrado */ });
+  }
+
+  refrescar();
+  setInterval(refrescar, 60000);
+})();
+</script>
 <style>
 #contador-flotante {
   position: fixed;
