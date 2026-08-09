@@ -1226,16 +1226,27 @@ footer {
 -->
 <div id="contador-flotante">
   <div class="cf-item">
-    <span class="cf-num" id="cf-creadas">197</span>
+    <span class="cf-num" id="cf-creadas">220</span>
     <span class="cf-lbl">cuentas creadas</span>
   </div>
   <div class="cf-sep"></div>
   <div class="cf-item">
-    <span class="cf-num cf-on" id="cf-online">178</span>
+    <span class="cf-num cf-on" id="cf-online">170</span>
     <span class="cf-lbl">online</span>
   </div>
 </div>
 <script>
+// ============================================================================
+// ACTUALIZACION AUTOMATICA: DESACTIVADA (2026-08-09)
+// ----------------------------------------------------------------------------
+// El endpoint /stats funciona, pero la fuente no sirve: el poller lee
+// MEMB_STAT y esa tabla SUBESTIMA mucho (marcaba 84 cuando el GameServer
+// tenia 168 reales). El conteo verdadero vive en la MEMORIA del GameServer,
+// no en SQL: se puede leer del titulo de su ventana ("Online Users: N").
+// Cuando el poller lea de ahi, se descomenta este bloque y vuelve a ser
+// automatico. Mientras tanto los numeros de arriba se editan a mano.
+// ============================================================================
+/*
 (function(){
   var WORKER = 'https://mudalbros-pagos.pablodalinger77.workers.dev';
   var elC = document.getElementById('cf-creadas');
@@ -1268,6 +1279,7 @@ footer {
   refrescar();
   setInterval(refrescar, 60000);
 })();
+*/
 </script>
 <style>
 #contador-flotante {
