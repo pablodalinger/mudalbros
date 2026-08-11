@@ -1420,5 +1420,64 @@ footer {
 })();
 </script>
 
+<!-- â”€â”€ VENTANA FLOTANTE: PACK DE BIENVENIDA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+     Se abre al entrar y se cierra con la X, tocando fuera, o con Escape.
+     La imagen es VERTICAL (941x1672): se dimensiona por ALTURA para que
+     entre completa en cualquier pantalla sin deformarse ni cortarse.
+-->
+<style>
+#pack-overlay{
+  position:fixed; inset:0; z-index:10000;
+  background:rgba(4,6,14,0.86); backdrop-filter:blur(4px);
+  display:flex; align-items:center; justify-content:center;
+  padding:1rem;
+}
+#pack-modal{
+  position:relative;
+  display:inline-block;
+  line-height:0;
+  background:#0a0d18;
+  border:1px solid rgba(212,168,67,0.5);
+  border-radius:12px;
+  box-shadow:0 20px 70px rgba(0,0,0,0.85);
+  overflow:hidden;
+}
+#pack-modal img{
+  display:block;
+  width:auto; height:auto;
+  max-height:94vh; max-width:94vw;
+}
+#pack-close{
+  position:absolute; top:10px; left:10px;
+  width:32px; height:32px;
+  border-radius:50%;
+  background:rgba(10,13,24,0.85);
+  border:1px solid rgba(212,168,67,0.5);
+  color:var(--gold-light);
+  font-size:1.3rem; line-height:1;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s, transform 0.2s;
+}
+#pack-close:hover{ background:rgba(212,168,67,0.25); transform:scale(1.08); }
+</style>
+<div id="pack-overlay">
+  <div id="pack-modal">
+    <button id="pack-close" aria-label="Cerrar">&times;</button>
+    <img src="images/VentanaBienvenida.png" alt="MU DalBros - Pack de bienvenida: 3 dias de buffs al crear un personaje nuevo">
+  </div>
+</div>
+<script>
+(function(){
+  var overlay  = document.getElementById('pack-overlay');
+  var closeBtn = document.getElementById('pack-close');
+  function cerrar(){ overlay.style.display = 'none'; }
+  closeBtn.addEventListener('click', cerrar);
+  // clic en el fondo (fuera de la imagen) tambien cierra
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) cerrar(); });
+  // tecla Escape
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') cerrar(); });
+})();
+</script>
 </body>
 </html>
