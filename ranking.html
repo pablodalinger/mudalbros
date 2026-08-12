@@ -1203,7 +1203,8 @@ footer {
   align-items:center; justify-content:center; padding:1rem;
 }
 #build-modal{
-  position:relative; width:min(420px, 94vw);
+  position:relative; width:min(520px, 94vw);
+  max-height:88vh; overflow-y:auto;
   background:#0a0d18; border:1px solid rgba(212,168,67,0.5);
   border-radius:14px; box-shadow:0 20px 70px rgba(0,0,0,0.85);
   padding:1.6rem 1.4rem 1.3rem;
@@ -1238,6 +1239,40 @@ footer {
 }
 .build-extra b{ color:#7dffa0; font-weight:800; }
 @media (max-width:420px){ .build-grid{ grid-template-columns:1fr; } }
+
+/* ── Equipo puesto ── */
+.eq-tit{
+  margin:1.1rem 0 0.5rem; text-align:center; font-size:0.72rem;
+  letter-spacing:0.18em; text-transform:uppercase; color:#8b86a8;
+}
+.eq-lista{ display:grid; grid-template-columns:1fr 1fr; gap:0.3rem 0.7rem; }
+@media (max-width:460px){ .eq-lista{ grid-template-columns:1fr; } }
+.eqitem{
+  position:relative; padding:0.3rem 0.4rem; border-radius:6px;
+  border:1px solid transparent; cursor:help;
+}
+.eqitem:hover, .eqitem.abierto{
+  background:rgba(212,168,67,0.10); border-color:rgba(212,168,67,0.3);
+}
+.eq-parte{ display:block; font-size:0.63rem; color:#7d789a; letter-spacing:0.06em; }
+.eq-nombre{ display:block; font-size:0.82rem; font-weight:700; color:#e9e6f7; line-height:1.25; }
+.eq-nombre.exc{ color:#7dffa0; }
+/* Tooltip: se muestra al pasar el mouse, y al tocar en celular (.abierto). */
+.eqtip{
+  display:none; position:absolute; z-index:5; left:0; top:calc(100% + 4px);
+  min-width:230px; max-width:290px;
+  background:#05070f; border:1px solid rgba(212,168,67,0.55);
+  border-radius:8px; padding:0.6rem 0.7rem;
+  box-shadow:0 10px 34px rgba(0,0,0,0.9); text-align:left;
+}
+.eqitem:hover .eqtip, .eqitem.abierto .eqtip{ display:block; }
+.eqtip b{ display:block; margin-bottom:0.35rem; color:#ffd76e; font-size:0.8rem; }
+.eqtip span{ display:block; font-size:0.72rem; line-height:1.5; }
+.eq-ex{ color:#7dffa0; }
+.eq-lk{ color:#8fd0ff; }
+.eq-sk{ color:#ffc98f; }
+.eq-op{ color:#e9e6f7; }
+.eq-na{ color:#7d789a; }
 </style>
 <div id="build-overlay">
   <div id="build-modal">
@@ -1277,6 +1312,49 @@ footer {
     return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  // ── Equipo ────────────────────────────────────────────────────────────
+  // El poller manda cada pieza compacta: s=slot n=nombre g=grupo l=+nivel
+  // k=skill c=luck o=opcion x=bits excellent. El texto se arma aca para que
+  // el payload viaje liviano (viajan 100 personajes en cada push).
+  var PARTES = ['Arma derecha','Arma izquierda','Casco','Armadura','Pantalón',
+                'Guantes','Botas','Alas','Pet','Pendiente','Anillo 1','Anillo 2'];
+  // Se listan de bit5 a bit0, el mismo orden en que las muestra el juego.
+  var EXC_ARMA = [[0x20,'Tasa de daño excelente +10%'], [0x10,'Daño +nivel/20'],
+                  [0x08,'Daño +2%'], [0x04,'Velocidad de ataque +7'],
+                  [0x02,'Recupera vida +vida/8'], [0x01,'Recupera maná +maná/8']];
+  var EXC_DEF  = [[0x20,'Vida máxima +4%'], [0x10,'Maná máximo +4%'],
+                  [0x08,'Reduce el daño recibido 4%'], [0x04,'Refleja daño 5%'],
+                  [0x02,'Tasa de defensa +10%'], [0x01,'Zen +30%']];
+
+  function equipoHTML(eq){
+    if (!eq || !eq.length) return '';
+    var piezas = eq.map(function(p){
+      var esArma = p.g <= 5;
+      var nombre = escapar(p.n);
+      if (p.x) nombre = 'Excellent ' + nombre;
+      if (p.l) nombre += ' +' + p.l;
+
+      var det = [];
+      if (p.o) det.push('<span class="eq-op">' +
+        (esArma ? 'Daño adicional' : 'Defensa adicional') + ' +' + (p.o * 4) + '</span>');
+      if (p.c) det.push('<span class="eq-lk">Luck (+25% Jewel of Soul, +5% crítico)</span>');
+      if (p.k) det.push('<span class="eq-sk">Tiene skill</span>');
+      if (p.x){
+        (esArma ? EXC_ARMA : EXC_DEF).forEach(function(o){
+          if (p.x & o[0]) det.push('<span class="eq-ex">' + o[1] + '</span>');
+        });
+      }
+      if (!det.length) det.push('<span class="eq-na">Sin opciones</span>');
+
+      return '<div class="eqitem">' +
+        '<span class="eq-parte">' + (PARTES[p.s] || ('Slot ' + p.s)) + '</span>' +
+        '<span class="eq-nombre' + (p.x ? ' exc' : '') + '">' + nombre + '</span>' +
+        '<span class="eqtip"><b>' + nombre + '</b>' + det.join('') + '</span>' +
+      '</div>';
+    }).join('');
+    return '<div class="eq-tit">Equipo</div><div class="eq-lista">' + piezas + '</div>';
+  }
+
   function mostrarBuild(row){
     var stat = function(etiqueta, valor){
       return '<div class="bstat"><span class="bstat-l">' + etiqueta + '</span>' +
@@ -1299,8 +1377,20 @@ footer {
         '<span><b>' + row.deads + '</b> muertes</span>' +
         '<span><b>' + row.pk + '</b> PK</span>' +
         '<span>' + escapar(row.mapa) + '</span>' +
-      '</div>';
-    document.getElementById('build-body').innerHTML = html;
+      '</div>' +
+      equipoHTML(row.eq);
+    var cuerpo = document.getElementById('build-body');
+    cuerpo.innerHTML = html;
+    // En celular no hay hover: tocar la pieza abre y cierra su tooltip.
+    var abiertos = cuerpo.querySelectorAll('.eqitem');
+    Array.prototype.forEach.call(abiertos, function(el){
+      el.addEventListener('click', function(){
+        var yaEstaba = el.classList.contains('abierto');
+        Array.prototype.forEach.call(abiertos, function(o){ o.classList.remove('abierto'); });
+        if (!yaEstaba) el.classList.add('abierto');
+      });
+    });
+    document.getElementById('build-modal').scrollTop = 0;
     document.getElementById('build-overlay').style.display = 'flex';
   }
 
