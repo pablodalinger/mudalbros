@@ -1,0 +1,6 @@
+# Material de trabajo del generador de iconos: geometria y texturas sacadas del
+# cliente. Son cientos de archivos que se regeneran solos con
+#   py "MU MSPro\Tools\exportar_para_render.py" <carpeta>
+# No tiene sentido versionarlos. Si algun dia los iconos ya generados salen a
+# produccion, van a ir en su propia carpeta (images/items/), no en esta.
+_render/

@@ -1250,7 +1250,20 @@ footer {
 .eqitem{
   position:relative; padding:0.3rem 0.4rem; border-radius:6px;
   border:1px solid transparent; cursor:help;
+  display:flex; align-items:center; gap:0.45rem;
 }
+/* El icono sale del pack de la comunidad, copiado a images/items/GRUPO-INDICE.webp.
+   Si un item no lo tiene (18 custom quedaron sin icono), se oculta solo y la
+   pieza sigue mostrando su nombre y su tooltip igual que antes. */
+/* Los iconos vienen proporcionados al espacio que el item ocupa en el inventario
+   del juego: un cetro mide 61x176 y un anillo es casi cuadrado. Por eso el
+   recuadro es mas alto que ancho y se usa "contain", para que los largos no
+   queden diminutos ni los chicos deformados. */
+.eq-ico{
+  width:38px; height:46px; flex:0 0 38px; object-fit:contain;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,0.7));
+}
+.eq-txt{ min-width:0; }
 .eqitem:hover, .eqitem.abierto{
   background:rgba(212,168,67,0.10); border-color:rgba(212,168,67,0.3);
 }
@@ -1346,9 +1359,17 @@ footer {
       }
       if (!det.length) det.push('<span class="eq-na">Sin opciones</span>');
 
-      return '<div class="eqitem">' +
-        '<span class="eq-parte">' + (PARTES[p.s] || ('Slot ' + p.s)) + '</span>' +
-        '<span class="eq-nombre' + (p.x ? ' exc' : '') + '">' + nombre + '</span>' +
+      // Si el icono no existe, se oculta solo (onerror) y queda el texto.
+      var ico = (p.i !== undefined)
+        ? '<img class="eq-ico" loading="lazy" alt="" src="images/items/' + p.g + '-' + p.i + '.webp"' +
+          ' onerror="this.style.display=\'none\'">'
+        : '';
+
+      return '<div class="eqitem">' + ico +
+        '<span class="eq-txt">' +
+          '<span class="eq-parte">' + (PARTES[p.s] || ('Slot ' + p.s)) + '</span>' +
+          '<span class="eq-nombre' + (p.x ? ' exc' : '') + '">' + nombre + '</span>' +
+        '</span>' +
         '<span class="eqtip"><b>' + nombre + '</b>' + det.join('') + '</span>' +
       '</div>';
     }).join('');
