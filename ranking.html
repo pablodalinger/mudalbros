@@ -1189,6 +1189,63 @@ footer {
 
   </div>
 </section>
+
+<!-- ── PANEL DE BUILD ──────────────────────────────────────────────────
+     Se abre al hacer clic en cualquier fila del ranking. Los datos ya
+     vienen dentro de cada fila del JSON, no se pide nada extra al server.
+-->
+<style>
+.rrow-click { cursor: pointer; transition: background 0.15s; }
+.rrow-click:hover { background: rgba(212,168,67,0.10); }
+#build-overlay{
+  position:fixed; inset:0; z-index:11000; display:none;
+  background:rgba(4,6,14,0.86); backdrop-filter:blur(4px);
+  align-items:center; justify-content:center; padding:1rem;
+}
+#build-modal{
+  position:relative; width:min(420px, 94vw);
+  background:#0a0d18; border:1px solid rgba(212,168,67,0.5);
+  border-radius:14px; box-shadow:0 20px 70px rgba(0,0,0,0.85);
+  padding:1.6rem 1.4rem 1.3rem;
+}
+#build-close{
+  position:absolute; top:10px; right:10px;
+  width:30px; height:30px; border-radius:50%;
+  background:rgba(10,13,24,0.85); border:1px solid rgba(212,168,67,0.5);
+  color:var(--gold-light, #ffd76e); font-size:1.2rem; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s, transform 0.2s;
+}
+#build-close:hover{ background:rgba(212,168,67,0.25); transform:scale(1.08); }
+.build-head{ text-align:center; margin-bottom:1.1rem; }
+.build-head h3{
+  margin:0; font-size:1.5rem; color:#ffd76e; letter-spacing:0.01em;
+  text-shadow:0 0 14px rgba(255,215,110,0.45);
+}
+.build-head p{ margin:0.3rem 0 0; font-size:0.85rem; color:#c3bfe0; }
+.build-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;
+  padding:0.9rem 0; border-top:1px solid rgba(212,168,67,0.18);
+  border-bottom:1px solid rgba(212,168,67,0.18);
+}
+.bstat{ display:flex; justify-content:space-between; align-items:baseline; padding:0.15rem 0.2rem; }
+.bstat-l{ font-size:0.8rem; color:#9d99b8; }
+.bstat-v{ font-size:1rem; font-weight:800; color:#e9e6f7; }
+.build-extra{
+  display:flex; flex-wrap:wrap; gap:0.4rem 1.1rem;
+  justify-content:center; margin-top:0.9rem;
+  font-size:0.78rem; color:#9d99b8;
+}
+.build-extra b{ color:#7dffa0; font-weight:800; }
+@media (max-width:420px){ .build-grid{ grid-template-columns:1fr; } }
+</style>
+<div id="build-overlay">
+  <div id="build-modal">
+    <button id="build-close" aria-label="Cerrar">&times;</button>
+    <div id="build-body"></div>
+  </div>
+</div>
+
 <script>
 (function(){
   var MEDALLA = ['g', 's', 'b'];
@@ -1200,7 +1257,10 @@ footer {
     return lista.map(function(row, i){
       var pos = offset + i;
       var claseRpos = pos < 3 ? ' ' + MEDALLA[pos] : '';
-      return '<tr>' +
+      // data-i = indice dentro de la ventana visible; el handler lo resuelve
+      // contra la lista completa usando el offset de la pagina.
+      var clickable = row.clase ? ' class="rrow-click" data-i="' + i + '"' : '';
+      return '<tr' + clickable + '>' +
         '<td class="rpos' + claseRpos + '">' + (pos + 1) + '</td>' +
         '<td class="rname">' + row.name + '</td>' +
         '<td class="rmut">' + secundario(row) + '</td>' +
@@ -1208,6 +1268,48 @@ footer {
       '</tr>';
     }).join('');
   }
+
+  // ── Panel de build ────────────────────────────────────────────────────
+  // Los campos extra (clase, str, agi...) los agrega el poller del VPS.
+  // Si un personaje viene sin ellos (dato viejo en KV), la fila no es
+  // clickeable y el ranking sigue funcionando igual que antes.
+  function escapar(t){
+    return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function mostrarBuild(row){
+    var stat = function(etiqueta, valor){
+      return '<div class="bstat"><span class="bstat-l">' + etiqueta + '</span>' +
+             '<span class="bstat-v">' + Number(valor).toLocaleString('es-AR') + '</span></div>';
+    };
+    var html =
+      '<div class="build-head">' +
+        '<h3>' + escapar(row.name) + '</h3>' +
+        '<p>' + escapar(row.clase) + ' &middot; Nivel ' + row.level +
+        ' &middot; ' + row.resets + ' resets</p>' +
+      '</div>' +
+      '<div class="build-grid">' +
+        stat('Fuerza', row.str) + stat('Agilidad', row.agi) +
+        stat('Vitalidad', row.vit) + stat('Energía', row.ene) +
+        (row.cmd > 0 ? stat('Comando', row.cmd) : '') +
+        stat('Sin repartir', row.libres) +
+      '</div>' +
+      '<div class="build-extra">' +
+        '<span><b>' + row.kills + '</b> kills</span>' +
+        '<span><b>' + row.deads + '</b> muertes</span>' +
+        '<span><b>' + row.pk + '</b> PK</span>' +
+        '<span>' + escapar(row.mapa) + '</span>' +
+      '</div>';
+    document.getElementById('build-body').innerHTML = html;
+    document.getElementById('build-overlay').style.display = 'flex';
+  }
+
+  (function(){
+    var ov = document.getElementById('build-overlay');
+    document.getElementById('build-close').addEventListener('click', function(){ ov.style.display = 'none'; });
+    ov.addEventListener('click', function(e){ if (e.target === ov) ov.style.display = 'none'; });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') ov.style.display = 'none'; });
+  })();
 
   // Arma un panel con paginado local en ventanas fijas de 10 (1-10, 11-20,
   // 21-30...). No hace falta pedir mas datos: ya tenemos hasta 50 en memoria,
@@ -1243,6 +1345,15 @@ footer {
         botones[b].addEventListener('click', function(e){
           pagina += e.target.getAttribute('data-dir') === 'next' ? 1 : -1;
           render();
+        });
+      }
+
+      // Clic en una fila -> abre el panel con la build de ese personaje.
+      var filas = wrap.querySelectorAll('.rrow-click');
+      for (var r = 0; r < filas.length; r++) {
+        filas[r].addEventListener('click', function(e){
+          var i = parseInt(e.currentTarget.getAttribute('data-i'), 10);
+          mostrarBuild(lista[desde + i]);
         });
       }
     }
