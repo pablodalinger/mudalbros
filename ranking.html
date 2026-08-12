@@ -1339,13 +1339,20 @@ footer {
                   [0x08,'Reduce el daño recibido 4%'], [0x04,'Refleja daño 5%'],
                   [0x02,'Tasa de defensa +10%'], [0x01,'Zen +30%']];
 
-  // ⚠️ LAS ALAS Y CAPAS (grupo 12) NUNCA MUESTRAN EXCELENTES.
-  // En MU esos items NO pueden ser excelentes, asi que cualquier valor en ese
-  // byte para el grupo 12 significa otra cosa y produce excelentes falsos
-  // (aparecio en las alas de Evelyn y en la capa de Pilin).
-  // Para el resto el byte esta VERIFICADO: se crearon dos Sword of Destruction
-  // identicas, una normal y otra con Exe=63, y el byte paso de 00 a 3F = los 6
-  // bits de las 6 opciones que mostraba el tooltip.
+  // ⚠️ LAS ALAS Y CAPAS (grupo 12) NUNCA SON EXCELENTES.
+  // En MU esos items NO pueden serlo, y ese mismo byte guarda sus OPCIONES DE
+  // ALA, que son otra cosa. Leerlo con la tabla de excelentes daba textos
+  // falsos (paso con las alas de Evelyn y la capa de Pilin).
+  //
+  // Mapeo MEDIDO in-game creando una capa por bit (/make 12 49 ... Exe ... ):
+  //     1 = vida · 2 = mana · 4 = ignora defensa · 8, 16 y 32 = no hacen nada
+  // Se muestran SIN numeros a proposito: el tooltip de la Cloak of Warrior
+  // decia +50 / +50 / 3%, pero no se comprobo si esos valores son iguales en
+  // alas de otro nivel. Si algun dia se verifica, se agregan aca.
+  var OPC_ALAS = [[0x01, 'Aumenta la vida'],
+                  [0x02, 'Aumenta el maná'],
+                  [0x04, 'Ignora parte de la defensa del rival']];
+
   function tieneExcelentes(p){ return p.g !== 12 && p.x; }
 
   function equipoHTML(eq){
@@ -1364,6 +1371,10 @@ footer {
       if (p.k) det.push('<span class="eq-sk">Tiene skill</span>');
       if (exc){
         (esArma ? EXC_ARMA : EXC_DEF).forEach(function(o){
+          if (p.x & o[0]) det.push('<span class="eq-ex">' + o[1] + '</span>');
+        });
+      } else if (p.g === 12 && p.x){
+        OPC_ALAS.forEach(function(o){
           if (p.x & o[0]) det.push('<span class="eq-ex">' + o[1] + '</span>');
         });
       }
