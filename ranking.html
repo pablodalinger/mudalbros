@@ -1397,7 +1397,8 @@ footer {
         '<span><b>' + row.kills + '</b> kills</span>' +
         '<span><b>' + row.deads + '</b> muertes</span>' +
         '<span><b>' + row.pk + '</b> PK</span>' +
-        '<span>' + escapar(row.mapa) + '</span>' +
+        // El MAPA donde esta el personaje NO se muestra: es informacion que
+        // sirve para ir a cazarlo. Tampoco viaja ya en el JSON del ranking.
       '</div>' +
       equipoHTML(row.eq);
     var cuerpo = document.getElementById('build-body');
