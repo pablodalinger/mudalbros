@@ -1197,6 +1197,17 @@ footer {
 <style>
 .rrow-click { cursor: pointer; transition: background 0.15s; }
 .rrow-click:hover { background: rgba(212,168,67,0.10); }
+/* Cartel de VIP al lado del nombre en el ranking. Solo aparece si el VIP esta
+   VIGENTE: el poller manda "vip" unicamente cuando no venci�. */
+.rvip{
+  display:inline-flex; align-items:center; gap:0.18em;
+  margin-left:0.5rem; padding:0.05rem 0.4rem;
+  font-size:0.62rem; font-weight:800; letter-spacing:0.08em;
+  color:#ffd76e; border:1px solid rgba(255,215,110,0.45);
+  border-radius:999px; background:rgba(255,215,110,0.10);
+  text-shadow:0 0 8px rgba(255,215,110,0.5); vertical-align:middle;
+  white-space:nowrap;
+}
 #build-overlay{
   position:fixed; inset:0; z-index:11000; display:none;
   background:rgba(4,6,14,0.86); backdrop-filter:blur(4px);
@@ -1310,7 +1321,8 @@ footer {
       var clickable = row.clase ? ' class="rrow-click" data-i="' + i + '"' : '';
       return '<tr' + clickable + '>' +
         '<td class="rpos' + claseRpos + '">' + (pos + 1) + '</td>' +
-        '<td class="rname">' + row.name + '</td>' +
+        '<td class="rname">' + row.name +
+          (row.vip ? '<span class="rvip">&#9733; VIP</span>' : '') + '</td>' +
         '<td class="rmut">' + secundario(row) + '</td>' +
         '<td class="rval">' + principal(row) + '</td>' +
       '</tr>';
