@@ -1525,11 +1525,15 @@ footer {
     document.getElementById('build-modal').scrollTop = 0;
     document.getElementById('build-overlay').style.display = 'flex';
     document.body.style.overflow = 'hidden';   // bloquea el scroll de la pagina: solo scrollea el modal
+    try { if (window.top !== window) window.parent.postMessage({ muModal: 'open' }, '*'); } catch (e) {}
   }
 
   (function(){
     var ov = document.getElementById('build-overlay');
-    function cerrar(){ ov.style.display = 'none'; document.body.style.overflow = ''; }
+    function cerrar(){
+      ov.style.display = 'none'; document.body.style.overflow = '';
+      try { if (window.top !== window) window.parent.postMessage({ muModal: 'close' }, '*'); } catch (e) {}
+    }
     document.getElementById('build-close').addEventListener('click', cerrar);
     ov.addEventListener('click', function(e){ if (e.target === ov) cerrar(); });
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape') cerrar(); });
