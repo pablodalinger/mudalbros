@@ -1365,13 +1365,19 @@ footer {
                   [0x02, 'Aumenta el maná'],
                   [0x04, 'Ignora parte de la defensa del rival']];
 
-  function tieneExcelentes(p){ return p.g !== 12 && p.x; }
+  // El ala/capa se detecta por el SLOT (7 = Alas), NO por el grupo. Las capas de
+  // nivel alto (Cape of the Lord del DL, capa de RF, alas S2) son items
+  // "extendidos" que el poller decodifica con un grupo distinto de 12; leerlas con
+  // la tabla de excelentes daba textos falsos ("Excellent ... Vida máxima/Refleja").
+  // Cualquier cosa en el slot 7 es un ala/capa y usa OPC_ALAS.
+  function esAla(p){ return p.s === 7; }
+  function tieneExcelentes(p){ return !esAla(p) && p.x; }
 
   function equipoHTML(eq){
     if (!eq || !eq.length) return '';
     var piezas = eq.map(function(p){
       var esArma = p.g <= 5;
-      var exc = tieneExcelentes(p);        // ver la nota de arriba: el grupo 12 queda afuera
+      var exc = tieneExcelentes(p);        // ver la nota de arriba: el slot 7 (ala) queda afuera
       var nombre = escapar(p.n);
       if (exc) nombre = 'Excellent ' + nombre;
       if (p.l) nombre += ' +' + p.l;
@@ -1385,7 +1391,7 @@ footer {
         (esArma ? EXC_ARMA : EXC_DEF).forEach(function(o){
           if (p.x & o[0]) det.push('<span class="eq-ex">' + o[1] + '</span>');
         });
-      } else if (p.g === 12 && p.x){
+      } else if (esAla(p) && p.x){
         OPC_ALAS.forEach(function(o){
           if (p.x & o[0]) det.push('<span class="eq-ex">' + o[1] + '</span>');
         });
