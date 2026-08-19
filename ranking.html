@@ -1330,11 +1330,28 @@ footer {
 .eq-sk{ color:#ffc98f; }
 .eq-op{ color:#e9e6f7; }
 .eq-na{ color:#7d789a; }
+/* Tooltip de mobile: barra fija abajo de la pantalla (siempre legible, no se corta). */
+#eq-mobtip{ display:none; }
+@media (max-width:660px){
+  /* En mobile el tooltip flotante se sale de pantalla -> lo ocultamos y usamos la barra. */
+  .eq-slot.abierto .eqtip{ display:none !important; }
+  #eq-mobtip.visible{
+    display:block;
+    position:fixed; left:50%; bottom:10px; transform:translateX(-50%);
+    width:94vw; max-width:94vw; z-index:2147483601;
+    background:#05070f; border:1px solid rgba(212,168,67,0.6);
+    border-radius:10px; padding:0.7rem 0.85rem; text-align:left;
+    box-shadow:0 -8px 34px rgba(0,0,0,0.92);
+  }
+  #eq-mobtip b{ display:block; margin-bottom:0.35rem; color:#ffd76e; font-size:0.92rem; }
+  #eq-mobtip span{ display:block; font-size:0.85rem; line-height:1.55; }
+}
 </style>
 <div id="build-overlay">
   <div id="build-modal">
     <button id="build-close" aria-label="Cerrar">&times;</button>
     <div id="build-body"></div>
+    <div id="eq-mobtip"></div>
   </div>
 </div>
 
@@ -1514,12 +1531,22 @@ footer {
     var cuerpo = document.getElementById('build-body');
     cuerpo.innerHTML = html;
     // En celular no hay hover: tocar la pieza abre y cierra su tooltip.
+    var mobtip = document.getElementById('eq-mobtip');
     var abiertos = cuerpo.querySelectorAll('.eq-slot');
     Array.prototype.forEach.call(abiertos, function(el){
       el.addEventListener('click', function(){
         var yaEstaba = el.classList.contains('abierto');
         Array.prototype.forEach.call(abiertos, function(o){ o.classList.remove('abierto'); });
-        if (!yaEstaba) el.classList.add('abierto');
+        if (yaEstaba){
+          if (mobtip){ mobtip.classList.remove('visible'); mobtip.innerHTML = ''; }
+        } else {
+          el.classList.add('abierto');
+          if (mobtip){
+            var tip = el.querySelector('.eqtip');
+            mobtip.innerHTML = tip ? tip.innerHTML : '';
+            mobtip.classList.add('visible');
+          }
+        }
       });
     });
     document.getElementById('build-modal').scrollTop = 0;
@@ -1532,6 +1559,7 @@ footer {
     var ov = document.getElementById('build-overlay');
     function cerrar(){
       ov.style.display = 'none'; document.body.style.overflow = '';
+      var mt = document.getElementById('eq-mobtip'); if (mt){ mt.classList.remove('visible'); mt.innerHTML = ''; }
       try { if (window.top !== window) window.parent.postMessage({ muModal: 'close' }, '*'); } catch (e) {}
     }
     document.getElementById('build-close').addEventListener('click', cerrar);
