@@ -1209,7 +1209,7 @@ footer {
   white-space:nowrap;
 }
 #build-overlay{
-  position:fixed; inset:0; z-index:11000; display:none;
+  position:fixed; inset:0; z-index:2147483000; display:none;
   background:rgba(4,6,14,0.86); backdrop-filter:blur(4px);
   align-items:center; justify-content:center; padding:1rem;
 }
@@ -1524,13 +1524,15 @@ footer {
     });
     document.getElementById('build-modal').scrollTop = 0;
     document.getElementById('build-overlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';   // bloquea el scroll de la pagina: solo scrollea el modal
   }
 
   (function(){
     var ov = document.getElementById('build-overlay');
-    document.getElementById('build-close').addEventListener('click', function(){ ov.style.display = 'none'; });
-    ov.addEventListener('click', function(e){ if (e.target === ov) ov.style.display = 'none'; });
-    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') ov.style.display = 'none'; });
+    function cerrar(){ ov.style.display = 'none'; document.body.style.overflow = ''; }
+    document.getElementById('build-close').addEventListener('click', cerrar);
+    ov.addEventListener('click', function(e){ if (e.target === ov) cerrar(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') cerrar(); });
   })();
 
   // Arma un panel con paginado local en ventanas fijas de 10 (1-10, 11-20,
