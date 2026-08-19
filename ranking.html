@@ -1214,11 +1214,26 @@ footer {
   align-items:center; justify-content:center; padding:1rem;
 }
 #build-modal{
-  position:relative; width:min(520px, 94vw);
-  max-height:88vh; overflow-y:auto;
+  position:relative; width:min(960px, 96vw);
+  max-height:90vh; overflow-y:auto;
   background:#0a0d18; border:1px solid rgba(212,168,67,0.5);
   border-radius:14px; box-shadow:0 20px 70px rgba(0,0,0,0.85);
-  padding:1.6rem 1.4rem 1.3rem;
+  padding:1.6rem 1.5rem 1.4rem;
+}
+/* Layout de 2 columnas: personaje + info | inventario. */
+.build-2col{ display:flex; gap:1.4rem; align-items:center; }
+.build-left{ flex:0 0 300px; max-width:300px; }
+.build-right{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.build-char{
+  width:100%; aspect-ratio:1030/1024; object-fit:cover; object-position:center top;
+  border-radius:12px; border:1px solid rgba(212,168,67,0.4);
+  box-shadow:0 6px 26px rgba(0,0,0,0.75); display:block; margin-bottom:0.9rem;
+}
+.build-left .build-grid{ grid-template-columns:1fr; }
+@media (max-width:660px){
+  .build-2col{ flex-direction:column; align-items:center; }
+  .build-left{ flex:0 0 auto; max-width:300px; width:100%; }
+  .build-right{ width:100%; }
 }
 #build-close{
   position:absolute; top:10px; right:10px;
@@ -1256,40 +1271,58 @@ footer {
   margin:1.1rem 0 0.5rem; text-align:center; font-size:0.72rem;
   letter-spacing:0.18em; text-transform:uppercase; color:#8b86a8;
 }
-.eq-lista{ display:grid; grid-template-columns:1fr 1fr; gap:0.3rem 0.7rem; }
-@media (max-width:460px){ .eq-lista{ grid-template-columns:1fr; } }
-.eqitem{
-  position:relative; padding:0.3rem 0.4rem; border-radius:6px;
-  border:1px solid transparent; cursor:help;
-  display:flex; align-items:center; gap:0.45rem;
+/* Grilla del inventario: la imagen del equipo de fondo y cada item posicionado
+   en su slot (posiciones en % en SLOTPOS, medidas sobre images/Inventario.jpeg). */
+.eq-grid{
+  position:relative; width:100%; max-width:560px; margin:0 auto;
+  aspect-ratio:992 / 1083;
+  background:url('images/Personajes/inventario-hd.jpg') center/contain no-repeat;
 }
-/* El icono sale del pack de la comunidad, copiado a images/items/GRUPO-INDICE.webp.
-   Si un item no lo tiene (18 custom quedaron sin icono), se oculta solo y la
-   pieza sigue mostrando su nombre y su tooltip igual que antes. */
-/* Los iconos vienen proporcionados al espacio que el item ocupa en el inventario
-   del juego: un cetro mide 61x176 y un anillo es casi cuadrado. Por eso el
-   recuadro es mas alto que ancho y se usa "contain", para que los largos no
-   queden diminutos ni los chicos deformados. */
+.eq-slot{
+  position:absolute; transform:translate(-50%,-50%);
+  width:20%; height:21%; min-width:40px; min-height:40px;
+  display:flex; align-items:center; justify-content:center; cursor:help;
+}
+/* Alas y pet quedan mas chicos que el resto. */
+.eq-slot.chico{ width:22%; height:20%; min-width:40px; min-height:40px; }
+/* Pet: se muestra a su tamaño natural (como estaba antes), no estirado. */
+.eq-slot.pet{ width:26%; height:24%; min-width:40px; min-height:40px; }
+.eq-slot.pet .eq-ico{ width:auto; height:auto; max-width:100%; max-height:100%; }
+/* Casco/pants/guantes/botas (g) y armadura (g2). Armas quedan base. */
+.eq-slot.g{  width:16%; height:15%; }
+.eq-slot.g2{ width:19%; height:18%; }
+/* Anillos y pendiente (celdas chicas del inventario). */
+.eq-slot.aro{ width:14%; height:14%; }
+/* Glow para que los items resalten del fondo oscuro del inventario. */
 .eq-ico{
-  width:38px; height:46px; flex:0 0 38px; object-fit:contain;
-  filter:drop-shadow(0 1px 3px rgba(0,0,0,0.7));
+  width:100%; height:100%; object-fit:contain;
+  filter:
+    saturate(1.55) brightness(1.18) contrast(1.08)
+    drop-shadow(0 0 3px rgba(255,255,255,0.85))
+    drop-shadow(0 0 8px rgba(255,214,110,0.6))
+    drop-shadow(0 1px 2px rgba(0,0,0,0.9));
 }
-.eq-txt{ min-width:0; }
-.eqitem:hover, .eqitem.abierto{
-  background:rgba(212,168,67,0.10); border-color:rgba(212,168,67,0.3);
+.eq-slot:hover .eq-ico{
+  filter:
+    saturate(1.7) brightness(1.25) contrast(1.1)
+    drop-shadow(0 0 4px rgba(255,255,255,1))
+    drop-shadow(0 0 12px rgba(255,214,110,0.95))
+    drop-shadow(0 1px 2px rgba(0,0,0,0.9));
 }
-.eq-parte{ display:block; font-size:0.63rem; color:#7d789a; letter-spacing:0.06em; }
-.eq-nombre{ display:block; font-size:0.82rem; font-weight:700; color:#e9e6f7; line-height:1.25; }
-.eq-nombre.exc{ color:#7dffa0; }
 /* Tooltip: se muestra al pasar el mouse, y al tocar en celular (.abierto). */
 .eqtip{
-  display:none; position:absolute; z-index:5; left:0; top:calc(100% + 4px);
-  min-width:230px; max-width:290px;
+  display:none; position:absolute; z-index:30; left:50%; top:calc(100% + 6px);
+  transform:translateX(-50%);
+  min-width:200px; max-width:260px;
   background:#05070f; border:1px solid rgba(212,168,67,0.55);
   border-radius:8px; padding:0.6rem 0.7rem;
   box-shadow:0 10px 34px rgba(0,0,0,0.9); text-align:left;
 }
-.eqitem:hover .eqtip, .eqitem.abierto .eqtip{ display:block; }
+.eq-slot.abajo .eqtip{ top:auto; bottom:calc(100% + 6px); }
+/* El slot activo se levanta por encima de los demas para que su tooltip no
+   quede tapado por los items vecinos. */
+.eq-slot:hover, .eq-slot.abierto{ z-index:40; }
+.eq-slot:hover .eqtip, .eq-slot.abierto .eqtip{ display:block; }
 .eqtip b{ display:block; margin-bottom:0.35rem; color:#ffd76e; font-size:0.8rem; }
 .eqtip span{ display:block; font-size:0.72rem; line-height:1.5; }
 .eq-ex{ color:#7dffa0; }
@@ -1373,9 +1406,27 @@ footer {
   function esAla(p){ return p.s === 7; }
   function tieneExcelentes(p){ return !esAla(p) && p.x; }
 
+  // Posicion [left%, top%] de cada slot sobre images/Inventario.jpeg (medido de la
+  // imagen etiquetada). Slots MU: 0 armaD 1 armaI 2 casco 3 armadura 4 pants
+  // 5 guantes 6 botas 7 alas 8 pet 9 pendiente 10 anillo1 11 anillo2.
+  var SLOTPOS = {
+    8:[18,32], 2:[53,32], 7:[80,32],
+    0:[17,60], 9:[38,50], 3:[53,57], 1:[82,61],
+    5:[19,85], 10:[36,80], 4:[53,86], 11:[67,80], 6:[84,87]
+  };
+  // Clase de tamaño CSS por slot: g/g2 = centro (casco/pants/armadura) grandes,
+  // chico = alas/pet, aro = anillos/pendiente (iconos chicos -> se agrandan).
+  var SLOTCLASS = {
+    2:'g', 3:'g2', 4:'g', 5:'g', 6:'g',
+    7:'chico', 8:'pet',
+    9:'aro', 10:'aro', 11:'aro'
+  };
+
   function equipoHTML(eq){
     if (!eq || !eq.length) return '';
     var piezas = eq.map(function(p){
+      var pos = SLOTPOS[p.s];
+      if (!pos) return '';                 // slot desconocido: no se dibuja
       var esArma = p.g <= 5;
       var exc = tieneExcelentes(p);        // ver la nota de arriba: el slot 7 (ala) queda afuera
       var nombre = escapar(p.n);
@@ -1396,23 +1447,35 @@ footer {
           if (p.x & o[0]) det.push('<span class="eq-ex">' + o[1] + '</span>');
         });
       }
-      if (!det.length) det.push('<span class="eq-na">Sin opciones</span>');
+      if (!det.length) det.push('<span class="eq-na">' + (PARTES[p.s] || '') + '</span>');
 
-      // Si el icono no existe, se oculta solo (onerror) y queda el texto.
+      // Si el icono no existe, se oculta solo (onerror).
       var ico = (p.i !== undefined)
         ? '<img class="eq-ico" loading="lazy" alt="" src="images/items/' + p.g + '-' + p.i + '.webp"' +
           ' onerror="this.style.display=\'none\'">'
         : '';
 
-      return '<div class="eqitem">' + ico +
-        '<span class="eq-txt">' +
-          '<span class="eq-parte">' + (PARTES[p.s] || ('Slot ' + p.s)) + '</span>' +
-          '<span class="eq-nombre' + (exc ? ' exc' : '') + '">' + nombre + '</span>' +
-        '</span>' +
+      var abajo = pos[1] >= 72 ? ' abajo' : '';   // tooltip hacia arriba en la fila de abajo
+      var big = SLOTCLASS[p.s] ? ' ' + SLOTCLASS[p.s] : '';
+      return '<div class="eq-slot' + abajo + big + '" style="left:' + pos[0] + '%;top:' + pos[1] + '%">' +
+        ico +
         '<span class="eqtip"><b>' + nombre + '</b>' + det.join('') + '</span>' +
       '</div>';
     }).join('');
-    return '<div class="eq-tit">Equipo</div><div class="eq-lista">' + piezas + '</div>';
+    return '<div class="eq-grid">' + piezas + '</div>';
+  }
+
+  // Clase -> imagen del personaje (images/Personajes/clase-XX.jpg).
+  function imgClase(clase){
+    var c = (clase || '').toLowerCase();
+    if (/lord|emperor/.test(c))        return 'dl';
+    if (/knight|blade/.test(c))        return 'dk';
+    if (/wizard|soul|grand/.test(c))   return 'dw';
+    if (/elf/.test(c))                 return 'elf';
+    if (/gladiator|duel/.test(c))      return 'mg';
+    if (/rage|fist/.test(c))           return 'rf';
+    if (/summoner|dimension/.test(c))  return 'su';
+    return null;
   }
 
   function mostrarBuild(row){
@@ -1420,30 +1483,38 @@ footer {
       return '<div class="bstat"><span class="bstat-l">' + etiqueta + '</span>' +
              '<span class="bstat-v">' + Number(valor).toLocaleString('es-AR') + '</span></div>';
     };
+    var cl = imgClase(row.clase);
+    var charImg = cl
+      ? '<img class="build-char" src="images/Personajes/clase-' + cl + '.jpg" alt=""' +
+        ' onerror="this.style.display=\'none\'">'
+      : '';
     var html =
-      '<div class="build-head">' +
-        '<h3>' + escapar(row.name) + '</h3>' +
-        '<p>' + escapar(row.clase) + ' &middot; Nivel ' + row.level +
-        ' &middot; ' + row.resets + ' resets</p>' +
-      '</div>' +
-      '<div class="build-grid">' +
-        stat('Fuerza', row.str) + stat('Agilidad', row.agi) +
-        stat('Vitalidad', row.vit) + stat('Energía', row.ene) +
-        (row.cmd > 0 ? stat('Comando', row.cmd) : '') +
-        stat('Sin repartir', row.libres) +
-      '</div>' +
-      '<div class="build-extra">' +
-        '<span><b>' + row.kills + '</b> kills</span>' +
-        '<span><b>' + row.deads + '</b> muertes</span>' +
-        '<span><b>' + row.pk + '</b> PK</span>' +
-        // El MAPA donde esta el personaje NO se muestra: es informacion que
-        // sirve para ir a cazarlo. Tampoco viaja ya en el JSON del ranking.
-      '</div>' +
-      equipoHTML(row.eq);
+      '<div class="build-2col">' +
+        '<div class="build-left">' +
+          charImg +
+          '<div class="build-head">' +
+            '<h3>' + escapar(row.name) + '</h3>' +
+            '<p>' + escapar(row.clase) + ' &middot; Nivel ' + row.level +
+            ' &middot; ' + row.resets + ' resets</p>' +
+          '</div>' +
+          '<div class="build-grid">' +
+            stat('Fuerza', row.str) + stat('Agilidad', row.agi) +
+            stat('Vitalidad', row.vit) + stat('Energía', row.ene) +
+            (row.cmd > 0 ? stat('Comando', row.cmd) : '') +
+            stat('Sin repartir', row.libres) +
+          '</div>' +
+          '<div class="build-extra">' +
+            '<span><b>' + row.kills + '</b> kills</span>' +
+            '<span><b>' + row.deads + '</b> muertes</span>' +
+            '<span><b>' + row.pk + '</b> PK</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="build-right">' + equipoHTML(row.eq) + '</div>' +
+      '</div>';
     var cuerpo = document.getElementById('build-body');
     cuerpo.innerHTML = html;
     // En celular no hay hover: tocar la pieza abre y cierra su tooltip.
-    var abiertos = cuerpo.querySelectorAll('.eqitem');
+    var abiertos = cuerpo.querySelectorAll('.eq-slot');
     Array.prototype.forEach.call(abiertos, function(el){
       el.addEventListener('click', function(){
         var yaEstaba = el.classList.contains('abierto');
