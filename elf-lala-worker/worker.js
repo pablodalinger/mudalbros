@@ -106,7 +106,7 @@ ESCALON 1 (arma nativa +15 a Divine of the Archangel): 100% de exito, 1.000.000 
 - Shining Scepter +15 -> Divine Scepter of the Archangel
 - Demonic Stick +15 -> Divine Stick of the Archangel
 - Albatross Bow +15 -> Divine Crossbow of the Archangel
-- Phoenix Soul Star +15 -> Divine Claws of Archangel
+- Piercing Glove +15 -> Divine Claws of Archangel
 
 ESCALON 2 (Divine +15 a BloodAngel Excellent): 100% de exito, 1.000.000 zen, skill garantizado, 30% de chance de luck, siempre viene con 1 opcion excelente. Normalmente 5 Jewel of Bless + 5 Jewel of Soul, EXCEPTO el Magic Gladiator que en vez de Soul usa 5 Jewel of Life para su propia espada (MagicSword):
 - Divine Sword +15 + 5 Bless + 5 Soul -> BloodAngel Sword
@@ -129,7 +129,7 @@ ALAS:
 
 PRIORIDAD CUANDO TE ESCRIBEN SOLO EL NOMBRE DE UN ARMA O PIEZA (sin pregunta explicita, ej: alguien te escribe nada mas "daybreak", "divine sword" o "bloodangel set"): esto NO es automaticamente una pregunta de drop. Es parte del sistema de Custom Mix, respondes con la info de la escalera correspondiente de arriba, en vez de responder directamente que no tenes datos de drop. Solo aplica la regla de drops (mas abajo) si la pregunta es explicitamente sobre donde cae o dropea el item.
 
-IMPORTANTE - PRIORIDAD SOBRE DATOS ESPECIFICOS EN PREGUNTAS DE CUSTOM MIX: si la pregunta menciona "divine", "bloodangel", "darkangel", "custom mix" o el nombre de una de las 7 armas/sets de la escalera, la informacion de CUSTOM MIX de arriba SIEMPRE tiene prioridad sobre cualquier cosa que aparezca en "DATOS ESPECIFICOS PARA ESTA CONSULTA" mas abajo (esa seccion es para preguntas de DROP de items random, puede traerte resultados irrelevantes por coincidencia de palabras sueltas - ejemplo: "divine claw" NO tiene relacion con el item "Claw of Beast" aunque comparta la palabra "claw"). En las respuestas de Custom Mix SIEMPRE usa el nombre EXACTO del arma nativa tal cual esta escrito en la lista de arriba (Daybreak, Platina Staff, Shining Scepter, Demonic Stick, Albatross Bow, Phoenix Soul Star) - NUNCA un nombre generico como "Scepter +15" o "Staff +15".
+IMPORTANTE - PRIORIDAD SOBRE DATOS ESPECIFICOS EN PREGUNTAS DE CUSTOM MIX: si la pregunta menciona "divine", "bloodangel", "darkangel", "custom mix" o el nombre de una de las 7 armas/sets de la escalera, la informacion de CUSTOM MIX de arriba SIEMPRE tiene prioridad sobre cualquier cosa que aparezca en "DATOS ESPECIFICOS PARA ESTA CONSULTA" mas abajo (esa seccion es para preguntas de DROP de items random, puede traerte resultados irrelevantes por coincidencia de palabras sueltas - ejemplo: "divine claw" NO tiene relacion con el item "Claw of Beast" aunque comparta la palabra "claw"). En las respuestas de Custom Mix SIEMPRE usa el nombre EXACTO del arma nativa tal cual esta escrito en la lista de arriba (Daybreak, Platina Staff, Shining Scepter, Demonic Stick, Albatross Bow, Piercing Glove) - NUNCA un nombre generico como "Scepter +15" o "Staff +15".
 
 REGLA CLAVE SOBRE DROPS: si te preguntan donde cae o dropea un item/arma/set especifico, primero revisa la seccion "DATOS ESPECIFICOS PARA ESTA CONSULTA" si aparece mas abajo. Si el item que preguntan NO aparece ahi ni en el resto de esta informacion, respondes que ese item no tiene un mob puntual asignado en nuestro servidor - sale del sistema de drop generico segun el nivel del mob, que no modificamos respecto al MU Online original, asi que se puede guiar por guias oficiales de MU Online Season 6 para ese caso especifico. NUNCA inventes un mapa o mob concreto que no este confirmado en esta informacion.
 
@@ -191,7 +191,7 @@ function findMatches(message, records, labelFields) {
 }
 
 const MIX_WEAPONS = [
-  { cat: "claws (Rage Fighter)", keys: ["claw", "claws", "garra", "garras", "phoenix"], nativa: "Phoenix Soul Star", divine: "Divine Claws of Archangel", blood: "BloodAngel Claws", dark: "DarkAngel Claws" },
+  { cat: "claws (Rage Fighter)", keys: ["claw", "claws", "garra", "garras", "piercing", "phoenix"], nativa: "Piercing Glove", divine: "Divine Claws of Archangel", blood: "BloodAngel Claws", dark: "DarkAngel Claws" },
   { cat: "espada", keys: ["sword", "espada", "daybreak"], nativa: "Daybreak", divine: "Divine Sword of the Archangel", blood: "BloodAngel Sword", dark: "DarkAngel Sword", nota: "Para el Magic Gladiator: el mismo Divine Sword of the Archangel +15 + 5 Jewel of Bless + 5 Jewel of LIFE (en vez de Soul) da BloodAngel MagicSword Excellent, y repitiendo el mix da DarkAngel MagicSword Excellent." },
   { cat: "staff (Wizard)", keys: ["staff", "platina", "baculo"], nativa: "Platina Staff", divine: "Divine Staff of the Archangel", blood: "BloodAngel Staff", dark: "DarkAngel Staff" },
   { cat: "scepter (Dark Lord)", keys: ["scepter", "sceptre", "cetro", "shining"], nativa: "Shining Scepter", divine: "Divine Scepter of the Archangel", blood: "BloodAngel Scepter", dark: "DarkAngel Scepter" },
