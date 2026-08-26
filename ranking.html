@@ -1235,9 +1235,12 @@ footer {
   .build-left{ flex:0 0 auto; max-width:300px; width:100%; }
   .build-right{ width:100%; }
   /* En movil el scroll interno del modal se traba en touch: que scrollee el
-     overlay completo, anclado arriba, para poder llegar hasta la descripcion. */
-  #build-overlay{ align-items:flex-start; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-  #build-modal{ max-height:none; }
+     overlay completo, anclado arriba, para poder llegar hasta la descripcion.
+     backdrop-filter:none -> sino rompe el position:fixed del tooltip de item
+     (lo ancla al overlay en vez del viewport) y se desubica al scrollear. */
+  #build-overlay{ align-items:flex-start; overflow-y:auto; -webkit-overflow-scrolling:touch;
+                  backdrop-filter:none; background:rgba(4,6,14,0.94); }
+  #build-modal{ max-height:none; margin:auto 0; }
 }
 #build-close{
   position:absolute; top:10px; right:10px;
