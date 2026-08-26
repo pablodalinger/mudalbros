@@ -1558,15 +1558,21 @@ footer {
       el.addEventListener('click', function(){
         var yaEstaba = el.classList.contains('abierto');
         Array.prototype.forEach.call(abiertos, function(o){ o.classList.remove('abierto'); });
-        if (yaEstaba){
-          if (mobtip){ mobtip.classList.remove('visible'); mobtip.innerHTML = ''; }
-        } else {
+        var tipHtml = '';
+        if (!yaEstaba){
           el.classList.add('abierto');
-          if (mobtip){
-            var tip = el.querySelector('.eqtip');
-            mobtip.innerHTML = tip ? tip.innerHTML : '';
-            mobtip.classList.add('visible');
-          }
+          var tip = el.querySelector('.eqtip');
+          tipHtml = tip ? tip.innerHTML : '';
+        }
+        // Dentro del iframe (mudalbros.com) el position:fixed se ancla al viewport
+        // de layout del iframe y la barra se corta en movil. Entonces la mostramos
+        // en el documento PADRE (viewport real). Si NO estamos en iframe, barra local.
+        if (window.top !== window){
+          if (mobtip){ mobtip.classList.remove('visible'); mobtip.innerHTML = ''; }
+          try { window.parent.postMessage({ muItemTip: tipHtml || null }, '*'); } catch (e) {}
+        } else if (mobtip){
+          if (tipHtml){ mobtip.innerHTML = tipHtml; mobtip.classList.add('visible'); }
+          else { mobtip.classList.remove('visible'); mobtip.innerHTML = ''; }
         }
       });
     });
@@ -1581,7 +1587,7 @@ footer {
     function cerrar(){
       ov.style.display = 'none'; document.body.style.overflow = '';
       var mt = document.getElementById('eq-mobtip'); if (mt){ mt.classList.remove('visible'); mt.innerHTML = ''; }
-      try { if (window.top !== window) window.parent.postMessage({ muModal: 'close' }, '*'); } catch (e) {}
+      try { if (window.top !== window){ window.parent.postMessage({ muModal: 'close' }, '*'); window.parent.postMessage({ muItemTip: null }, '*'); } } catch (e) {}
     }
     document.getElementById('build-close').addEventListener('click', cerrar);
     ov.addEventListener('click', function(e){ if (e.target === ov) cerrar(); });
