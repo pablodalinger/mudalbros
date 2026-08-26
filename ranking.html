@@ -1234,6 +1234,10 @@ footer {
   .build-2col{ flex-direction:column; align-items:center; }
   .build-left{ flex:0 0 auto; max-width:300px; width:100%; }
   .build-right{ width:100%; }
+  /* En movil el scroll interno del modal se traba en touch: que scrollee el
+     overlay completo, anclado arriba, para poder llegar hasta la descripcion. */
+  #build-overlay{ align-items:flex-start; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+  #build-modal{ max-height:none; }
 }
 #build-close{
   position:absolute; top:10px; right:10px;
