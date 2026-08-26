@@ -1225,7 +1225,7 @@ footer {
 .build-left{ flex:0 0 300px; max-width:300px; }
 .build-right{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
 .build-char{
-  width:100%; aspect-ratio:1030/1024; object-fit:cover; object-position:center top;
+  width:100%; aspect-ratio:1/1; object-fit:cover; object-position:center;
   border-radius:12px; border:1px solid rgba(212,168,67,0.4);
   box-shadow:0 6px 26px rgba(0,0,0,0.75); display:block; margin-bottom:0.9rem;
 }
@@ -1501,9 +1501,14 @@ footer {
              '<span class="bstat-v">' + Number(valor).toLocaleString('es-AR') + '</span></div>';
     };
     var cl = imgClase(row.clase);
+    // Video de animacion por clase (se reproduce 1 vez al abrir y queda estatico en el
+    // ultimo frame; sin loop). El poster = la imagen estatica: se ve mientras carga y
+    // sirve de fallback si el video no esta/falla. Nombres de archivo: dk->bk, rf->rage, su->summ.
+    var VIDMAP = { dk:'bk', dl:'dl', dw:'dw', elf:'elf', mg:'mg', rf:'rage', su:'summ' };
     var charImg = cl
-      ? '<img class="build-char" src="images/Personajes/clase-' + cl + '.jpg" alt=""' +
-        ' onerror="this.style.display=\'none\'">'
+      ? '<video class="build-char" muted autoplay playsinline preload="auto">' +
+        '<source src="images/Personajes/Animaciones/' + VIDMAP[cl] + '.mp4" type="video/mp4">' +
+        '</video>'
       : '';
     var html =
       '<div class="build-2col">' +
