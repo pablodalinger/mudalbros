@@ -1239,8 +1239,11 @@ footer {
      backdrop-filter:none -> sino rompe el position:fixed del tooltip de item
      (lo ancla al overlay en vez del viewport) y se desubica al scrollear. */
   #build-overlay{ align-items:flex-start; overflow-y:auto; -webkit-overflow-scrolling:touch;
+                  overscroll-behavior:contain; touch-action:pan-y;
                   backdrop-filter:none; background:rgba(4,6,14,0.94); }
-  #build-modal{ max-height:none; margin:auto 0; }
+  /* padding-bottom para que la ultima fila de items no quede tapada por el
+     tooltip fijo de abajo. */
+  #build-modal{ max-height:none; padding-bottom:5rem; }
 }
 #build-close{
   position:absolute; top:10px; right:10px;
@@ -1508,15 +1511,18 @@ footer {
              '<span class="bstat-v">' + Number(valor).toLocaleString('es-AR') + '</span></div>';
     };
     var cl = imgClase(row.clase);
-    // Video de animacion por clase (se reproduce 1 vez al abrir y queda estatico en el
-    // ultimo frame; sin loop). El poster = la imagen estatica: se ve mientras carga y
-    // sirve de fallback si el video no esta/falla. Nombres de archivo: dk->bk, rf->rage, su->summ.
+    // En PC: video de animacion por clase (1 vez al abrir, sin loop, queda estatico).
+    // En movil: imagen estatica -> el video se traba en el modal de muchos celulares
+    // (decode + iframe), asi que priorizamos que cargue rapido y limpio.
+    // Nombres de video: dk->bk, rf->rage, su->summ.
     var VIDMAP = { dk:'bk', dl:'dl', dw:'dw', elf:'elf', mg:'mg', rf:'rage', su:'summ' };
-    var charImg = cl
-      ? '<video class="build-char" muted autoplay playsinline preload="auto">' +
-        '<source src="images/Personajes/Animaciones/' + VIDMAP[cl] + '.mp4" type="video/mp4">' +
-        '</video>'
-      : '';
+    var esMovil = window.innerWidth <= 660 || (navigator.maxTouchPoints > 0 && window.innerWidth < 900);
+    var charImg = !cl ? ''
+      : esMovil
+        ? '<img class="build-char" src="images/Personajes/clase-' + cl + '.jpg" alt="">'
+        : '<video class="build-char" muted autoplay playsinline preload="auto">' +
+          '<source src="images/Personajes/Animaciones/' + VIDMAP[cl] + '.mp4" type="video/mp4">' +
+          '</video>';
     var html =
       '<div class="build-2col">' +
         '<div class="build-left">' +
