@@ -1361,9 +1361,12 @@ footer {
   <div id="build-modal">
     <button id="build-close" aria-label="Cerrar">&times;</button>
     <div id="build-body"></div>
-    <div id="eq-mobtip"></div>
   </div>
 </div>
+<!-- Fuera del overlay (que tiene overflow-y:auto): asi el position:fixed del tooltip
+     de item se ancla al viewport visible y no queda confinado/cortado al scrollear
+     en movil (dentro de un contenedor con scroll, el fixed se rompe en mobile). -->
+<div id="eq-mobtip"></div>
 
 <script>
 (function(){
