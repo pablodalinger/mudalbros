@@ -1228,6 +1228,8 @@ footer {
   width:100%; aspect-ratio:1/1; object-fit:cover; object-position:center;
   border-radius:12px; border:1px solid rgba(212,168,67,0.4);
   box-shadow:0 6px 26px rgba(0,0,0,0.75); display:block; margin-bottom:0.9rem;
+  /* forzar capa GPU propia -> compositing/pintado mas suave del video */
+  transform:translateZ(0); will-change:transform; backface-visibility:hidden;
 }
 .build-left .build-grid{ grid-template-columns:1fr; }
 @media (max-width:660px){
@@ -1507,6 +1509,26 @@ footer {
     if (/summoner|dimension/.test(c))  return 'su';
     return null;
   }
+
+  // Precarga de los videos de animacion (PC): los baja al cache del navegador
+  // apenas carga la pagina, asi al abrir un personaje el video ya esta buffereado
+  // y NO se traba en la primera reproduccion (la causa del tironeo).
+  (function preloadVids(){
+    var esMovil = window.innerWidth <= 660 || (navigator.maxTouchPoints > 0 && window.innerWidth < 900);
+    if (esMovil) return; // en movil se usa imagen estatica
+    function go(){
+      ['bk','dl','dw','elf','mg','rage','summ'].forEach(function(n){
+        var v = document.createElement('video');
+        v.muted = true; v.preload = 'auto'; v.playsInline = true;
+        v.src = 'images/Personajes/Animaciones/' + n + '.mp4';
+        v.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none';
+        v.load();
+        document.body.appendChild(v);
+      });
+    }
+    if (document.readyState === 'complete') go();
+    else window.addEventListener('load', go);
+  })();
 
   function mostrarBuild(row){
     var stat = function(etiqueta, valor){
