@@ -1174,7 +1174,7 @@ footer {
       <div class="rank-panel">
         <div class="rank-panel-head">
           <span class="rank-panel-icon">👑</span>
-          <span class="rank-panel-title">Top Jugadores — Nivel</span>
+          <span class="rank-panel-title">Top Jugadores General</span>
         </div>
         <div id="rank-level-wrap"><div class="rank-empty">Cargando ranking...</div></div>
       </div>
@@ -1690,8 +1690,8 @@ footer {
     .then(function(r){ return r.json(); })
     .then(function(data){
       armarPanel('rank-level-wrap', data.topLevel,
-        function(row){ return 'Lvl ' + row.level; },
-        function(row){ return row.resets + ' resets'; }
+        function(row){ return row.resets + ' resets'; },
+        function(row){ return 'ML ' + (row.mlevel || 0); }
       );
       armarPanel('rank-reset-wrap', data.topReset,
         function(row){ return row.resets + ' resets'; },
