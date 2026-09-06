@@ -1365,6 +1365,7 @@ footer {
 .eq-lk{ color:#8fd0ff; }
 .eq-sk{ color:#ffc98f; }
 .eq-op{ color:#e9e6f7; }
+.eq-hm{ color:#ffd94a; }   /* opcion de Jewel of Harmony (amarillo, como in-game) */
 .eq-na{ color:#7d789a; }
 /* Tooltip de mobile: barra fija abajo de la pantalla (siempre legible, no se corta). */
 #eq-mobtip{ display:none; }
@@ -1503,6 +1504,9 @@ footer {
           if (p.x & o[0]) det.push('<span class="eq-ex">' + o[1] + '</span>');
         });
       }
+      // Opcion de Jewel of Harmony (amarillo). El poller ya manda el nombre y el
+      // valor listos, solo si la opcion tiene efecto real (> 0).
+      if (p.hn) det.push('<span class="eq-hm">' + escapar(p.hn) + ' +' + p.hv + '</span>');
       if (!det.length) det.push('<span class="eq-na">' + (PARTES[p.s] || '') + '</span>');
 
       // Si el icono no existe, se oculta solo (onerror).
