@@ -1185,6 +1185,27 @@ footer {
         </div>
         <div id="rank-reset-wrap"><div class="rank-empty">Cargando ranking...</div></div>
       </div>
+      <div class="rank-panel">
+        <div class="rank-panel-head">
+          <span class="rank-panel-icon">🎓</span>
+          <span class="rank-panel-title">Top Master Level</span>
+        </div>
+        <div id="rank-master-wrap"><div class="rank-empty">Cargando ranking...</div></div>
+      </div>
+      <div class="rank-panel">
+        <div class="rank-panel-head">
+          <span class="rank-panel-icon">🩸</span>
+          <span class="rank-panel-title">Top Blood Castle</span>
+        </div>
+        <div id="rank-bc-wrap"><div class="rank-empty">Cargando ranking...</div></div>
+      </div>
+      <div class="rank-panel">
+        <div class="rank-panel-head">
+          <span class="rank-panel-icon">👹</span>
+          <span class="rank-panel-title">Top Devil Square</span>
+        </div>
+        <div id="rank-ds-wrap"><div class="rank-empty">Cargando ranking...</div></div>
+      </div>
     </div>
 
   </div>
@@ -1676,11 +1697,23 @@ footer {
         function(row){ return row.resets + ' resets'; },
         function(row){ return 'Lvl ' + row.level; }
       );
+      armarPanel('rank-master-wrap', data.topMaster,
+        function(row){ return 'ML ' + (row.mlevel || 0); },
+        function(row){ return 'Lvl ' + row.level; }
+      );
+      armarPanel('rank-bc-wrap', data.topBloodCastle,
+        function(row){ return (row.score || 0).toLocaleString('es-AR') + ' pts'; },
+        function(row){ return 'Lvl ' + row.level; }
+      );
+      armarPanel('rank-ds-wrap', data.topDevilSquare,
+        function(row){ return (row.score || 0).toLocaleString('es-AR') + ' pts'; },
+        function(row){ return 'Lvl ' + row.level; }
+      );
     })
     .catch(function(){
       var msg = '<div class="rank-empty">No se pudo cargar el ranking. Intentá de nuevo más tarde.</div>';
-      document.getElementById('rank-level-wrap').innerHTML = msg;
-      document.getElementById('rank-reset-wrap').innerHTML = msg;
+      ['rank-level-wrap','rank-reset-wrap','rank-master-wrap','rank-bc-wrap','rank-ds-wrap']
+        .forEach(function(id){ document.getElementById(id).innerHTML = msg; });
     });
 })();
 </script>

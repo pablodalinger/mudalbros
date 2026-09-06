@@ -291,14 +291,18 @@ export default {
           return json({ error: "La verificación anti-bot falló. Recargá la página e intentá de nuevo." }, 403, H);
       }
 
-      // Limite anti-abuso: 10 cuentas por IP por hora.
+      // Limite anti-abuso: 100 cuentas CREADAS por IP por hora (subido de 10 el
+      // 2026-08-13 por pedido de Pablo).
+      // NO CONFUNDIR con MaxIpConnection = 6 del GameServer, que es otra cosa:
+      // ese limita cuantas cuentas pueden estar CONECTADAS a la vez por IP y
+      // sigue en 6. Este de aca solo limita cuantas se pueden DAR DE ALTA.
       // NO bajarlo: el multi-cuenta es publico legitimo y promocionado del server
       // (una party de 5 + los mulos para vender se crea de una sentada).
       // Se cuenta en D1 y no en KV: el KV cacheado devolvia contadores viejos.
       const rl = await env.DB.prepare(
         "SELECT COUNT(*) AS n FROM altas WHERE ip = ? AND creado_ts > ?"
       ).bind(ip, ahora - 3600000).first();
-      if (rl && rl.n >= 10)
+      if (rl && rl.n >= 100)
         return json({ error: "Demasiadas cuentas creadas desde esta conexion. Esperá un rato." }, 429, H);
 
       const txid = "alta_" + crypto.randomUUID();
@@ -343,6 +347,9 @@ export default {
       const data = {
         topLevel: Array.isArray(body.topLevel) ? body.topLevel.slice(0, 50) : [],
         topReset: Array.isArray(body.topReset) ? body.topReset.slice(0, 50) : [],
+        topMaster: Array.isArray(body.topMaster) ? body.topMaster.slice(0, 50) : [],
+        topBloodCastle: Array.isArray(body.topBloodCastle) ? body.topBloodCastle.slice(0, 50) : [],
+        topDevilSquare: Array.isArray(body.topDevilSquare) ? body.topDevilSquare.slice(0, 50) : [],
         updated: Date.now(),
       };
       await env.PAGOS_KV.put("ranking_data", JSON.stringify(data));
@@ -382,7 +389,7 @@ export default {
     // ----------------------------------------------------------------------
     if (path === "/ranking-data" && request.method === "GET") {
       const v = await env.PAGOS_KV.get("ranking_data");
-      let data = { topLevel: [], topReset: [], updated: 0 };
+      let data = { topLevel: [], topReset: [], topMaster: [], topBloodCastle: [], topDevilSquare: [], updated: 0 };
       if (v) {
         try { data = JSON.parse(v); } catch (e) {}
       }
