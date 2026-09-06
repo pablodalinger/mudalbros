@@ -1229,6 +1229,9 @@ footer {
   text-shadow:0 0 8px rgba(255,215,110,0.5); vertical-align:middle;
   white-space:nowrap;
 }
+/* Placeholder invisible: reserva el mismo espacio del VIP en filas sin VIP,
+   asi todas las filas miden igual (nombre + linea del badge). */
+.rvip.rvip-ph{ visibility:hidden; }
 #build-overlay{
   position:fixed; inset:0; z-index:2147483000; display:none;
   background:rgba(4,6,14,0.86); backdrop-filter:blur(4px);
@@ -1408,7 +1411,7 @@ footer {
       return '<tr' + clickable + '>' +
         '<td class="rpos' + claseRpos + '">' + (pos + 1) + '</td>' +
         '<td class="rname">' + row.name +
-          (row.vip ? '<span class="rvip">&#9733; VIP</span>' : '') + '</td>' +
+          '<span class="rvip' + (row.vip ? '' : ' rvip-ph') + '">&#9733; VIP</span>' + '</td>' +
         '<td class="rmut">' + secundario(row) + '</td>' +
         '<td class="rval">' + principal(row) + '</td>' +
       '</tr>';
