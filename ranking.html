@@ -1509,10 +1509,11 @@ footer {
       if (p.hn) det.push('<span class="eq-hm">' + escapar(p.hn) + ' +' + p.hv + '</span>');
       if (!det.length) det.push('<span class="eq-na">' + (PARTES[p.s] || '') + '</span>');
 
-      // Si el icono no existe, se oculta solo (onerror).
+      // Icono: intenta .webp; si no existe prueba .png; si tampoco, se oculta.
+      var icoBase = 'images/items/' + p.g + '-' + p.i;
       var ico = (p.i !== undefined)
-        ? '<img class="eq-ico" loading="lazy" alt="" src="images/items/' + p.g + '-' + p.i + '.webp"' +
-          ' onerror="this.style.display=\'none\'">'
+        ? '<img class="eq-ico" loading="lazy" alt="" src="' + icoBase + '.webp"' +
+          ' onerror="if(this.dataset.f){this.style.display=\'none\'}else{this.dataset.f=1;this.src=\'' + icoBase + '.png\'}">'
         : '';
 
       var abajo = pos[1] >= 72 ? ' abajo' : '';   // tooltip hacia arriba en la fila de abajo
