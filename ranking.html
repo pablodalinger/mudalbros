@@ -1443,17 +1443,19 @@ footer {
 
   // ⚠️ LAS ALAS Y CAPAS (grupo 12) NUNCA SON EXCELENTES.
   // En MU esos items NO pueden serlo, y ese mismo byte guarda sus OPCIONES DE
-  // ALA, que son otra cosa. Leerlo con la tabla de excelentes daba textos
-  // falsos (paso con las alas de Evelyn y la capa de Pilin).
+  // ALA, que son otra cosa.
   //
-  // Mapeo MEDIDO in-game creando una capa por bit (/make 12 49 ... Exe ... ):
-  //     1 = vida · 2 = mana · 4 = ignora defensa · 8, 16 y 32 = no hacen nada
-  // Se muestran SIN numeros a proposito: el tooltip de la Cloak of Warrior
-  // decia +50 / +50 / 3%, pero no se comprobo si esos valores son iguales en
-  // alas de otro nivel. Si algun dia se verifica, se agregan aca.
-  var OPC_ALAS = [[0x01, 'Aumenta la vida'],
-                  [0x02, 'Aumenta el maná'],
-                  [0x04, 'Ignora parte de la defensa del rival']];
+  // Mapeo MEDIDO in-game (2026-09-08, Pablo) creando alas y capas por bit
+  // (/make 12 <idx> 0 0 0 0 <bit> 0). Es IGUAL para TODAS las alas y capas
+  // (S2 / 2.5 / S3 / S4 custom):
+  //     1 = ignora defensa 5% · 2 = refleja daño 5% · 4 = recupera vida 5% ·
+  //     8 = recupera maná 5% · 16 y 32 = no hacen nada
+  // (Antes 0x04 estaba mal mapeado como "ignora defensa" -> mostraba ignore
+  //  falso en la Lord of the Cape. Corregido.)
+  var OPC_ALAS = [[0x01, 'Ignora la defensa del rival 5%'],
+                  [0x02, 'Refleja el daño del rival 5%'],
+                  [0x04, 'Recupera toda la vida 5%'],
+                  [0x08, 'Recupera todo el maná 5%']];
 
   // El ala/capa se detecta por el SLOT (7 = Alas), NO por el grupo. Las capas de
   // nivel alto (Cape of the Lord del DL, capa de RF, alas S2) son items
